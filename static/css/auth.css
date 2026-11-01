@@ -62,20 +62,24 @@
 .auth-story h1 { overflow-wrap:break-word; }
 .auth-stage { width:100%; max-width:none; margin:0; overflow:hidden; }
 
-/* Original navy wordmark sits directly on a light header, without a white tile. */
-.auth-masthead { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px clamp(18px,5vw,72px); background:#eef4fa; }
-.auth-masthead > a:last-child { display:flex; align-items:center; min-height:44px; font-size:13px; color:#405c75; }
-.auth-register .auth-brand { width:290px; }
-.auth-shell { min-height:calc(100svh - 84px); }
-@media(max-width:600px) {
- .auth-masthead { gap:8px; padding:8px 14px; }
- .auth-register .auth-brand { width:220px; }
- .auth-masthead .auth-brand { flex-shrink:1; min-width:0; }
- .auth-masthead > a:last-child { flex-shrink:0; font-size:12px; }
- .auth-stage { padding-top:28px; }
- .auth-story-copy { padding-top:8px; }
-}
-
 /* Decorative pen strokes emphasize the word without changing the heading font. */
 .auth-story h1 .sketch-emphasis { position:relative; display:inline-block; white-space:nowrap; padding-bottom:.27em; }
 .sketch-underline { position:absolute; left:0; bottom:0; width:100%; height:.4em; overflow:visible; pointer-events:none; fill:none; stroke:currentColor; stroke-width:2.7; stroke-linecap:round; stroke-linejoin:round; }
+
+/* Approved transparent logo on navy; keep compact mobile hero proportions. */
+.auth-brand, .auth-register .auth-brand { width:340px; max-width:100%; background:transparent; border:0; border-radius:0; }
+.auth-shell { min-height:100svh; }
+.auth-story { background:radial-gradient(ellipse at 0% 100%,#153c5b,transparent 65%),var(--navy); }
+.auth-tabs { background:transparent; border-radius:0; border-bottom:1px solid #cbdce9; padding:0; }
+.auth-tabs a { border-radius:0; border-bottom:3px solid transparent; }
+.auth-tabs a[aria-current] { background:transparent; border-bottom-color:var(--blue); box-shadow:none; }
+.auth-liquid-blue { width:370px; height:420px; top:8%; right:5%; }
+.auth-liquid-teal { width:280px; height:340px; left:2%; bottom:6%; }
+@media(max-width:1000px) {
+ .auth-brand, .auth-register .auth-brand { width:230px; }
+ .auth-story { padding:20px 20px 24px; }
+ .auth-story-copy { padding-top:22px; }
+ .auth-stage { padding-top:64px; }
+ .auth-liquid-blue { width:190px; height:230px; }
+ .auth-liquid-teal { width:170px; height:200px; }
+}

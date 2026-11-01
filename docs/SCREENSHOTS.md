@@ -55,3 +55,12 @@ The bold heading is retained, with a decorative teal sketch underline beneath â€
 - [Mobile](screenshots/underlined-register-390.png)
 
 The underline was checked at 320, 390, 768 and 1440px without horizontal overflow; desktop and mobile screenshots were visually inspected.
+
+## Approved transparent SVG logo
+
+The uploaded `brand/careerpulse-logo-primary.svg` is preserved byte-for-byte. UI variants in `static/images/` trim canvas whitespace; the approved dark-background variant uses white Career lettering and light blue Pulse/pulse strokes. The light-background variant retains the original colors. Authentication and desktop sidebar use the dark variant; mobile workspace headers use the light variant. No logo tile or background rectangle is added.
+
+- [Registration desktop](screenshots/approved-logo-register-1440.png)
+- [Registration mobile](screenshots/approved-logo-register-390.png)
+
+Verified 35 unit tests, complete Chromium workflow, and auth layouts at 320/390/768/1440px. Registration screenshots were visually inspected. Earlier generated-logo attempts are not used.

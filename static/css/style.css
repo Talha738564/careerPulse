@@ -1124,3 +1124,7 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
     gap: 8px;
   }
 }
+
+/* Transparent supplied brand variants: white lettering on navy, navy on light. */
+.brand { background:transparent; border:0; border-radius:0; }
+.mobile-brand { background:transparent; border:0; border-radius:0; padding:0; box-shadow:none; }

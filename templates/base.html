@@ -11,7 +11,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <aside class="sidebar">
 <a class="brand" href="{{ url_for('home') }}">
-<img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse">
+<img src="{{ url_for('static',filename='images/careerpulse-logo-dark.svg') }}" alt="CareerPulse">
 </a>
 <p class="eyebrow">STUDENT WORKSPACE</p>
 <nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('saved.index','Saved jobs','◇'),('tracker.index','Application tracker','▤'),('profile','Profile & skills','◎'),('alerts.index','Job alerts','◉'),('alerts.notifications','Notifications','◌')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
@@ -27,7 +27,7 @@
 <div class="workspace">
 <header class="topbar">
 <a class="mobile-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home">
-<img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse">
+<img src="{{ url_for('static',filename='images/careerpulse-logo-light.svg') }}" alt="CareerPulse">
 </a>
 <form action="{{ url_for('opportunities') }}" role="search">
 <label class="sr-only" for="global-search">Search jobs, companies or skills</label>

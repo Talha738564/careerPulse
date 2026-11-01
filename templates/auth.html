@@ -10,9 +10,10 @@
 </head>
 <body class="auth-page {{ 'auth-register' if register else 'auth-login' }}">
 <a class="skip" href="#main">Skip to content</a>
-<header class="auth-masthead"><a class="auth-brand" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse home"></a><a href="{{ url_for('home') }}">← Back to home</a></header>
+
 <div class="auth-shell">
 <section class="auth-story" aria-labelledby="auth-headline">
+<a class="auth-brand" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='images/careerpulse-logo-dark.svg') }}" alt="CareerPulse home"></a>
 
 <div class="auth-story-copy">
 <p class="eyebrow">SMALL STEPS. BIG POSSIBILITIES.</p>
@@ -27,6 +28,7 @@
 <div class="auth-liquid auth-liquid-story" aria-hidden="true"></div>
 </section>
 <main id="main" class="auth-stage" tabindex="-1">
+<a class="auth-back" href="{{ url_for('home') }}">← Back to home</a>
 
 <div class="auth-liquid auth-liquid-blue" aria-hidden="true"></div>
 <div class="auth-liquid auth-liquid-teal" aria-hidden="true"></div>
