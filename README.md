@@ -10,8 +10,8 @@ py -3 -m venv .venv
 if (!(Test-Path .env)) { Copy-Item .env.example .env }
 .\.venv\Scripts\python.exe -m flask --app app:create_app run
 ```
-Open http://127.0.0.1:5000. Use **Enter the student demo** for a guest workspace,
-or **Sign in → Create an account** to register a fictional student.
+Open http://127.0.0.1:5000. Use the homepage **Sign in** or **Create account** buttons for authentication,
+or **Try the guest demo without an account** for a guest workspace.
 
 For the admin workflow, set your own `ADMIN_EMAIL` and a unique `ADMIN_PASSWORD`
 (12+ characters) in the ignored `.env`, restart, then sign in with them. The fixed

@@ -44,3 +44,15 @@ class AuthTests(unittest.TestCase):
             self.assertEqual(self.post('/login',email='x',password='x').status_code,401)
         self.assertEqual(self.post('/login',email='x',password='x').status_code,429)
         self.assertEqual(self.client.get('/logout').status_code,405)
+
+    def test_auth_pages_and_homepage_entry_points(self):
+        for path in ['/login','/login/','/register','/register/']:
+            response=self.client.get(path)
+            self.assertEqual(response.status_code,200,path)
+            self.assertIn(b'name="password"',response.data)
+            self.assertIn(b'name="csrf_token"',response.data)
+        home=self.client.get('/').data
+        self.assertIn(b'aria-label="Account access"',home)
+        self.assertIn(b'href="/login"',home)
+        self.assertIn(b'href="/register"',home)
+        self.assertIn(b'Try the guest demo without an account',home)

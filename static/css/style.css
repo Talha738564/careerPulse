@@ -768,3 +768,7 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
 .identity { max-width:190px; grid-template-columns:36px minmax(0,1fr); }
 .identity-name { overflow:hidden; text-overflow:ellipsis; }
 @media(max-width:700px) { input, select, textarea { font-size:16px; } }
+.auth-entry { display:flex; align-items:center; flex-wrap:wrap; gap:16px; }
+.topbar .auth-entry { flex-shrink:0; gap:12px; }
+.account-register { font-size:13px; font-weight:600; padding:12px 0; }
+.landing .guest-entry { margin:16px 0 0; font-size:13px; }

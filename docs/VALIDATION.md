@@ -1,7 +1,7 @@
 # Validation and evidence
 
 ## Current checks
-- 34 unittest cases pass across matching, required/preferred/zero-skill cases,
+- 35 unittest cases pass across matching, required/preferred/zero-skill cases,
   route rendering, escaped input, combined filters, CSRF rejection, profile editing,
   browser isolation, shortlist idempotence, confirmed tracker updates/date checks,
   alert matching/deduplication, notification ownership/read state, password hashing,
@@ -32,3 +32,7 @@ background notification worker, email delivery, password recovery, or production
 hosting is configured. Password recovery and email delivery are not in this course
 milestone's required scope. Live Oracle auth/persistence and concurrency tests are
 pending a real database. Current tests do not establish production readiness.
+
+Authentication discovery regression: homepage and header now expose Sign in and
+Create account directly. Both forms were opened from the homepage at 1440px and
+390px; /login/, /register/ and their canonical routes all return HTTP 200.

@@ -14,7 +14,7 @@ def register_auth(app):
     attempts = {}
     bp = Blueprint('auth', __name__)
 
-    @bp.route('/register', methods=['GET','POST'])
+    @bp.route('/register', methods=['GET','POST'], strict_slashes=False)
     def register():
         error = None
         if request.method == 'POST':
@@ -37,7 +37,7 @@ def register_auth(app):
                     return redirect(url_for('auth.login'),code=303)
         return render_template('auth.html',title='Create an account',register=True,error=error),422 if error else 200
 
-    @bp.route('/login', methods=['GET','POST'])
+    @bp.route('/login', methods=['GET','POST'], strict_slashes=False)
     def login():
         error=None
         if request.method=='POST':

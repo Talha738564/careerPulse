@@ -21,3 +21,8 @@ it stays anchored to the phone screen while the content scrolls.
 - [Confirmed application tracker](screenshots/journey-tracker-desktop.png) · [Mobile](screenshots/journey-tracker-mobile.png)
 - [Admin-created opportunity](screenshots/journey-admin-catalog-desktop.png) · [Mobile](screenshots/journey-admin-catalog-mobile.png)
 - [Updated admin overview](screenshots/journey-admin-desktop.png) · [Mobile](screenshots/journey-admin-mobile.png)
+
+## Authentication entry fix
+- [Homepage access buttons](screenshots/auth-entry-desktop.png) · [Mobile](screenshots/auth-entry-mobile.png)
+- [Login](screenshots/auth-login-1440.png) · [Mobile](screenshots/auth-login-390.png)
+- [Registration](screenshots/auth-register-1440.png) · [Mobile](screenshots/auth-register-390.png)
