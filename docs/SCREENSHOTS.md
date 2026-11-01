@@ -46,3 +46,12 @@ The original SVG is unchanged. The authentication logo now sits without a white 
 The handwritten concept is a browser screenshot with a temporary Caveat font override, not the live heading style. Font source: [Google Fonts Caveat](https://github.com/google/fonts/tree/main/ofl/caveat). The live page retains the bold heading pending selection.
 
 Validation: 35 unit tests and the full Chromium workflow passed. Current and concept layouts passed overflow checks at 320, 390, 768 and 1440px; desktop/mobile concept screenshots were visually inspected.
+
+## Selected registration heading: bold with sketch underline
+
+The bold heading is retained, with a decorative teal sketch underline beneath “opportunities.” The handwritten concept above was not selected.
+
+- [Desktop](screenshots/underlined-register-1440.png)
+- [Mobile](screenshots/underlined-register-390.png)
+
+The underline was checked at 320, 390, 768 and 1440px without horizontal overflow; desktop and mobile screenshots were visually inspected.

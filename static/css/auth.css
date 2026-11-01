@@ -75,3 +75,7 @@
  .auth-stage { padding-top:28px; }
  .auth-story-copy { padding-top:8px; }
 }
+
+/* Decorative pen strokes emphasize the word without changing the heading font. */
+.auth-story h1 .sketch-emphasis { position:relative; display:inline-block; white-space:nowrap; padding-bottom:.27em; }
+.sketch-underline { position:absolute; left:0; bottom:0; width:100%; height:.4em; overflow:visible; pointer-events:none; fill:none; stroke:currentColor; stroke-width:2.7; stroke-linecap:round; stroke-linejoin:round; }
