@@ -33,3 +33,16 @@ it stays anchored to the phone screen while the content scrolls.
 - [Sign in — mobile](screenshots/glass-login-390.png)
 - [Registration — desktop](screenshots/glass-register-1440.png)
 - [Registration — mobile](screenshots/glass-register-390.png)
+
+## Transparent authentication logo and handwritten concept
+
+The original SVG is unchanged. The authentication logo now sits without a white tile on a light top header so its navy lettering remains readable. Registration uses a slightly larger logo.
+
+- [Current registration — desktop](screenshots/transparent-logo-register-1440.png)
+- [Current registration — mobile](screenshots/transparent-logo-register-390.png)
+- [Handwritten concept — desktop](screenshots/handwritten-register-preview-1440.png)
+- [Handwritten concept — mobile](screenshots/handwritten-register-preview-390.png)
+
+The handwritten concept is a browser screenshot with a temporary Caveat font override, not the live heading style. Font source: [Google Fonts Caveat](https://github.com/google/fonts/tree/main/ofl/caveat). The live page retains the bold heading pending selection.
+
+Validation: 35 unit tests and the full Chromium workflow passed. Current and concept layouts passed overflow checks at 320, 390, 768 and 1440px; desktop/mobile concept screenshots were visually inspected.
