@@ -62,3 +62,12 @@ city/type/remote/minimum-pay criteria. Current catalog matches are included.
 Notifications are deduplicated per alert/opportunity; saved deadlines within seven
 days produce a separate reminder. Read state belongs to the visitor. 20 tests
 passed, with captured desktop/mobile alert and notification pages.
+
+## Authentication
+Student registration, sign-in and POST logout use Werkzeug password hashes,
+CSRF tokens, rotated login sessions and a five-attempt/minute sign-in limit.
+Roles are assigned on the server; registration never creates administrators.
+Configure ADMIN_EMAIL and ADMIN_PASSWORD (12+ characters) securely in local .env
+before startup to create the fixed admin account. No default admin password exists.
+Accounts and signed-in profiles are in memory in demo mode. Guest demo access is
+intentional; guest sessions never inherit account activity. 23 tests passed.

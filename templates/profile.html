@@ -3,7 +3,7 @@
 <p class="eyebrow">BUILD YOUR FOUNDATION</p>
 <h1>Your story. Your strengths.</h1>
 <p>Keep your skills current to find opportunities that fit.</p>
-<div class="notice">Demo storage: edits live in a signed browser session cookie, which is readable, not encrypted. Use fictional information only. Clearing cookies or restarting without a stable SECRET_KEY resets your profile. Nothing is saved to Oracle.</div>
+<div class="notice">Demo storage: use fictional information only. Guest profile edits use a readable signed cookie. Signed-in profiles and activity stay in server memory. Restarting the app resets memory; nothing is saved to Oracle.</div>
 {% if errors %}<div class="form-errors" role="alert"><h2>Please check your entries</h2><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
 <div class="dashboard-grid profile-grid">
 <section class="panel"><h2>Academic profile</h2>
@@ -21,6 +21,6 @@
 <section><div class="panel"><h2>Your skills</h2><p class="subtext">Adding an existing skill updates its level and experience. Matching uses skill presence; proficiency and experience do not change the score.</p>
 {% for record in profile.skill_records %}<div class="skill-row"><div><strong>{{ record.skill_name }}</strong><small>{{ record.proficiency|title }} · {{ record.years_experience }} years</small></div><form method="post" action="{{ url_for('remove_skill') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="skill_name" value="{{ record.skill_name }}"><button class="remove" aria-label="Remove {{ record.skill_name }}">Remove</button></form></div>{% else %}<p>No skills yet. Add your first skill below to start finding matches.</p>{% endfor %}
 <h3 class="form-title">Add or update a skill</h3><form method="post" action="{{ url_for('skills') }}" class="profile-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Skill<select name="skill_name">{% for skill in catalog %}<option>{{ skill }}</option>{% endfor %}</select></label><label>Proficiency<select name="proficiency">{% for level in levels %}<option value="{{ level }}">{{ level|title }}</option>{% endfor %}</select></label><label>Years of experience<input name="years_experience" type="number" min="0" max="50" step="0.1" value="0" required></label><button class="button">Save skill</button></form></div>
-<div class="panel"><h2>A fresh start</h2><p>Restore Sara’s fictional profile and three original skills. This discards your demo edits.</p><form method="post" action="{{ url_for('reset_profile') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Reset demo profile</button></form></div></section>
+<div class="panel"><h2>A fresh start</h2><p>Reset your profile and skills to their starting values. This discards your demo edits.</p><form method="post" action="{{ url_for('reset_profile') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Reset demo profile</button></form></div></section>
 </div>
 {% endblock %}

@@ -6,20 +6,25 @@ from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
 from services.activity import activity
+from routes.auth import register_auth
+from services.accounts import current_user
 from routes.alerts import register_alerts
 from routes.tracker import register_tracker
 from routes.saved import register_saved
 from services.profile import DemoProfileStore, validate_profile, validate_skill, SKILLS, LEVELS
 
 
-def create_app(repository=None):
+def create_app(repository=None, test_config=None):
     app = Flask(__name__)
     app.config.from_object(Config)
+    if test_config:
+        app.config.update(test_config)
     if app.config['DATA_BACKEND'] != 'mock' and repository is None:
         raise RuntimeError('Oracle adapter is not implemented yet; use DATA_BACKEND=mock.')
     app.secret_key = app.config.get('SECRET_KEY') or secrets.token_hex(32)
     app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax', MAX_CONTENT_LENGTH=16384)
     repo = repository or MockRepository()
+    register_auth(app)
 
     def store():
         return DemoProfileStore(session, repo)
@@ -79,7 +84,10 @@ def create_app(repository=None):
 
     @app.post('/profile/reset')
     def reset_profile():
-        session.pop('demo_profile', None)
+        if current_user():
+            current_user()['profile'] = None
+        else:
+            session.pop('demo_profile', None)
         flash('Fictional sample profile restored.')
         return redirect(url_for('profile'), code=303)
 

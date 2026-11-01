@@ -4,7 +4,7 @@ from flask import current_app, session
 
 
 def activity():
-    key = session.get('visitor_id')
+    key = ('user:' + session['user_id']) if session.get('user_id') else session.get('visitor_id')
     if key is None:
         key = secrets.token_urlsafe(24)
         session['visitor_id'] = key

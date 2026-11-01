@@ -1,6 +1,7 @@
 """Validated demo profile storage; replace with an Oracle-backed implementation later."""
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
+from services.accounts import current_user
 
 SKILLS = ('Python', 'SQL', 'Git', 'Flask', 'Excel', 'Power BI', 'HTML', 'CSS',
           'JavaScript', 'Docker', 'Linux', 'Java')
@@ -17,12 +18,20 @@ class DemoProfileStore:
         defaults.update(original)
         defaults['skill_records'] = [dict(skill_name=s, proficiency='BEGINNER', years_experience='0')
                                      for s in original['skills']]
-        defaults.update(self.session.get('demo_profile', {}))
+        account = current_user()
+        if account:
+            defaults.update(full_name=account['full_name'], skill_records=[], university='', major='', study_year=1)
+        defaults.update((account.get('profile') or {}) if account else self.session.get('demo_profile', {}))
         defaults['skills'] = [s['skill_name'] for s in defaults['skill_records']]
         return defaults
 
     def save(self, profile):
-        self.session['demo_profile'] = profile
+        account = current_user()
+        if account:
+            account['profile'] = profile
+            account['full_name'] = profile['full_name']
+        else:
+            self.session['demo_profile'] = profile
 
 
 def validate_profile(form):
