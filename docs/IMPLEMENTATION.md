@@ -27,3 +27,19 @@ POSTs; then saved jobs, manually confirmed tracker updates, alerts/notifications
 admin company/opportunity CRUD. Finally preserve the complete DBMS academic scope
 in PROJECT_BRIEF.md with ERD, normalization, Oracle DDL/constraints, SQL demos,
 authentication/authorization and a real Oracle adapter. Companies never log in.
+
+
+## Milestone 2: demo profile and skills
+`/profile` supports GET and validated POST; `/skills`, `/skills/remove`, and
+`/profile/reset` accept CSRF-protected POST only. Profile fields cover name,
+university, major, study year, CGPA (0–4 scale), city, resume/portfolio URLs and bio.
+Skills support catalog selection, proficiency and years of experience; selecting
+an existing skill updates it. Removing all skills is supported. Recommendations
+and details use the edited skills immediately.
+
+DemoProfileStore isolates temporary edits per signed browser cookie, not in Oracle.
+Cookies are readable, not encrypted: use fictional data only. No login exists.
+A random per-process signing key is used unless SECRET_KEY is configured locally;
+restarts then invalidate sessions. Set your own random SECRET_KEY in .env for
+restart persistence; never commit it. Reset restores the original fixtures.
+Next milestone: saved jobs, then explicitly confirmed tracker status updates.

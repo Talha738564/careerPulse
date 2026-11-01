@@ -728,3 +728,17 @@ footer span {
 }
 
 }
+/* Profile editing */
+.notice { padding:16px 20px; margin-bottom:24px; border:1px solid #beded8; background:#eaf7f4; border-radius:12px; color:#17594f; }
+.form-errors { padding:20px; margin-bottom:24px; border:1px solid #d9a594; background:#fff2ec; border-radius:12px; color:#823318; }
+.profile-form { display:grid; gap:10px; }
+.profile-form label { font-size:13px; font-weight:600; }
+.profile-form .button { justify-self:start; margin-top:12px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+textarea { width:100%; min-width:0; resize:vertical; border:1px solid #cdd8e5; border-radius:8px; padding:12px; font:inherit; color:var(--ink); }
+textarea:focus-visible { outline:3px solid #008578; outline-offset:4px; }
+.skill-row { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); }
+.skill-row small { display:block; }
+.remove { background:white; color:#8a3525; border:1px solid #dfc7c2; border-radius:8px; min-height:44px; padding:8px 12px; }
+.form-title { margin-top:24px; }
+@media(max-width:700px) { .mobile-nav a { padding:0 10px; } .form-row { grid-template-columns:1fr; } }

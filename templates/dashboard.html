@@ -2,7 +2,7 @@
 <div class="page-heading">
 <div>
 <p class="eyebrow">YOUR CAREER, IN MOTION</p>
-<h1>Welcome back, Sara<span class="teal">.</span>
+<h1>Welcome back, {{ student.full_name.split()[0] }}<span class="teal">.</span>
 </h1>
 <p>Small steps today. Bigger possibilities tomorrow.</p>
 </div>
@@ -35,8 +35,8 @@
 <strong>{{ student.skills|length }} skills</strong>
 </div>
 <div class="chips">{% for skill in student.skills %}<span class="chip known">✓ {{ skill }}</span>{% endfor %}</div>
-<p class="subtext">Your fictional profile knows Git. Docker and Flask are learning opportunities.</p>
-<small>Profile editing is coming in the next milestone.</small>
+<p class="subtext">Matches reflect the skills in your current demo profile.</p>
+<small><a href="{{ url_for('profile') }}">Edit your profile and skills →</a></small>
 </section>
 <section class="panel">
 <h2>Skills in demand</h2>
