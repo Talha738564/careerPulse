@@ -13,6 +13,12 @@
 <option value="yes" {{ 'selected' if remote=='yes' }}>Remote only</option>
 </select>
 </label>
+<label>City<select name="city"><option value="">All cities</option>{% for city in cities %}<option {{ 'selected' if request.args.get('city')==city }}>{{ city }}</option>{% endfor %}</select></label>
+<label>Skill<select name="skill"><option value="">All skills</option>{% for skill in catalog %}<option {{ 'selected' if request.args.get('skill')==skill }}>{{ skill }}</option>{% endfor %}</select></label>
+<label>Experience<select name="level"><option value="">All levels</option>{% for level in ['STUDENT','FRESH','JUNIOR'] %}<option {{ 'selected' if request.args.get('level')==level }}>{{ level }}</option>{% endfor %}</select></label>
+<label>Minimum pay (PKR)<input type="number" min="0" max="9999999999" name="salary" value="{{ request.args.get('salary','') }}" placeholder="Any pay"></label>
+<label>Deadline on or before<input type="date" name="deadline" value="{{ request.args.get('deadline','') }}"></label>
+<label>Sort by<select name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select></label>
 <button class="button">Apply filters</button>
 <a href="{{ url_for('opportunities') }}">Reset</a>
 </form>

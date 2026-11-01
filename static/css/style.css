@@ -761,3 +761,7 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
 .auth-layout { display:grid; grid-template-columns:1.2fr 1fr; align-items:center; gap:40px; margin:36px 0; }
 .topbar > form[action$="logout"] { flex:0; }
 @media(max-width:700px) { .auth-layout { grid-template-columns:1fr; gap:10px; } .topbar { flex-wrap:wrap; } .topbar form[role="search"] { flex-basis:100%; } }
+.topbar > form[action$="logout"] { display:block; min-width:86px; }
+.topbar > form[action$="logout"] button { border-radius:8px; white-space:nowrap; padding:8px 12px; }
+.topbar { gap:16px; }
+.filters label { min-width:160px; }

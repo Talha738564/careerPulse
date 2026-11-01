@@ -6,6 +6,8 @@ from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
 from services.activity import activity
+from routes.apply import register_apply
+from services.discovery import filter_jobs
 from routes.admin import register_admin
 from services.catalog import verified_destination
 from routes.auth import register_auth
@@ -112,13 +114,14 @@ def create_app(repository=None, test_config=None):
 
     @app.get('/opportunities')
     def opportunities():
-        q=request.args.get('q','').strip()
-        kind=request.args.get('type','')
-        remote=request.args.get('remote','')
-        jobs=enrich([j for j in repo.opportunities() if j['status']=='ACTIVE'], student()['skills'])
-        jobs=[j for j in jobs if q.casefold() in ' '.join([j['title'],j['company_name'],j['city'],j['description'],*j['required'],*j['preferred']]).casefold()
-              and (not kind or j['job_type']==kind) and (remote!='yes' or j['is_remote'])]
-        return render_template('opportunities.html',title='Explore opportunities',jobs=jobs,q=q,kind=kind,remote=remote)
+        jobs=enrich(repo.opportunities(), student()['skills'])
+        try:
+            jobs=filter_jobs(jobs,request.args)
+        except ValueError as exc:
+            abort(400,description=str(exc))
+        return render_template('opportunities.html',title='Explore opportunities',jobs=jobs,
+            q=request.args.get('q',''),kind=request.args.get('type',''),remote=request.args.get('remote',''),
+            catalog=SKILLS,cities=sorted({j['city'] for j in repo.opportunities()}))
 
     @app.get('/opportunities/<int:opp_id>')
     def detail(opp_id):
@@ -131,6 +134,7 @@ def create_app(repository=None, test_config=None):
     def missing(error):
         return render_template('404.html',title='Page not found'),404
 
+    register_apply(app, repo)
     register_admin(app, repo)
     register_alerts(app, repo)
     register_tracker(app, repo)

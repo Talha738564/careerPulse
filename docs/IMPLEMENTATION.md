@@ -79,3 +79,10 @@ and preferred skills cannot overlap. Real listings require a source and explicit
 HTTPS careers-host verification; fictional listings always disable apply links.
 Changing the company careers URL revokes previous link verification. Catalog edits
 notify all in-memory matching alert owners. 27 tests and desktop/mobile checks pass.
+
+## Discovery and external apply
+Active discovery supports text, type, city, skill, experience, remote, minimum pay,
+maximum deadline and match/deadline/newest sort. Closing-soon chips appear within
+seven days. Verified, active real listings expose a CSRF-protected outbound POST
+that revalidates the careers hostname and records a click, never an application.
+Fixtures remain non-clickable. 30 tests passed and discovery screenshots captured.

@@ -1,4 +1,5 @@
 from collections import Counter
+from datetime import date
 
 def match(required, known):
     required = sorted(set(required))
@@ -7,7 +8,7 @@ def match(required, known):
                 score=round(100*len(matched)/len(required),1) if required else None)
 
 def enrich(jobs, skills):
-    return [dict(job, **match(job['required'], skills)) for job in jobs]
+    return [dict(job, days_left=(job['deadline']-date.today()).days, **match(job['required'], skills)) for job in jobs]
 
 def demand(jobs):
     counts = Counter(skill for job in jobs for skill in set(job['required']))
