@@ -36,6 +36,14 @@ def run(output):
             page.screenshot(path=str(output/(name+'-mobile.png')),full_page=True)
             page.set_viewport_size({'width':1440,'height':1000})
         try:
+            for route in ('/login', '/register'):
+                visit(route)
+                for width in (320, 390, 768, 1440):
+                    page.set_viewport_size({'width':width, 'height':844})
+                    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (route, width)
+                    expect(page.locator('h1')).to_be_visible()
+                page.set_viewport_size({'width':1440, 'height':1000})
+                capture('glass-' + route.lstrip('/'))
             visit('/')
             capture('auth-entry')
             page.get_by_label('Account access',exact=True).get_by_role('link',name='Create account',exact=True).click()

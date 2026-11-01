@@ -36,3 +36,9 @@ pending a real database. Current tests do not establish production readiness.
 Authentication discovery regression: homepage and header now expose Sign in and
 Create account directly. Both forms were opened from the homepage at 1440px and
 390px; /login/, /register/ and their canonical routes all return HTTP 200.
+
+### Glass authentication refresh — 2026-11-01
+
+Login and registration now use a dedicated responsive public layout with original brand artwork, bold headings, frosted forms and static blue/teal glass shapes. Existing authentication, CSRF, flash messages and server validation remain connected. Demo accounts still reset on server restart.
+
+Validation: 35 unit tests passed; full Chromium student/admin browser workflow passed. Auth layout checked at 320, 390, 768 and 1440 CSS pixels with no horizontal overflow. Focused browser checks verified keyboard skip navigation, invalid login, password mismatch feedback and reduced-motion styling. Desktop and mobile screenshots were captured and visually inspected. Tests use browser emulation, not physical phones or their keyboards.

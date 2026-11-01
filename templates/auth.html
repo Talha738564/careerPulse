@@ -1,27 +1,56 @@
-{% extends 'base.html' %}{% block content %}
-<div class="auth-layout">
-<section class="landing">
-<p class="eyebrow">YOUR NEXT CHAPTER</p>
-<h1>{{ 'Make room for possibility.' if register else 'Welcome back.' }}</h1>
-<p>{{ 'Build your profile and start your own career journey.' if register else 'Pick up where you left off. Your next opportunity is waiting.' }}</p>
-<p class="subtext">Demo accounts and edits stay in server memory and reset when the app restarts. Use fictional information.</p>
-</section>
-<section class="panel">
-<h2>{{ 'Create a student account' if register else 'Sign in' }}</h2>{% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}<form method="post" class="profile-form">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-{% if register %}<label>Full name<input name="full_name" maxlength="120" autocomplete="name" required value="{{ request.form.get('full_name','') }}">
-</label>{% endif %}
-<label>Email<input name="email" type="email" maxlength="150" autocomplete="username" required value="{{ request.form.get('email','') }}">
-</label>
-<label>Password<input name="password" type="password" autocomplete="{{ 'new-password' if register else 'current-password' }}" minlength="{{ 12 if register else 1 }}" maxlength="128" required>
-</label>{% if register %}<label>Confirm password<input name="confirm_password" type="password" autocomplete="new-password" required>
-</label>{% endif %}
-<button class="button">{{ 'Create account' if register else 'Sign in' }}</button>
-</form>
-<p class="card-action">
-<a href="{{ url_for('auth.login') if register else url_for('auth.register') }}">{{ 'Already have an account? Sign in' if register else 'New here? Create an account' }}</a>
-</p>
-<a href="{{ url_for('dashboard') }}">Explore the guest demo →</a>
-</section>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · CareerPulse</title>
+<link rel="icon" href="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/auth.css') }}">
+</head>
+<body class="auth-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="auth-shell">
+<section class="auth-story" aria-labelledby="auth-headline">
+<a class="auth-brand" href="{{ url_for('home') }}"><img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse home"></a>
+<div class="auth-story-copy">
+<p class="eyebrow">SMALL STEPS. BIG POSSIBILITIES.</p>
+<h1 id="auth-headline">{% if register %}Turn your skills into <span>opportunities.</span>{% else %}Your next chapter <span>starts here.</span>{% endif %}</h1>
+<p class="auth-intro">Discover where your skills can take you. Find your fit, build your confidence, and keep your next move in sight.</p>
+<div class="auth-preview" aria-label="What you can do with CareerPulse">
+<span class="auth-preview-icon" aria-hidden="true">→</span>
+<div><strong>Your potential. A clearer direction.</strong><p>Discover opportunities. Understand your skill gaps. Track your progress.</p></div>
 </div>
-{% endblock %}
+</div>
+<p class="auth-story-footer">BUILT FOR YOUR NEXT STEP.</p>
+<div class="auth-liquid auth-liquid-story" aria-hidden="true"></div>
+</section>
+<main id="main" class="auth-stage" tabindex="-1">
+<a class="auth-back" href="{{ url_for('home') }}">← Back to home</a>
+<div class="auth-liquid auth-liquid-blue" aria-hidden="true"></div>
+<div class="auth-liquid auth-liquid-teal" aria-hidden="true"></div>
+<section class="auth-card" aria-labelledby="form-heading">
+<nav class="auth-tabs" aria-label="Account access">
+<a href="{{ url_for('auth.login') }}" {% if not register %}aria-current="page"{% endif %}>Sign in</a>
+<a href="{{ url_for('auth.register') }}" {% if register %}aria-current="page"{% endif %}>Create account</a>
+</nav>
+<p class="auth-kicker">{{ 'YOUR JOURNEY STARTS HERE' if register else 'GOOD TO SEE YOU AGAIN' }}</p>
+<h2 id="form-heading">{{ 'Make your next move.' if register else 'Welcome back.' }}</h2>
+<p>{{ 'Create your student account and explore what comes next.' if register else 'Sign in to pick up where you left off.' }}</p>
+{% for message in get_flashed_messages() %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+{% if error %}<p id="auth-error" class="form-errors" role="alert">{{ error }}</p>{% endif %}
+<form method="post" class="auth-form" {% if error %}aria-describedby="auth-error"{% endif %}>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% if register %}<label for="full-name">Full name</label><input id="full-name" name="full_name" maxlength="120" autocomplete="name" required value="{{ request.form.get('full_name','') }}">{% endif %}
+<label for="email">Email</label><input id="email" name="email" type="email" maxlength="150" autocomplete="username" required value="{{ request.form.get('email','') }}">
+<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="{{ 'new-password' if register else 'current-password' }}" minlength="{{ 12 if register else 1 }}" maxlength="128" required {% if register %}aria-describedby="password-hint"{% endif %}>
+{% if register %}<small id="password-hint">Use 12–128 characters.</small><label for="confirm-password">Confirm password</label><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" maxlength="128" required>{% endif %}
+<button class="button auth-submit">{{ 'Create account' if register else 'Sign in' }} <span aria-hidden="true">→</span></button>
+</form>
+<p class="auth-switch">{{ 'Already have an account?' if register else 'New to CareerPulse?' }} <a href="{{ url_for('auth.login') if register else url_for('auth.register') }}">{{ 'Sign in' if register else 'Create an account' }}</a></p>
+<div class="auth-demo"><strong>Just exploring?</strong> <a href="{{ url_for('dashboard') }}">Try the guest demo →</a><p>Demo mode · Use fictional information. Accounts and edits reset when the server restarts.</p></div>
+</section>
+</main>
+</div>
+</body>
+</html>

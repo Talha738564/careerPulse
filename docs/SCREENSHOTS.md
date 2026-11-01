@@ -26,3 +26,10 @@ it stays anchored to the phone screen while the content scrolls.
 - [Homepage access buttons](screenshots/auth-entry-desktop.png) · [Mobile](screenshots/auth-entry-mobile.png)
 - [Login](screenshots/auth-login-1440.png) · [Mobile](screenshots/auth-login-390.png)
 - [Registration](screenshots/auth-register-1440.png) · [Mobile](screenshots/auth-register-390.png)
+
+## Glass authentication
+
+- [Sign in — desktop](screenshots/glass-login-1440.png)
+- [Sign in — mobile](screenshots/glass-login-390.png)
+- [Registration — desktop](screenshots/glass-register-1440.png)
+- [Registration — mobile](screenshots/glass-register-390.png)
