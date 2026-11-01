@@ -11,5 +11,5 @@ def enrich(jobs, skills):
     return [dict(job, days_left=(job['deadline']-date.today()).days, **match(job['required'], skills)) for job in jobs]
 
 def demand(jobs):
-    counts = Counter(skill for job in jobs for skill in set(job['required']))
+    counts = Counter(skill for job in jobs for skill in sorted(set(job['required'])))
     return [(skill, round(count/len(jobs)*100)) for skill,count in counts.most_common()]

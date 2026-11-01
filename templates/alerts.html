@@ -1,11 +1,49 @@
 {% extends 'base.html' %}{% block content %}
-<p class="eyebrow">LET OPPORTUNITY FIND YOU</p><h1>A little less searching.</h1><p>Set your preferences. We’ll collect matching roles in your notifications.</p>
-<div class="dashboard-grid"><section>
-{% for alert in alerts %}<article class="panel"><div class="section-heading"><h2>{{ alert.alert_name }}</h2><span class="match">{{ 'Active' if alert.is_active else 'Paused' }}</span></div><p>{{ alert.city or 'Any city' }} · {{ alert.job_type|replace('_',' ')|title or 'Any type' }} · {{ 'Remote only' if alert.is_remote_only else 'Any location' }} · PKR {{ alert.min_salary }}+</p><div class="chips">{% for skill in alert.skills %}<span class="chip">{{ skill }}</span>{% else %}<span>Any skill</span>{% endfor %}</div><div class="actions"><a href="{{ url_for('alerts.index', edit=alert.alert_id) }}">Edit</a>{% for action,label in [('toggle','Resume' if not alert.is_active else 'Pause'),('delete','Delete')] %}<form method="post" action="{{ url_for('alerts.action',alert_id=alert.alert_id,action=action) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">{{ label }}</button></form>{% endfor %}</div></article>{% else %}<div class="panel"><h2>Make your first alert.</h2><p>Choose the skills and location you want to hear about.</p></div>{% endfor %}
-<a href="{{ url_for('alerts.notifications') }}">View notifications →</a></section>
-<section class="panel"><h2>{{ 'Edit alert' if editing else 'Create an alert' }}</h2><form method="post" class="profile-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% if editing %}<input type="hidden" name="alert_id" value="{{ editing.alert_id }}">{% endif %}
-<label>Alert name<input name="alert_name" required maxlength="150" value="{{ editing.alert_name if editing else '' }}"></label><label>City (optional)<input name="city" maxlength="100" value="{{ editing.city if editing else '' }}"></label>
-<label>Job type<select name="job_type">{% for kind in ['','INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ kind }}" {{ 'selected' if editing and editing.job_type==kind }}>{{ kind|replace('_',' ')|title or 'Any type' }}</option>{% endfor %}</select></label>
-<label>Minimum pay (PKR)<input name="min_salary" type="number" min="0" max="9999999999" value="{{ editing.min_salary if editing else 0 }}"></label><label class="check-label"><input type="checkbox" name="remote" value="yes" {{ 'checked' if editing and editing.is_remote_only }}> Remote only</label>
-<fieldset><legend>Skills (any selected skill can match)</legend><div class="skill-options">{% for skill in catalog %}<label class="check-label"><input type="checkbox" name="skills" value="{{ skill }}" {{ 'checked' if editing and skill in editing.skills }}>{{ skill }}</label>{% endfor %}</div></fieldset><p class="subtext">All other criteria must match. Current and newly curated active roles are included. Pay is monthly for employment and per project for freelance roles.</p><button class="button">{{ 'Save alert' if editing else 'Create alert' }}</button></form></section></div>
+<p class="eyebrow">LET OPPORTUNITY FIND YOU</p>
+<h1>A little less searching.</h1>
+<p>Set your preferences. We’ll collect matching roles in your notifications.</p>
+<div class="dashboard-grid">
+<section>
+{% for alert in alerts %}<article class="panel">
+<div class="section-heading">
+<h2>{{ alert.alert_name }}</h2>
+<span class="match">{{ 'Active' if alert.is_active else 'Paused' }}</span>
+</div>
+<p>{{ alert.city or 'Any city' }} · {{ alert.job_type|replace('_',' ')|title or 'Any type' }} · {{ 'Remote only' if alert.is_remote_only else 'Any location' }} · PKR {{ alert.min_salary }}+</p>
+<div class="chips">{% for skill in alert.skills %}<span class="chip">{{ skill }}</span>{% else %}<span>Any skill</span>{% endfor %}</div>
+<div class="actions">
+<a href="{{ url_for('alerts.index', edit=alert.alert_id) }}">Edit</a>{% for action,label in [('toggle','Resume' if not alert.is_active else 'Pause'),('delete','Delete')] %}<form method="post" action="{{ url_for('alerts.action',alert_id=alert.alert_id,action=action) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="remove">{{ label }}</button>
+</form>{% endfor %}</div>
+</article>{% else %}<div class="panel">
+<h2>Make your first alert.</h2>
+<p>Choose the skills and location you want to hear about.</p>
+</div>{% endfor %}
+<a href="{{ url_for('alerts.notifications') }}">View notifications →</a>
+</section>
+<section class="panel">
+<h2>{{ 'Edit alert' if editing else 'Create an alert' }}</h2>
+<form method="post" class="profile-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% if editing %}<input type="hidden" name="alert_id" value="{{ editing.alert_id }}">{% endif %}
+<label>Alert name<input name="alert_name" required maxlength="150" value="{{ editing.alert_name if editing else '' }}">
+</label>
+<label>City (optional)<input name="city" maxlength="100" value="{{ editing.city if editing else '' }}">
+</label>
+<label>Job type<select aria-label="Job type" name="job_type">{% for kind in ['','INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ kind }}" {{ 'selected' if editing and editing.job_type==kind }}>{{ kind|replace('_',' ')|title or 'Any type' }}</option>{% endfor %}</select>
+</label>
+<label>Minimum pay (PKR)<input name="min_salary" type="number" min="0" max="9999999999" value="{{ editing.min_salary if editing else 0 }}">
+</label>
+<label class="check-label">
+<input type="checkbox" name="remote" value="yes" {{ 'checked' if editing and editing.is_remote_only }}> Remote only</label>
+<fieldset>
+<legend>Skills (any selected skill can match)</legend>
+<div class="skill-options">{% for skill in catalog %}<label class="check-label">
+<input type="checkbox" name="skills" value="{{ skill }}" {{ 'checked' if editing and skill in editing.skills }}>{{ skill }}</label>{% endfor %}</div>
+</fieldset>
+<p class="subtext">All other criteria must match. Current and newly curated active roles are included. Pay is monthly for employment and per project for freelance roles.</p>
+<button class="button">{{ 'Save alert' if editing else 'Create alert' }}</button>
+</form>
+</section>
+</div>
 {% endblock %}

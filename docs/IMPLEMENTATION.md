@@ -86,3 +86,11 @@ maximum deadline and match/deadline/newest sort. Closing-soon chips appear withi
 seven days. Verified, active real listings expose a CSRF-protected outbound POST
 that revalidates the careers hostname and records a click, never an application.
 Fixtures remain non-clickable. 30 tests passed and discovery screenshots captured.
+
+## Final demo state (supersedes earlier milestone limitations)
+All required student/admin flows now work in explicit demo mode. Accounts and all
+profile/activity/catalog state are in server memory; cookies carry only IDs/tokens
+and transient flash messages. A restart clears memory. No Oracle web adapter is
+claimed. README.md lists the current routes and setup; VALIDATION.md records tests;
+SCREENSHOTS.md links the milestone and final browser captures. The browser suite
+also validates student-to-admin separation and new-job alert delivery across users.

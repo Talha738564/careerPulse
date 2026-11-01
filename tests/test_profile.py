@@ -38,13 +38,13 @@ class ProfileTests(unittest.TestCase):
         for level in ['BEGINNER','ADVANCED']:
             self.assertEqual(self.post('/skills', skill_name='Git', proficiency=level, years_experience='1.5').status_code,303)
         with self.client.session_transaction() as session:
-            records = session['demo_profile']['skill_records']
+            records = self.app.extensions['activity'][session['visitor_id']]['profile']['skill_records']
             self.assertEqual(sum(r['skill_name']=='Git' for r in records),1)
             self.assertEqual(records[-1]['proficiency'],'ADVANCED')
         self.assertIn(b'100% required-skill match',self.client.get('/opportunities/1').data)
         self.post('/profile/reset')
         with self.client.session_transaction() as session:
-            self.assertNotIn('demo_profile',session)
+            self.assertNotIn('profile',self.app.extensions['activity'][session['visitor_id']])
 
     def test_invalid_skills(self):
         for data in [dict(skill_name='Unknown',proficiency='BEGINNER',years_experience='0'),

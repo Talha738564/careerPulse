@@ -32,14 +32,19 @@
 <button aria-label="Search">Search</button>
 </form>
 <span class="identity">
-<b class="avatar">{{ student.full_name[:1] }}</b> {{ student.full_name }} <small>{{ account.role|title if account else 'Guest demo' }}</small>
+<b class="avatar">{{ student.full_name[:1] }}</b>
+<span class="identity-name">{{ student.full_name }}</span>
+<small>{{ account.role|title if account else 'Guest demo' }}</small>
 </span>
-{% if account %}<form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Sign out</button></form>{% else %}<a class="updates-link" href="{{ url_for('auth.login') }}">Sign in</a>{% endif %}
+{% if account %}<form method="post" action="{{ url_for('auth.logout') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="remove">Sign out</button>
+</form>{% else %}<a class="updates-link" href="{{ url_for('auth.login') }}">Sign in</a>{% endif %}
 {% if account and account.role=='ADMIN' %}<a class="updates-link" href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
 <a class="updates-link" href="{{ url_for('alerts.notifications') }}">Updates</a>
 </header>
 <main id="main">
-<div class="demo-note">DEMO WORKSPACE <span>All people, companies and opportunities are fictional.</span>
+<div class="demo-note">DEMO WORKSPACE <span>Sample records are fictional. Your edits are temporary.</span>
 </div>{% for message in get_flashed_messages() %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
 {% block content %}
 

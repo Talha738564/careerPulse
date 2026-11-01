@@ -70,3 +70,17 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(self.post('/alerts',alert_name='Bad',min_salary='-1').status_code,400)
         self.assertEqual(self.post('/alerts',alert_name='Remote SQL',skills='SQL',remote='yes',min_salary='0').status_code,303)
         self.assertIn(b'all caught up',self.client.get('/notifications').data)
+
+    def test_dashboard_counts_offer_and_rejected_as_applications(self):
+        from flask import template_rendered
+        self.post('/opportunities/1/track')
+        self.post('/tracker/1',status='OFFER',applied_on='2026-01-01',confirmed='yes')
+        contexts=[]
+        def capture(sender,template,context,**extra):
+            contexts.append(context)
+        template_rendered.connect(capture,self.app)
+        try:
+            self.client.get('/dashboard')
+        finally:
+            template_rendered.disconnect(capture,self.app)
+        self.assertEqual(contexts[-1]['applications_count'],1)

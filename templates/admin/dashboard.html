@@ -1,1 +1,25 @@
-{% extends 'base.html' %}{% block content %}<p class="eyebrow">CURATOR WORKSPACE</p><h1>Better opportunities start here.</h1><p>Manage the catalog, verify official links and see what students are exploring.</p>{% include 'admin/nav.html' %}<div class="stats">{% for value,label in [(total,'Total opportunities'),(active,'Active roles'),(companies,'Companies'),(accounts,'Demo accounts')] %}<div class="stat"><span>{{ label }}</span><strong>{{ value }}</strong></div>{% endfor %}</div><div class="dashboard-grid"><section class="panel"><h2>Catalog activity</h2>{% for job in jobs %}<div class="skill-row"><div><strong>{{ job.title }}</strong><small>{{ job.company_name }} · {{ job.status|title }}</small></div><a href="{{ url_for('admin.job_form',opp_id=job.opp_id) }}">Edit</a></div>{% endfor %}</section><section class="panel"><h2>Student interest</h2><p class="subtext">Saved jobs and explicit outbound clicks in this demo process. Clicks are not applications.</p>{% for job in jobs %}<div class="skill-row"><div><strong>{{ job.title }}</strong><small>{{ saved[job.opp_id] }} saved · {{ clicks[job.opp_id] }} outbound clicks</small></div></div>{% endfor %}<p class="card-action">Companies are catalog entities. There are no employer accounts or hiring decisions.</p></section></div>{% endblock %}
+{% extends 'base.html' %}{% block content %}<p class="eyebrow">CURATOR WORKSPACE</p>
+<h1>Better opportunities start here.</h1>
+<p>Manage the catalog, verify official links and see what students are exploring.</p>{% include 'admin/nav.html' %}<div class="stats">{% for value,label in [(total,'Total opportunities'),(active,'Active roles'),(companies,'Companies'),(accounts,'Demo accounts')] %}<div class="stat">
+<span>{{ label }}</span>
+<strong>{{ value }}</strong>
+</div>{% endfor %}</div>
+<div class="dashboard-grid">
+<section class="panel">
+<h2>Catalog activity</h2>{% for job in jobs %}<div class="skill-row">
+<div>
+<strong>{{ job.title }}</strong>
+<small>{{ job.company_name }} · {{ job.status|title }}</small>
+</div>
+<a href="{{ url_for('admin.job_form',opp_id=job.opp_id) }}">Edit</a>
+</div>{% endfor %}</section>
+<section class="panel">
+<h2>Student interest</h2>
+<p class="subtext">Saved jobs and explicit outbound clicks in this demo process. Clicks are not applications.</p>{% for job in jobs %}<div class="skill-row">
+<div>
+<strong>{{ job.title }}</strong>
+<small>{{ saved[job.opp_id] }} saved · {{ clicks[job.opp_id] }} outbound clicks</small>
+</div>
+</div>{% endfor %}<p class="card-action">Companies are catalog entities. There are no employer accounts or hiring decisions.</p>
+</section>
+</div>{% endblock %}

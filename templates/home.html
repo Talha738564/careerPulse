@@ -7,13 +7,13 @@
 <a class="button" href="{{ url_for('dashboard') }}">Enter the student demo →</a>
 <a class="secondary" href="{{ url_for('opportunities') }}">Browse opportunities</a>
 </section>
-<div class="stats">{% for number,title,body in [('01','Discover your fit','Transparent matching based on required skills.'),('02','Build your confidence','See exactly which skills match and what to learn next.'),('03','Own your journey','Manual tracking is planned. Applying always happens with the employer.')] %}<article class="panel">
+<div class="stats">{% for number,title,body in [('01','Discover your fit','Transparent matching based on required skills.'),('02','Build your confidence','See exactly which skills match and what to learn next.'),('03','Own your journey','Track your application progress with explicit, personal status updates.')] %}<article class="panel">
 <p class="eyebrow">{{ number }}</p>
 <h2>{{ title }}</h2>
 <p>{{ body }}</p>
 </article>{% endfor %}</div>
 <section class="panel">
 <h2>A course project with a clear purpose.</h2>
-<p>This demo uses fictional data and supports temporary profile and skill editing. Saved jobs, tracker updates, alerts, notifications and admin curation come next, followed by Oracle schema, authentication and integration. Companies will remain curated entities, without employer accounts.</p>
+<p>Explore the guest demo or create a student account. Profiles, saved jobs, tracking, alerts and admin curation are working with temporary in-memory data. The Oracle schema and SQL demonstrations are prepared; live integration awaits a database. Companies are curated entities, without employer accounts.</p>
 </section>
 {% endblock %}

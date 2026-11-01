@@ -31,11 +31,28 @@
 <p class="subtext">Matched required skills ÷ total required skills × 100. Preferred skills do not affect this score. No required skills means “Not scored.”</p>
 </section>
 <section class="panel">
-{% if can_apply %}<span class="match">Official link verified by curator</span><h2>Apply with the employer</h2><p>You’ll leave CareerPulse. Return to update your tracker after you actually submit your application.</p><form method="post" target="_blank" rel="noopener noreferrer" action="{{ url_for('apply.external',opp_id=job.opp_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button">Apply on company website ↗</button></form>{% else %}<h2>{{ 'Demo opportunity' if job.is_demo else 'Application unavailable' }}</h2><p>{{ 'This fictional listing has no employer application link.' if job.is_demo else 'This role is inactive or its official link has not been verified.' }}</p>{% endif %}
+{% if can_apply %}<span class="match">Official link verified by curator</span>
+<h2>Apply with the employer</h2>
+<p>You’ll leave CareerPulse. Return to update your tracker after you actually submit your application.</p>
+<form method="post" target="_blank" rel="noopener noreferrer" action="{{ url_for('apply.external',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Apply on company website →</button>
+</form>{% else %}<h2>{{ 'Demo opportunity' if job.is_demo else 'Application unavailable' }}</h2>
+<p>{{ 'This fictional listing has no employer application link.' if job.is_demo else 'This role is inactive or its official link has not been verified.' }}</p>{% endif %}
 <form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}"><button class="button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button></form>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}">
+<button class="button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button>
+</form>
 </section>
-<section class="panel"><h2>Track your next step</h2><p>Keep your own record. Adding a role starts at Saved and never submits an application.</p><form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button">Add to tracker</button></form></section>
+<section class="panel">
+<h2>Track your next step</h2>
+<p>Keep your own record. Adding a role starts at Saved and never submits an application.</p>
+<form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Add to tracker</button>
+</form>
+</section>
 </aside>
 </div>
 {% endblock %}

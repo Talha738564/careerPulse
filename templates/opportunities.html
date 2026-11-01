@@ -5,26 +5,35 @@
 <form class="filters" method="get">
 <label>Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
 </label>
-<label>Job type<select name="type">
+<label>Job type<select aria-label="Job type" name="type">
 <option value="">All types</option>{% for value in ['INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ value }}" {{ 'selected' if kind==value }}>{{ value|replace('_',' ')|title }}</option>{% endfor %}</select>
 </label>
-<label>Location<select name="remote">
+<label>Location<select aria-label="Location" name="remote">
 <option value="">Any location</option>
 <option value="yes" {{ 'selected' if remote=='yes' }}>Remote only</option>
 </select>
 </label>
-<label>City<select name="city"><option value="">All cities</option>{% for city in cities %}<option {{ 'selected' if request.args.get('city')==city }}>{{ city }}</option>{% endfor %}</select></label>
-<label>Skill<select name="skill"><option value="">All skills</option>{% for skill in catalog %}<option {{ 'selected' if request.args.get('skill')==skill }}>{{ skill }}</option>{% endfor %}</select></label>
-<label>Experience<select name="level"><option value="">All levels</option>{% for level in ['STUDENT','FRESH','JUNIOR'] %}<option {{ 'selected' if request.args.get('level')==level }}>{{ level }}</option>{% endfor %}</select></label>
-<label>Minimum pay (PKR)<input type="number" min="0" max="9999999999" name="salary" value="{{ request.args.get('salary','') }}" placeholder="Any pay"></label>
-<label>Deadline on or before<input type="date" name="deadline" value="{{ request.args.get('deadline','') }}"></label>
-<label>Sort by<select name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select></label>
+<label>City<select aria-label="City" name="city">
+<option value="">All cities</option>{% for city in cities %}<option {{ 'selected' if request.args.get('city')==city }}>{{ city }}</option>{% endfor %}</select>
+</label>
+<label>Skill<select aria-label="Skill" name="skill">
+<option value="">All skills</option>{% for skill in catalog %}<option {{ 'selected' if request.args.get('skill')==skill }}>{{ skill }}</option>{% endfor %}</select>
+</label>
+<label>Experience<select aria-label="Experience" name="level">
+<option value="">All levels</option>{% for level in ['STUDENT','FRESH','JUNIOR'] %}<option {{ 'selected' if request.args.get('level')==level }}>{{ level }}</option>{% endfor %}</select>
+</label>
+<label>Minimum pay (PKR)<input type="number" min="0" max="9999999999" name="salary" value="{{ request.args.get('salary','') }}" placeholder="Any pay">
+</label>
+<label>Deadline on or before<input type="date" name="deadline" value="{{ request.args.get('deadline','') }}">
+</label>
+<label>Sort by<select aria-label="Sort by" name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select>
+</label>
 <button class="button">Apply filters</button>
 <a href="{{ url_for('opportunities') }}">Reset</a>
 </form>
 <div class="section-heading">
 <h2>{{ jobs|length }} opportunities</h2>
-<span>Fictional catalog</span>
+<span>Curated demo workspace</span>
 </div>
 <div class="browse-grid">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
 <h2>No matches this time.</h2>

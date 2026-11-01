@@ -2,6 +2,7 @@
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
 from services.accounts import current_user
+from services.activity import activity
 
 SKILLS = ('Python', 'SQL', 'Git', 'Flask', 'Excel', 'Power BI', 'HTML', 'CSS',
           'JavaScript', 'Docker', 'Linux', 'Java')
@@ -21,7 +22,7 @@ class DemoProfileStore:
         account = current_user()
         if account:
             defaults.update(full_name=account['full_name'], skill_records=[], university='', major='', study_year=1)
-        defaults.update((account.get('profile') or {}) if account else self.session.get('demo_profile', {}))
+        defaults.update((account.get('profile') or {}) if account else activity().get('profile', {}))
         defaults['skills'] = [s['skill_name'] for s in defaults['skill_records']]
         return defaults
 
@@ -31,7 +32,7 @@ class DemoProfileStore:
             account['profile'] = profile
             account['full_name'] = profile['full_name']
         else:
-            self.session['demo_profile'] = profile
+            activity()['profile'] = profile
 
 
 def validate_profile(form):

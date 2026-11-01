@@ -63,7 +63,7 @@ def create_app(repository=None, test_config=None):
         if errors:
             return profile_page(updated, errors), 422
         store().save(updated)
-        flash('Demo profile saved for this browser session.')
+        flash('Demo profile saved in this workspace.')
         return redirect(url_for('profile'), code=303)
 
     @app.post('/skills')
@@ -92,8 +92,8 @@ def create_app(repository=None, test_config=None):
         if current_user():
             current_user()['profile'] = None
         else:
-            session.pop('demo_profile', None)
-        flash('Fictional sample profile restored.')
+            activity().pop('profile', None)
+        flash('Profile reset to its starting values.')
         return redirect(url_for('profile'), code=303)
 
     @app.context_processor
@@ -110,7 +110,7 @@ def create_app(repository=None, test_config=None):
         ranked = sorted(jobs, key=lambda j: j['score'] if j['score'] is not None else -1, reverse=True)
         return render_template('dashboard.html', title='Dashboard', jobs=ranked[:3],
                                total=len(jobs), strong=sum(j['score'] is not None and j['score']>=65 for j in jobs),
-                               demand=demand(jobs)[:5], counts=Counter(r['status'] for r in activity()['tracker'].values()), saved_count=len(activity()['saved']))
+                               demand=demand(jobs)[:5], applications_count=sum(r['status']!='SAVED' for r in activity()['tracker'].values()), counts=Counter(r['status'] for r in activity()['tracker'].values()), saved_count=len(activity()['saved']))
 
     @app.get('/opportunities')
     def opportunities():
@@ -129,6 +129,14 @@ def create_app(repository=None, test_config=None):
         if job is None: abort(404)
         company=next(c for c in repo.companies() if c['company_id']==job['company_id'])
         return render_template('detail.html',title=job['title'],job=job, can_apply=job['status']=='ACTIVE' and verified_destination(job,company))
+
+    @app.errorhandler(400)
+    @app.errorhandler(403)
+    @app.errorhandler(409)
+    @app.errorhandler(413)
+    @app.errorhandler(429)
+    def form_error(error):
+        return render_template('error.html',title=error.name,error=error),error.code
 
     @app.errorhandler(404)
     def missing(error):

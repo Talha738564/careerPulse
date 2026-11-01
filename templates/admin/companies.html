@@ -1,1 +1,14 @@
-{% extends 'base.html' %}{% block content %}<h1>Companies</h1><p>Curated company records, not employer accounts.</p>{% include 'admin/nav.html' %}<a class="button" href="{{ url_for('admin.company_form') }}">Add company</a><div class="browse-grid">{% for company in companies %}<article class="panel"><h2>{{ company.company_name }}</h2><p>{{ company.industry }} · {{ company.city }}</p><span class="match">{{ 'Active' if company.is_active else 'Inactive' }}</span><div class="actions"><a href="{{ url_for('admin.company_form',company_id=company.company_id) }}">Edit company</a><form method="post" action="{{ url_for('admin.delete_company',company_id=company.company_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Delete unused company</button></form></div></article>{% else %}<p>No companies yet.</p>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}{% block content %}<h1>Companies</h1>
+<p>Curated company records, not employer accounts.</p>{% include 'admin/nav.html' %}<a class="button" href="{{ url_for('admin.company_form') }}">Add company</a>
+<div class="browse-grid">{% for company in companies %}<article class="panel">
+<h2>{{ company.company_name }}</h2>
+<p>{{ company.industry }} · {{ company.city }}</p>
+<span class="match">{{ 'Active' if company.is_active else 'Inactive' }}</span>
+<div class="actions">
+<a href="{{ url_for('admin.company_form',company_id=company.company_id) }}">Edit company</a>
+<form method="post" action="{{ url_for('admin.delete_company',company_id=company.company_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="remove">Delete unused company</button>
+</form>
+</div>
+</article>{% else %}<p>No companies yet.</p>{% endfor %}</div>{% endblock %}
