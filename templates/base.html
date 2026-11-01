@@ -14,7 +14,7 @@
 <img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse">
 </a>
 <p class="eyebrow">STUDENT WORKSPACE</p>
-<nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('saved.index','Saved jobs','◇'),('profile','Profile & skills','◎'),('home','About the demo','◎')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
+<nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('saved.index','Saved jobs','◇'),('tracker.index','Application tracker','▤'),('profile','Profile & skills','◎'),('home','About the demo','◎')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
 <span aria-hidden="true">{{ icon }}</span>{{ label }}</a>{% endfor %}</nav>
 <div class="sidebar-note">
 <span class="eyebrow">ONE STEP FORWARD</span>
@@ -44,6 +44,6 @@
 <footer>CareerPulse · Built for your next step. <span>Oracle integration planned</span>
 </footer>
 </div>
-<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label in [('dashboard','Dashboard'),('opportunities','Explore'),('profile','Profile'),('saved.index','Saved')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
+<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label in [('dashboard','Home'),('opportunities','Explore'),('saved.index','Saved'),('tracker.index','Tracker'),('profile','Profile')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
 </body>
 </html>

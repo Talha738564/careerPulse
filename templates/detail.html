@@ -36,6 +36,7 @@
 <form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}"><button class="button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button></form>
 </section>
+<section class="panel"><h2>Track your next step</h2><p>Keep your own record. Adding a role starts at Saved and never submits an application.</p><form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button">Add to tracker</button></form></section>
 </aside>
 </div>
 {% endblock %}

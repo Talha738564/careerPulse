@@ -49,3 +49,9 @@ Save/remove actions are explicit, idempotent POSTs with CSRF protection. The sav
 page and dashboard count reflect your shortlist. Per-visitor activity is held in
 server memory for demo mode and resets on restart; no real application is implied.
 Validation: 16 tests passed; saved page inspected at 1440px and 390px with no overflow.
+
+## Application tracker
+Students add entries as Saved and explicitly confirm every status update. Applied,
+Interview, Offer and Rejected require an application date no later than today.
+Notes, filters and removal are supported; adding again never overwrites progress.
+18 tests passed; tracker desktop/mobile screenshots and overflow checks passed.

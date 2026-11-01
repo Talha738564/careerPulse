@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="eyebrow">EVERY STEP COUNTS</p><h1>Your journey, at a glance.</h1>
+<p>A personal record of your progress. You update each status; employers do not use this tracker.</p>
+<div class="status-tabs"><a href="{{ url_for('tracker.index') }}">All entries</a>{% for status in statuses %}<a href="{{ url_for('tracker.index', status=status) }}" {{ 'aria-current=page' if selected==status }}>{{ status|title }} <strong>{{ counts[status] }}</strong></a>{% endfor %}</div>
+{% for entry in entries %}
+<article class="panel"><div class="section-heading"><div><p class="eyebrow">{{ entry.job.company_name }}</p><h2><a href="{{ url_for('detail',opp_id=entry.job.opp_id) }}">{{ entry.job.title }}</a></h2></div><span class="match">{{ entry.status|title }}</span></div>
+<form method="post" action="{{ url_for('tracker.update',opp_id=entry.job.opp_id) }}" class="profile-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="form-row"><label>Status<select name="status">{% for status in statuses %}<option {{ 'selected' if entry.status==status }}>{{ status }}</option>{% endfor %}</select></label>
+<label>Date applied<input type="date" name="applied_on" value="{{ entry.applied_on }}" max="{{ today }}"></label></div>
+<label>Notes<textarea name="notes" rows="3" maxlength="1000">{{ entry.notes }}</textarea></label>
+<label class="check-label"><input type="checkbox" name="confirmed" value="yes" required> I confirm this status reflects my own application activity.</label>
+<button class="button">Save status update</button></form>
+<form class="card-action" method="post" action="{{ url_for('tracker.remove',opp_id=entry.job.opp_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Remove tracker entry</button></form>
+</article>{% else %}<div class="panel"><h2>No entries in this view.</h2><p>Open an opportunity and choose “Add to tracker” to get started.</p><a class="button" href="{{ url_for('opportunities') }}">Explore opportunities</a></div>{% endfor %}
+{% endblock %}

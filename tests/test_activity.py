@@ -26,3 +26,22 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(self.post('/opportunities/999/save',action='save').status_code,404)
         self.assertEqual(self.post('/opportunities/1/save',action='other').status_code,400)
         self.assertEqual(self.client.get('/opportunities/1/save').status_code,405)
+
+    def test_tracker_confirmed_updates(self):
+        self.assertEqual(self.post('/opportunities/1/track').status_code,303)
+        data = dict(status='APPLIED',notes='Sent portfolio',applied_on='2026-01-01')
+        self.assertEqual(self.post('/tracker/1',**data).status_code,400)
+        self.assertEqual(self.post('/tracker/1',confirmed='yes',**data).status_code,303)
+        self.assertIn(b'Sent portfolio',self.client.get('/tracker').data)
+        self.assertEqual(self.post('/opportunities/1/track').status_code,303)
+        self.assertIn(b'Sent portfolio',self.client.get('/tracker').data)
+        self.assertEqual(self.app.test_client().get('/tracker').status_code,200)
+        self.assertEqual(self.post('/tracker/1/remove').status_code,303)
+        self.assertEqual(self.post('/tracker/1',confirmed='yes',**data).status_code,404)
+
+    def test_tracker_invalid_status_dates_and_csrf(self):
+        self.post('/opportunities/1/track')
+        for status, when in [('HIRE',''),('APPLIED',''),('APPLIED','2999-01-01'),('APPLIED','bad')]:
+            self.assertEqual(self.post('/tracker/1',status=status,applied_on=when,confirmed='yes').status_code,400)
+        self.assertEqual(self.client.post('/tracker/1/remove').status_code,400)
+        self.assertEqual(self.post('/opportunities/999/track').status_code,404)

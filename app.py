@@ -6,6 +6,7 @@ from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
 from services.activity import activity
+from routes.tracker import register_tracker
 from routes.saved import register_saved
 from services.profile import DemoProfileStore, validate_profile, validate_skill, SKILLS, LEVELS
 
@@ -95,7 +96,7 @@ def create_app(repository=None):
         ranked = sorted(jobs, key=lambda j: j['score'] if j['score'] is not None else -1, reverse=True)
         return render_template('dashboard.html', title='Dashboard', jobs=ranked[:3],
                                total=len(jobs), strong=sum(j['score'] is not None and j['score']>=65 for j in jobs),
-                               demand=demand(jobs)[:5], counts=Counter(r['status'] for r in repo.tracker()), saved_count=len(activity()['saved']))
+                               demand=demand(jobs)[:5], counts=Counter(r['status'] for r in activity()['tracker'].values()), saved_count=len(activity()['saved']))
 
     @app.get('/opportunities')
     def opportunities():
@@ -117,6 +118,7 @@ def create_app(repository=None):
     def missing(error):
         return render_template('404.html',title='Page not found'),404
 
+    register_tracker(app, repo)
     register_saved(app, repo, student)
     return app
 
