@@ -742,3 +742,6 @@ textarea:focus-visible { outline:3px solid #008578; outline-offset:4px; }
 .remove { background:white; color:#8a3525; border:1px solid #dfc7c2; border-radius:8px; min-height:44px; padding:8px 12px; }
 .form-title { margin-top:24px; }
 @media(max-width:700px) { .mobile-nav a { padding:0 10px; } .form-row { grid-template-columns:1fr; } }
+.card-action { margin-top:16px; }
+.secondary-button { background:#eaf1ff; color:var(--blue); }
+.secondary-button:hover { background:#dce8ff; }

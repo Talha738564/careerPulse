@@ -5,6 +5,8 @@ from flask import Flask, abort, render_template, request, session, redirect, url
 from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
+from services.activity import activity
+from routes.saved import register_saved
 from services.profile import DemoProfileStore, validate_profile, validate_skill, SKILLS, LEVELS
 
 
@@ -81,7 +83,7 @@ def create_app(repository=None):
 
     @app.context_processor
     def shared():
-        return dict(student=student(), csrf_token=csrf_token)
+        return dict(student=student(), csrf_token=csrf_token, saved_ids=activity()["saved"])
 
     @app.get('/')
     def home():
@@ -93,7 +95,7 @@ def create_app(repository=None):
         ranked = sorted(jobs, key=lambda j: j['score'] if j['score'] is not None else -1, reverse=True)
         return render_template('dashboard.html', title='Dashboard', jobs=ranked[:3],
                                total=len(jobs), strong=sum(j['score'] is not None and j['score']>=65 for j in jobs),
-                               demand=demand(jobs)[:5], counts=Counter(r['status'] for r in repo.tracker()))
+                               demand=demand(jobs)[:5], counts=Counter(r['status'] for r in repo.tracker()), saved_count=len(activity()['saved']))
 
     @app.get('/opportunities')
     def opportunities():
@@ -115,6 +117,7 @@ def create_app(repository=None):
     def missing(error):
         return render_template('404.html',title='Page not found'),404
 
+    register_saved(app, repo, student)
     return app
 
 if __name__ == '__main__':

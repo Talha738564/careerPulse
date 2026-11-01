@@ -33,7 +33,8 @@
 <section class="panel">
 <h2>Demo opportunity</h2>
 <p>This fictional listing has no employer application link.</p>
-<p>Saving and manually updating application status will be added in a later milestone.</p>
+<form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}"><button class="button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button></form>
 </section>
 </aside>
 </div>

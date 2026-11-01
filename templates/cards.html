@@ -15,4 +15,9 @@
 <span>Demo deadline · {{ job.deadline.strftime('%d %b %Y') }}</span>
 <a href="{{ url_for('detail',opp_id=job.opp_id) }}">View opportunity →</a>
 </div>
+<form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}" class="card-action">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}">
+<button class="button secondary-button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button>
+</form>
 </article>{% endmacro %}

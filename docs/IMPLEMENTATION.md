@@ -43,3 +43,9 @@ A random per-process signing key is used unless SECRET_KEY is configured locally
 restarts then invalidate sessions. Set your own random SECRET_KEY in .env for
 restart persistence; never commit it. Reset restores the original fixtures.
 Next milestone: saved jobs, then explicitly confirmed tracker status updates.
+
+## Saved jobs
+Save/remove actions are explicit, idempotent POSTs with CSRF protection. The saved
+page and dashboard count reflect your shortlist. Per-visitor activity is held in
+server memory for demo mode and resets on restart; no real application is implied.
+Validation: 16 tests passed; saved page inspected at 1440px and 390px with no overflow.

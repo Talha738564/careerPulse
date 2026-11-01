@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% from 'cards.html' import job_card with context %}
+{% block content %}
+<p class="eyebrow">YOUR SHORTLIST</p>
+<h1>Good possibilities. Kept close.</h1>
+<p>Save interesting roles and come back when you’re ready. Saving is not applying.</p>
+<div class="section-heading"><h2>{{ jobs|length }} saved opportunities</h2><a href="{{ url_for('opportunities') }}">Explore more →</a></div>
+<div class="browse-grid">
+{% for job in jobs %}{{ job_card(job) }}
+{% else %}<section class="panel"><h2>Your shortlist starts here.</h2><p>Save an opportunity from the catalog to keep it on this page.</p><a class="button" href="{{ url_for('opportunities') }}">Find your first opportunity</a></section>{% endfor %}
+</div>
+{% endblock %}
