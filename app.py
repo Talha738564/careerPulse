@@ -6,6 +6,7 @@ from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
 from services.activity import activity
+from routes.alerts import register_alerts
 from routes.tracker import register_tracker
 from routes.saved import register_saved
 from services.profile import DemoProfileStore, validate_profile, validate_skill, SKILLS, LEVELS
@@ -118,6 +119,7 @@ def create_app(repository=None):
     def missing(error):
         return render_template('404.html',title='Page not found'),404
 
+    register_alerts(app, repo)
     register_tracker(app, repo)
     register_saved(app, repo, student)
     return app

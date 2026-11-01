@@ -45,3 +45,28 @@ class ActivityTests(unittest.TestCase):
             self.assertEqual(self.post('/tracker/1',status=status,applied_on=when,confirmed='yes').status_code,400)
         self.assertEqual(self.client.post('/tracker/1/remove').status_code,400)
         self.assertEqual(self.post('/opportunities/999/track').status_code,404)
+
+    def test_alerts_notifications_and_deadline_dedup(self):
+        self.post('/opportunities/1/save',action='save')
+        self.assertEqual(self.post('/alerts',alert_name='Python',skills='Python',min_salary='0').status_code,303)
+        response=self.client.get('/notifications')
+        self.assertIn(b'Deadline Pulse',response.data)
+        with self.client.session_transaction() as s:
+            state=self.app.extensions['activity'][s['visitor_id']]
+            count=len(state['notifications'])
+            notice_id=state['notifications'][0]['notification_id']
+            alert_id=state['alerts'][0]['alert_id']
+        self.client.get('/notifications')
+        self.assertEqual(len(state['notifications']),count)
+        self.assertEqual(self.post('/notifications/'+notice_id+'/read').status_code,303)
+        self.assertTrue(state['notifications'][0]['is_read'])
+        self.post('/alerts/'+alert_id+'/toggle')
+        self.assertFalse(state['alerts'][0]['is_active'])
+        self.post('/alerts/'+alert_id+'/delete')
+        self.assertEqual(state['alerts'],[])
+        self.assertEqual(self.post('/notifications/other/read').status_code,404)
+
+    def test_alert_validation_and_matching(self):
+        self.assertEqual(self.post('/alerts',alert_name='Bad',min_salary='-1').status_code,400)
+        self.assertEqual(self.post('/alerts',alert_name='Remote SQL',skills='SQL',remote='yes',min_salary='0').status_code,303)
+        self.assertIn(b'all caught up',self.client.get('/notifications').data)

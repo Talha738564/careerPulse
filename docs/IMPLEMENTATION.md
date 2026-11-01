@@ -55,3 +55,10 @@ Students add entries as Saved and explicitly confirm every status update. Applie
 Interview, Offer and Rejected require an application date no later than today.
 Notes, filters and removal are supported; adding again never overwrites progress.
 18 tests passed; tracker desktop/mobile screenshots and overflow checks passed.
+
+## Alerts and notifications
+Create/edit/pause/delete alerts; match any selected required skill and all supplied
+city/type/remote/minimum-pay criteria. Current catalog matches are included.
+Notifications are deduplicated per alert/opportunity; saved deadlines within seven
+days produce a separate reminder. Read state belongs to the visitor. 20 tests
+passed, with captured desktop/mobile alert and notification pages.

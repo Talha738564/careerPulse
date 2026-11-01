@@ -751,3 +751,10 @@ textarea:focus-visible { outline:3px solid #008578; outline-offset:4px; }
 .check-label { display:flex; align-items:center; gap:10px; }
 .check-label input { width:20px; min-height:20px; flex-shrink:0; }
 @media(max-width:700px) { .mobile-nav a { padding:0 5px; font-size:11px; } }
+.actions { display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-top:18px; }
+fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-width:0; }
+.skill-options { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.updates-link { font-size:12px; }
+.sidebar { overflow-y:auto; }
+.sidebar-note { margin-top:24px; }
+.navlink { padding:10px 16px; margin-bottom:4px; }
