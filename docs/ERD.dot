@@ -1,0 +1,37 @@
+digraph CareerPulse {
+ graph [label="CareerPulse · Oracle relational design",labelloc=t,fontsize=26,fontname="DejaVu Sans",bgcolor="#f4f7fb",pad=0.4,rankdir=LR,nodesep=0.5,ranksep=0.9];
+ node [shape=record,style="filled,rounded",fillcolor="white",color="#9db1c8",fontcolor="#0e2a47",fontname="DejaVu Sans",fontsize=12,margin=0.14];
+ edge [color="#1d5bd6",fontname="DejaVu Sans",fontsize=10];
+ USERS [label="USERS|PK user_id|UK email|password_hash · role"];
+ STUDENTS [label="STUDENTS|PK student_id|FK/UK user_id|academic profile"];
+ SKILLS [label="SKILLS|PK skill_id|UK skill_name"];
+ STUDENT_SKILLS [label="STUDENT_SKILLS|PK student_skill_id|FK student_id · skill_id|UK (student_id, skill_id)|proficiency · experience"];
+ COMPANIES [label="COMPANIES|PK company_id|careers URL · active|No employer accounts"];
+ OPPORTUNITIES [label="OPPORTUNITIES|PK opp_id|FK company_id|type · deadline · status|is_demo · verified URL"];
+ OPPORTUNITY_SKILLS [label="OPPORTUNITY_SKILLS|PK opp_skill_id|FK opp_id · skill_id|UK (opp_id, skill_id)|required / preferred"];
+ SAVED_JOBS [label="SAVED_JOBS|PK saved_id|FK student_id · opp_id|UK (student_id, opp_id)"];
+ APPLICATION_TRACKER [label="APPLICATION_TRACKER|PK tracking_id|FK student_id · opp_id|UK (student_id, opp_id)|manual status · notes · dates"];
+ JOB_ALERTS [label="JOB_ALERTS|PK alert_id|FK student_id|criteria · active"];
+ JOB_ALERT_SKILLS [label="JOB_ALERT_SKILLS|PK alert_skill_id|FK alert_id · skill_id|UK (alert_id, skill_id)"];
+ NOTIFICATIONS [label="NOTIFICATIONS|PK notification_id|FK user_id · opp_id|UK (user_id, event_key)|read state"];
+ APPLY_CLICKS [label="APPLY_CLICKS|PK click_id|FK student_id · opp_id|analytics only"];
+ SKILL_RESOURCES [label="SKILL_RESOURCES|PK resource_id|FK skill_id|curated learning URL"];
+ USERS -> STUDENTS [label="1 : 0..1"];
+ STUDENTS -> STUDENT_SKILLS [label="1 : many"];
+ SKILLS -> STUDENT_SKILLS [label="1 : many"];
+ COMPANIES -> OPPORTUNITIES [label="1 : many"];
+ OPPORTUNITIES -> OPPORTUNITY_SKILLS [label="1 : many"];
+ SKILLS -> OPPORTUNITY_SKILLS [label="1 : many"];
+ STUDENTS -> SAVED_JOBS [label="1 : many"];
+ OPPORTUNITIES -> SAVED_JOBS [label="1 : many"];
+ STUDENTS -> APPLICATION_TRACKER [label="1 : many"];
+ OPPORTUNITIES -> APPLICATION_TRACKER [label="1 : many"];
+ STUDENTS -> JOB_ALERTS [label="1 : many"];
+ JOB_ALERTS -> JOB_ALERT_SKILLS [label="1 : many"];
+ SKILLS -> JOB_ALERT_SKILLS [label="1 : many"];
+ USERS -> NOTIFICATIONS [label="1 : many"];
+ OPPORTUNITIES -> NOTIFICATIONS [label="1 : many"];
+ STUDENTS -> APPLY_CLICKS [label="1 : many"];
+ OPPORTUNITIES -> APPLY_CLICKS [label="1 : many"];
+ SKILLS -> SKILL_RESOURCES [label="1 : many"];
+}
