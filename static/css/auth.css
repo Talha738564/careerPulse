@@ -43,13 +43,13 @@
 @media (max-width:1000px) {
  .auth-shell { grid-template-columns:1fr; }
  .auth-story { padding:24px 24px 32px; }
- .auth-brand { width:190px; border-radius:0; }
+ .auth-brand { width:190px; border-radius:12px; }
  .auth-story-copy { padding:28px 0 0; }
  .auth-story .eyebrow { font-size:9px; margin-bottom:14px; letter-spacing:1.6px; }
- .auth-story h1 { font-size:clamp(34px,8.5vw,46px); letter-spacing:-1.4px; max-width:520px; margin-bottom:14px; }
+ .auth-story h1 { font-size:clamp(26px,6.5vw,36px); letter-spacing:-1.2px; max-width:520px; margin-bottom:8px; }
  .auth-intro { font-size:14px; margin-bottom:0; max-width:520px; }
  .auth-preview,.auth-story-footer,.auth-liquid-story { display:none; }
- .auth-stage { padding:64px 18px 28px; }
+ .auth-stage { padding:36px 18px 24px; }
  .auth-back { top:10px; right:24px; }
  .auth-card { padding:24px; border-radius:24px; }
  .auth-tabs { margin-bottom:26px; }

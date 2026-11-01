@@ -9,14 +9,14 @@
 {% for notice in notifications %}<article class="panel">
 <div class="section-heading">
 <h2>{{ notice.title }}</h2>
-<span class="match">{{ 'Read' if notice.is_read else 'New' }}</span>
+<span class="match {{ 'notice-read' if notice.is_read else 'notice-new' }}">{{ 'Read' if notice.is_read else 'New' }}</span>
 </div>
 <p>{{ notice.message }}</p>
 <small>{{ notice.created_at }}</small>
 <div class="actions">
-<a href="{{ url_for('detail',opp_id=notice.opp_id) }}">View opportunity →</a>{% if not notice.is_read %}<form method="post" action="{{ url_for('alerts.read',notification_id=notice.notification_id) }}">
+<a class="button secondary-button" href="{{ url_for('detail',opp_id=notice.opp_id) }}">View opportunity →</a>{% if not notice.is_read %}<form method="post" action="{{ url_for('alerts.read',notification_id=notice.notification_id) }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-<button class="button secondary-button">Mark as read</button>
+<button class="button">Mark as read</button>
 </form>{% endif %}</div>
 </article>{% else %}<section class="panel">
 <h2>You’re all caught up.</h2>

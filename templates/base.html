@@ -26,6 +26,9 @@
 </aside>
 <div class="workspace">
 <header class="topbar">
+<a class="mobile-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home">
+<img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse">
+</a>
 <form action="{{ url_for('opportunities') }}" role="search">
 <label class="sr-only" for="global-search">Search jobs, companies or skills</label>
 <input id="global-search" name="q" placeholder="Search jobs, companies or skills…">
@@ -36,15 +39,17 @@
 <span class="identity-name">{{ student.full_name }}</span>
 <small>{{ account.role|title if account else 'Guest demo' }}</small>
 </span>
+<div class="topbar-actions">
 {% if account %}<form method="post" action="{{ url_for('auth.logout') }}">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-<button class="remove">Sign out</button>
+<button class="remove topbar-btn">Sign out</button>
 </form>{% else %}<nav class="auth-entry" aria-label="Account navigation">
-<a class="button secondary-button" href="{{ url_for('auth.login') }}">Sign in</a>
+<a class="button secondary-button auth-btn" href="{{ url_for('auth.login') }}">Sign in</a>
 <a class="account-register" href="{{ url_for('auth.register') }}">Create account</a>
 </nav>{% endif %}
-{% if account and account.role=='ADMIN' %}<a class="updates-link" href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
+{% if account and account.role=='ADMIN' %}<a class="updates-link admin-pill" href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
 <a class="updates-link" href="{{ url_for('alerts.notifications') }}">Updates</a>
+</div>
 </header>
 <main id="main">
 <div class="demo-note">DEMO WORKSPACE <span>Sample records are fictional. Your edits are temporary.</span>
@@ -55,6 +60,9 @@
 <footer>CareerPulse · Built for your next step. <span>Oracle integration planned</span>
 </footer>
 </div>
-<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label in [('dashboard','Home'),('opportunities','Explore'),('saved.index','Saved'),('tracker.index','Tracker'),('profile','Profile')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
+<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label,icon in [('dashboard','Home','◫'),('opportunities','Explore','⌕'),('saved.index','Saved','◇'),('tracker.index','Tracker','▤'),('profile','Profile','◎')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
+<span class="mobile-nav-icon" aria-hidden="true">{{ icon }}</span>
+<span class="mobile-nav-label">{{ label }}</span>
+</a>{% endfor %}</nav>
 </body>
 </html>

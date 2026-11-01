@@ -15,7 +15,7 @@
 <a href="{{ url_for('detail',opp_id=entry.job.opp_id) }}">{{ entry.job.title }}</a>
 </h2>
 </div>
-<span class="match">{{ entry.status|title }}</span>
+<span class="match status-badge status-{{ entry.status|lower }}">{{ entry.status|title }}</span>
 </div>
 <form method="post" action="{{ url_for('tracker.update',opp_id=entry.job.opp_id) }}" class="profile-form">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

@@ -1,5 +1,5 @@
 <div class="status-tabs">
-<a href="{{ url_for('admin.dashboard') }}">Overview</a>
-<a href="{{ url_for('admin.companies') }}">Companies</a>
-<a href="{{ url_for('admin.opportunities') }}">Opportunities</a>
+<a href="{{ url_for('admin.dashboard') }}" {% if request.endpoint=='admin.dashboard' %}aria-current="page"{% endif %}>Overview</a>
+<a href="{{ url_for('admin.companies') }}" {% if 'company' in request.endpoint %}aria-current="page"{% endif %}>Companies</a>
+<a href="{{ url_for('admin.opportunities') }}" {% if 'job' in request.endpoint or 'opportunit' in request.endpoint %}aria-current="page"{% endif %}>Opportunities</a>
 </div>

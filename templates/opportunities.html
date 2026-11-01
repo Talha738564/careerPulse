@@ -3,8 +3,17 @@
 <h1>Opportunity starts here.</h1>
 <p>Find a role that fits your skills—and room to grow.</p>
 <form class="filters" method="get">
-<label>Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
+<div class="filter-search-row">
+<label class="filter-search-label">Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
 </label>
+<button class="button filter-search-btn">Search</button>
+</div>
+<details class="filter-accordion" {{ 'open' if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') or request.args.get('sort') }}>
+<summary class="filter-toggle">
+<span class="filter-toggle-title">⚙ Filter & sort options</span>
+<span class="filter-active-pill">{% if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') %}Active filters{% else %}Customize{% endif %}</span>
+</summary>
+<div class="filter-fields">
 <label>Job type<select aria-label="Job type" name="type">
 <option value="">All types</option>{% for value in ['INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ value }}" {{ 'selected' if kind==value }}>{{ value|replace('_',' ')|title }}</option>{% endfor %}</select>
 </label>
@@ -28,8 +37,12 @@
 </label>
 <label>Sort by<select aria-label="Sort by" name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select>
 </label>
+<div class="filter-actions-row">
 <button class="button">Apply filters</button>
-<a href="{{ url_for('opportunities') }}">Reset</a>
+<a class="filter-reset-link" href="{{ url_for('opportunities') }}">Reset all</a>
+</div>
+</div>
+</details>
 </form>
 <div class="section-heading">
 <h2>{{ jobs|length }} opportunities</h2>

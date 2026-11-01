@@ -1,10 +1,25 @@
 {% extends 'base.html' %}{% block content %}
-<a href="{{ url_for('opportunities') }}">← All opportunities</a>
+<a class="detail-back" href="{{ url_for('opportunities') }}">← All opportunities</a>
 <div class="detail-hero">
 <p class="eyebrow">{{ job.company_name }} · {{ 'FICTIONAL DEMO' if job.is_demo else 'CURATED OPPORTUNITY' }}</p>
 <h1>{{ job.title }}</h1>
 <p>{{ job.city }} · {{ 'Remote' if job.is_remote else 'On-site' }} · {{ job.job_type|replace('_',' ')|title }}</p>
 <span class="match">{{ '%g'|format(job.score) ~ '% required-skill match' if job.score is not none else 'Not scored — no required skills listed' }}</span>
+</div>
+<div class="detail-mobile-actions">
+{% if can_apply %}<form method="post" target="_blank" rel="noopener noreferrer" action="{{ url_for('apply.external',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Apply on company website →</button>
+</form>{% endif %}
+<form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}">
+<button class="button secondary-button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button>
+</form>
+<form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button secondary-button">Add to tracker</button>
+</form>
 </div>
 <div class="dashboard-grid">
 <article class="panel">
