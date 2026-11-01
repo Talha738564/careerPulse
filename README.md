@@ -11,3 +11,15 @@ Copy-Item .env.example .env
 ```
 Open http://127.0.0.1:5000. No Oracle connection is required. Only copy .env if it
 does not already exist. The development server is for local use, not production.
+
+## First milestone
+- `/`: introduction and demo entry
+- `/dashboard`: ranked recommendations, skill demand and sample tracker
+- `/opportunities`: search by role/company/city/skill, job type and remote filters
+- `/opportunities/<opp_id>`: required/preferred skills and match explanation
+
+All data is fictional and read-only. No real applications or Oracle writes occur.
+Profile, saved jobs, tracker editing, alerts and admin workflows are future work.
+Zero required skills means **Not scored**. See docs/IMPLEMENTATION.md for the
+adapter contract, limitations and next milestones. Original brand artwork is
+copied unchanged. No external fonts, scripts or frontend build are required.

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% from 'cards.html' import job_card %}{% block content %}
+<p class="eyebrow">DISCOVER YOUR NEXT STEP</p>
+<h1>Opportunity starts here.</h1>
+<p>Find a role that fits your skills—and room to grow.</p>
+<form class="filters" method="get">
+<label>Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
+</label>
+<label>Job type<select name="type">
+<option value="">All types</option>{% for value in ['INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ value }}" {{ 'selected' if kind==value }}>{{ value|replace('_',' ')|title }}</option>{% endfor %}</select>
+</label>
+<label>Location<select name="remote">
+<option value="">Any location</option>
+<option value="yes" {{ 'selected' if remote=='yes' }}>Remote only</option>
+</select>
+</label>
+<button class="button">Apply filters</button>
+<a href="{{ url_for('opportunities') }}">Reset</a>
+</form>
+<div class="section-heading">
+<h2>{{ jobs|length }} opportunities</h2>
+<span>Fictional catalog</span>
+</div>
+<div class="browse-grid">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
+<h2>No matches this time.</h2>
+<p>Try another skill or remove a filter.</p>
+<a href="{{ url_for('opportunities') }}">Show all opportunities →</a>
+</div>{% endfor %}</div>
+{% endblock %}

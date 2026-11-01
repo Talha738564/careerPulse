@@ -1,0 +1,29 @@
+# Milestone 1
+
+Routes: / (intro), /dashboard, /opportunities (GET q/type/remote filters),
+/opportunities/<opp_id> (detail), and a shared 404 page.
+
+app.create_app accepts a repository implementing the Protocol in
+services/repository.py. Repository methods return fresh fictional dictionaries.
+services/matching.py owns required-skill matching and demand aggregation;
+templates receive presentation-ready values. Oracle implementation can join
+COMPANIES, OPPORTUNITIES and OPPORTUNITY_SKILLS into this read interface. Student
+skills come from STUDENT_SKILLS + SKILLS. Tracker rows map to APPLICATION_TRACKER.
+
+Matched required skills / distinct required skills * 100, rounded to one decimal.
+Preferred skills never count. Empty required sets return None (Not scored), not
+100%. Sara knows Python, SQL, Git; Git is never shown missing for this profile.
+Demand uses the fraction of catalog opportunities requiring each distinct skill.
+Current fixtures are all active. A future Oracle adapter must filter active dates.
+
+All records are fictional, read-only, and generated on each request. Dates are
+relative to the server's current date. No employer links, credentials, auth,
+persistence or application submission exist. Tracker counts are explicitly sample
+activity; clicks never imply applications. Logo files are byte-identical copies.
+No JavaScript is needed for this milestone; all navigation/filtering is native HTML.
+
+Next: profile/skills editing with explicit demo storage semantics and CSRF-protected
+POSTs; then saved jobs, manually confirmed tracker updates, alerts/notifications,
+admin company/opportunity CRUD. Finally preserve the complete DBMS academic scope
+in PROJECT_BRIEF.md with ERD, normalization, Oracle DDL/constraints, SQL demos,
+authentication/authorization and a real Oracle adapter. Companies never log in.

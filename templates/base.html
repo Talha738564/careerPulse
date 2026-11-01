@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · CareerPulse</title>
+<link rel="icon" href="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="sidebar">
+<a class="brand" href="{{ url_for('home') }}">
+<img src="{{ url_for('static',filename='images/careerpulse_primary_logo_lockup.svg') }}" alt="CareerPulse">
+</a>
+<p class="eyebrow">STUDENT WORKSPACE</p>
+<nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('home','About the demo','◎')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
+<span aria-hidden="true">{{ icon }}</span>{{ label }}</a>{% endfor %}</nav>
+<div class="sidebar-note">
+<span class="eyebrow">ONE STEP FORWARD</span>
+<h3>Your skills. Your next chapter.</h3>
+<p>Explore where your strengths could take you.</p>
+<a class="button" href="{{ url_for('opportunities') }}">Find your fit →</a>
+</div>
+<p class="sidebar-foot">Individual DBMS project<br>Fictional student demo</p>
+</aside>
+<div class="workspace">
+<header class="topbar">
+<form action="{{ url_for('opportunities') }}" role="search">
+<label class="sr-only" for="global-search">Search jobs, companies or skills</label>
+<input id="global-search" name="q" placeholder="Search jobs, companies or skills…">
+<button aria-label="Search">Search</button>
+</form>
+<span class="identity">
+<b class="avatar">SA</b> Sara Ahmed <small>Demo student</small>
+</span>
+</header>
+<main id="main">
+<div class="demo-note">DEMO WORKSPACE <span>All people, companies and opportunities are fictional.</span>
+</div>{% block content %}
+
+{% endblock %}</main>
+<footer>CareerPulse · Built for your next step. <span>Oracle integration planned</span>
+</footer>
+</div>
+<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label in [('dashboard','Dashboard'),('opportunities','Explore'),('home','About')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% macro job_card(job) %}<article class="job-card">
+<div class="job-heading">
+<span class="company-icon" aria-hidden="true">{{ job.company_name[:1] }}</span>
+<div>
+<p class="overline">{{ job.company_name }} · Demo</p>
+<h3>
+<a href="{{ url_for('detail',opp_id=job.opp_id) }}">{{ job.title }}</a>
+</h3>
+</div>
+<span class="match">{{ '%g'|format(job.score) ~ '% match' if job.score is not none else 'Not scored' }}</span>
+</div>
+<p class="metadata">{{ job.city }} · {{ 'Remote' if job.is_remote else 'On-site' }} · {{ job.job_type|replace('_',' ')|title }}</p>
+<div class="chips">{% for skill in job.matched %}<span class="chip known">✓ {{ skill }}</span>{% endfor %}{% for skill in job.missing %}<span class="chip missing">Missing: {{ skill }}</span>{% endfor %}</div>
+<div class="job-bottom">
+<span>Demo deadline · {{ job.deadline.strftime('%d %b %Y') }}</span>
+<a href="{{ url_for('detail',opp_id=job.opp_id) }}">View opportunity →</a>
+</div>
+</article>{% endmacro %}
