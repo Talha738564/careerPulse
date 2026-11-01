@@ -15,7 +15,7 @@
 </a>
 <p class="eyebrow">STUDENT WORKSPACE</p>
 <nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('saved.index','Saved jobs','◇'),('tracker.index','Application tracker','▤'),('profile','Profile & skills','◎'),('alerts.index','Job alerts','◉'),('alerts.notifications','Notifications','◌')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
-<span aria-hidden="true">{{ icon }}</span>{{ label }}</a>{% endfor %}</nav>
+<span aria-hidden="true">{{ icon }}</span>{{ label }}</a>{% endfor %}{% if account and account.role=='ADMIN' %}<a class="navlink" href="{{ url_for('admin.dashboard') }}">Admin workspace</a>{% endif %}</nav>
 <div class="sidebar-note">
 <span class="eyebrow">ONE STEP FORWARD</span>
 <h3>Your skills. Your next chapter.</h3>

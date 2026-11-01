@@ -71,3 +71,11 @@ Configure ADMIN_EMAIL and ADMIN_PASSWORD (12+ characters) securely in local .env
 before startup to create the fixed admin account. No default admin password exists.
 Accounts and signed-in profiles are in memory in demo mode. Guest demo access is
 intentional; guest sessions never inherit account activity. 23 tests passed.
+
+## Admin catalog
+Fixed administrator accounts can create/edit/deactivate companies and create/edit/
+expire/soft-remove opportunities. Referenced companies cannot be deleted. Required
+and preferred skills cannot overlap. Real listings require a source and explicit
+HTTPS careers-host verification; fictional listings always disable apply links.
+Changing the company careers URL revokes previous link verification. Catalog edits
+notify all in-memory matching alert owners. 27 tests and desktop/mobile checks pass.

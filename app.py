@@ -6,6 +6,8 @@ from config import Config
 from services.repository import MockRepository
 from services.matching import enrich, demand
 from services.activity import activity
+from routes.admin import register_admin
+from services.catalog import verified_destination
 from routes.auth import register_auth
 from services.accounts import current_user
 from routes.alerts import register_alerts
@@ -24,6 +26,7 @@ def create_app(repository=None, test_config=None):
     app.secret_key = app.config.get('SECRET_KEY') or secrets.token_hex(32)
     app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax', MAX_CONTENT_LENGTH=16384)
     repo = repository or MockRepository()
+    app.extensions['repository'] = repo
     register_auth(app)
 
     def store():
@@ -101,7 +104,7 @@ def create_app(repository=None, test_config=None):
 
     @app.get('/dashboard')
     def dashboard():
-        jobs = enrich(repo.opportunities(), student()['skills'])
+        jobs = enrich([j for j in repo.opportunities() if j['status']=='ACTIVE'], student()['skills'])
         ranked = sorted(jobs, key=lambda j: j['score'] if j['score'] is not None else -1, reverse=True)
         return render_template('dashboard.html', title='Dashboard', jobs=ranked[:3],
                                total=len(jobs), strong=sum(j['score'] is not None and j['score']>=65 for j in jobs),
@@ -112,7 +115,7 @@ def create_app(repository=None, test_config=None):
         q=request.args.get('q','').strip()
         kind=request.args.get('type','')
         remote=request.args.get('remote','')
-        jobs=enrich(repo.opportunities(), student()['skills'])
+        jobs=enrich([j for j in repo.opportunities() if j['status']=='ACTIVE'], student()['skills'])
         jobs=[j for j in jobs if q.casefold() in ' '.join([j['title'],j['company_name'],j['city'],j['description'],*j['required'],*j['preferred']]).casefold()
               and (not kind or j['job_type']==kind) and (remote!='yes' or j['is_remote'])]
         return render_template('opportunities.html',title='Explore opportunities',jobs=jobs,q=q,kind=kind,remote=remote)
@@ -121,12 +124,14 @@ def create_app(repository=None, test_config=None):
     def detail(opp_id):
         job=next((j for j in enrich(repo.opportunities(),student()['skills']) if j['opp_id']==opp_id),None)
         if job is None: abort(404)
-        return render_template('detail.html',title=job['title'],job=job)
+        company=next(c for c in repo.companies() if c['company_id']==job['company_id'])
+        return render_template('detail.html',title=job['title'],job=job, can_apply=job['status']=='ACTIVE' and verified_destination(job,company))
 
     @app.errorhandler(404)
     def missing(error):
         return render_template('404.html',title='Page not found'),404
 
+    register_admin(app, repo)
     register_alerts(app, repo)
     register_tracker(app, repo)
     register_saved(app, repo, student)
