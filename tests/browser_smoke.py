@@ -38,12 +38,22 @@ def run(output):
         try:
             for route in ('/login', '/register'):
                 visit(route)
-                for width in (320, 390, 768, 1440):
+                for width in (320, 390, 768, 1024, 1280, 1366, 1440):
                     page.set_viewport_size({'width':width, 'height':844})
                     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (route, width)
                     expect(page.locator('h1')).to_be_visible()
+                    if width >= 1024:
+                        page.set_viewport_size({'width':width, 'height':720})
+                        assert page.evaluate('document.documentElement.scrollHeight <= innerHeight'), (route, width, 'auth scroll')
                 page.set_viewport_size({'width':1440, 'height':1000})
                 capture('glass-' + route.lstrip('/'))
+            visit('/opportunities')
+            search = page.locator('form[role="search"]')
+            page.locator('#global-search').fill('Python')
+            assert search.evaluate('(el) => getComputedStyle(el).outlineStyle') == 'solid'
+            search.get_by_role('button', name='Search', exact=True).click()
+            assert 'q=Python' in page.url
+            expect(page.locator('#global-search')).to_have_value('Python')
             visit('/')
             capture('auth-entry')
             page.get_by_label('Account access',exact=True).get_by_role('link',name='Create account',exact=True).click()
