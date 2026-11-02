@@ -1,0 +1,62 @@
+{% extends 'base.html' %}{% from 'cards.html' import job_card with context %}{% block content %}
+<div class="page-heading">
+<div>
+<p class="eyebrow">YOUR CAREER, IN MOTION</p>
+<h1>Welcome back, {{ student.full_name.split()[0] }}<span class="teal">.</span>
+</h1>
+<p>Small steps today. Bigger possibilities tomorrow.</p>
+</div>
+<a class="button" href="{{ url_for('opportunities') }}">Explore opportunities →</a>
+</div>
+<section class="stats" aria-label="Demo overview">{% for value,label in [(total,'Active opportunities'),(strong,'Matches of 65%+'),(saved_count,'Saved opportunities'),(applications_count,'Applications tracked')] %}<div class="stat">
+<span>{{ label }}</span>
+<strong>{{ value }}</strong>
+<small>Your demo workspace</small>
+</div>{% endfor %}</section>
+<div class="dashboard-grid">
+<section>
+<div class="section-heading">
+<h2>Recommended for you</h2>
+<a href="{{ url_for('opportunities') }}">View all →</a>
+</div>
+<p class="subtext">Ranked by the required skills you already know.</p>{% for job in jobs %}{{ job_card(job) }}{% endfor %}<div class="banner">
+<p class="eyebrow">BUILD YOUR NEXT CHAPTER</p>
+<h2>You have more potential<br>than a job title can tell.</h2>
+<p>Discover opportunities that connect your skills to meaningful work.</p>
+<a href="{{ url_for('opportunities') }}">Find your next opportunity →</a>
+</div>
+</section>
+<aside class="insights">
+<section class="panel">
+<p class="eyebrow">YOUR STARTING POINT</p>
+<h2>A strong foundation</h2>
+<div class="skill-orbit">
+<img src="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}" alt="">
+<strong>{{ student.skills|length }} skills</strong>
+</div>
+<div class="chips">{% for skill in student.skills %}<span class="chip known">✓ {{ skill }}</span>{% endfor %}</div>
+<p class="subtext">Matches reflect the skills in your current demo profile.</p>
+<small>
+<a href="{{ url_for('profile') }}">Edit your profile and skills →</a>
+</small>
+</section>
+<section class="panel">
+<h2>Skills in demand</h2>
+<p class="subtext">Required by these {{ total }} active opportunities</p>{% for skill,percent in demand %}<div class="demand">
+<label for="skill-{{ loop.index }}">{{ skill }} <b>{{ percent }}%</b>
+</label>
+<progress id="skill-{{ loop.index }}" max="100" value="{{ percent }}">{{ percent }}%</progress>
+</div>{% endfor %}</section>
+<section class="panel" id="tracker">
+<h2>Your journey so far</h2>
+<p class="subtext">Your manual tracker</p>
+<div class="tracker">{% for status in ['SAVED','APPLIED','INTERVIEW','OFFER','REJECTED'] %}<div>
+<strong>{{ counts[status] }}</strong>
+<span>{{ status|title }}</span>
+</div>{% endfor %}</div>
+<small>An apply click never changes your status. <a href="{{ url_for('tracker.index') }}">Update your tracker →</a>
+</small>
+</section>
+</aside>
+</div>
+{% endblock %}

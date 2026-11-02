@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}<h1>Opportunity catalog</h1>{% include 'admin/nav.html' %}<a class="button" href="{{ url_for('admin.job_form') }}">Add opportunity</a>
+<div class="browse-grid">{% for job in jobs %}<article class="panel">
+<p class="eyebrow">{{ job.company_name }}</p>
+<h2>{{ job.title }}</h2>
+<p>{{ job.status|title }} · {{ job.deadline }} · {{ 'Fictional demo' if job.is_demo else 'Curated listing' }}</p>
+<div class="actions">
+<a href="{{ url_for('admin.job_form',opp_id=job.opp_id) }}">Edit</a>{% for action in ['expire','remove'] %}<form method="post" action="{{ url_for('admin.job_action',opp_id=job.opp_id,action=action) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="remove">{{ action|title }}</button>
+</form>{% endfor %}</div>
+</article>{% else %}<p>No opportunities yet.</p>{% endfor %}</div>{% endblock %}

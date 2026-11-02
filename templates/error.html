@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+<p class="eyebrow">{{ error.code }} · {{ error.name }}</p>
+<h1>Let’s check that step.</h1>
+<p>{{ error.description }}</p>
+<p>Return to the relevant form and try again. If your session expired, sign in again.</p>
+<div class="actions">
+<a class="button" href="{{ url_for('dashboard') }}">Dashboard</a>
+<a href="{{ url_for('profile') }}">Profile</a>
+<a href="{{ url_for('tracker.index') }}">Tracker</a>
+<a href="{{ url_for('auth.login') }}">Sign in</a>
+</div>
+</section>
+{% endblock %}

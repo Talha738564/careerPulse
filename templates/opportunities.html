@@ -1,0 +1,56 @@
+{% extends 'base.html' %}{% from 'cards.html' import job_card with context %}{% block content %}
+<p class="eyebrow">DISCOVER YOUR NEXT STEP</p>
+<h1>Opportunity starts here.</h1>
+<p>Find a role that fits your skills—and room to grow.</p>
+<form class="filters" method="get">
+<div class="filter-search-row">
+<label class="filter-search-label">Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
+</label>
+<button class="button filter-search-btn">Search</button>
+</div>
+<details class="filter-accordion" {{ 'open' if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') or request.args.get('sort') }}>
+<summary class="filter-toggle">
+<span class="filter-toggle-title">⚙ Filter & sort options</span>
+<span class="filter-active-pill">{% if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') %}Active filters{% else %}Customize{% endif %}</span>
+</summary>
+<div class="filter-fields">
+<label>Job type<select aria-label="Job type" name="type">
+<option value="">All types</option>{% for value in ['INTERNSHIP','FREELANCE','FULL_TIME'] %}<option value="{{ value }}" {{ 'selected' if kind==value }}>{{ value|replace('_',' ')|title }}</option>{% endfor %}</select>
+</label>
+<label>Location<select aria-label="Location" name="remote">
+<option value="">Any location</option>
+<option value="yes" {{ 'selected' if remote=='yes' }}>Remote only</option>
+</select>
+</label>
+<label>City<select aria-label="City" name="city">
+<option value="">All cities</option>{% for city in cities %}<option {{ 'selected' if request.args.get('city')==city }}>{{ city }}</option>{% endfor %}</select>
+</label>
+<label>Skill<select aria-label="Skill" name="skill">
+<option value="">All skills</option>{% for skill in catalog %}<option {{ 'selected' if request.args.get('skill')==skill }}>{{ skill }}</option>{% endfor %}</select>
+</label>
+<label>Experience<select aria-label="Experience" name="level">
+<option value="">All levels</option>{% for level in ['STUDENT','FRESH','JUNIOR'] %}<option {{ 'selected' if request.args.get('level')==level }}>{{ level }}</option>{% endfor %}</select>
+</label>
+<label>Minimum pay (PKR)<input type="number" min="0" max="9999999999" name="salary" value="{{ request.args.get('salary','') }}" placeholder="Any pay">
+</label>
+<label>Deadline on or before<input type="date" name="deadline" value="{{ request.args.get('deadline','') }}">
+</label>
+<label>Sort by<select aria-label="Sort by" name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select>
+</label>
+<div class="filter-actions-row">
+<button class="button">Apply filters</button>
+<a class="filter-reset-link" href="{{ url_for('opportunities') }}">Reset all</a>
+</div>
+</div>
+</details>
+</form>
+<div class="section-heading">
+<h2>{{ jobs|length }} opportunities</h2>
+<span>Curated demo workspace</span>
+</div>
+<div class="browse-grid">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
+<h2>No matches this time.</h2>
+<p>Try another skill or remove a filter.</p>
+<a href="{{ url_for('opportunities') }}">Show all opportunities →</a>
+</div>{% endfor %}</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}{% block content %}<h1>Opportunity details</h1>{% include 'admin/nav.html' %}{% include 'admin/errors.html' %}<section class="panel">
+<form method="post" class="profile-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="form-row">
+<label>Title<input name="title" required maxlength="200" value="{{ row.get('title','') }}">
+</label>
+<label>Company<select aria-label="Company" name="company_id" required>{% for company in companies %}<option value="{{ company.company_id }}" {{ 'selected' if row.get('company_id')==company.company_id }}>{{ company.company_name }}{{ ' (inactive)' if not company.is_active }}</option>{% endfor %}</select>
+</label>
+</div>
+<div class="form-row">
+<label>Job type<select aria-label="Job type" name="job_type">{% for kind in kinds %}<option {{ 'selected' if row.get('job_type')==kind }}>{{ kind }}</option>{% endfor %}</select>
+</label>
+<label>Experience level<select aria-label="Experience level" name="experience_level">{% for level in levels %}<option {{ 'selected' if row.get('experience_level')==level }}>{{ level }}</option>{% endfor %}</select>
+</label>
+</div>
+{% for key,label in [('description','Description'),('requirements','Requirements')] %}<label>{{ label }}<textarea name="{{ key }}" maxlength="4000" rows="3">{{ row.get(key,'') }}</textarea>
+</label>{% endfor %}
+<div class="form-row">
+<label>City<input name="city" maxlength="100" value="{{ row.get('city','') }}">
+</label>
+<label>Deadline<input type="date" name="deadline" required value="{{ row.get('deadline','') }}">
+</label>
+</div>
+<label class="check-label">
+<input type="checkbox" name="is_remote" value="yes" {{ 'checked' if row.get('is_remote') }}> Remote</label>
+<div class="form-row">{% for key,label in [('min_salary','Minimum pay (PKR)'),('max_salary','Maximum pay (PKR)')] %}<label>{{ label }}<input type="number" name="{{ key }}" min="0" max="9999999999" value="{{ row.get(key,0) }}" required>
+</label>{% endfor %}</div>
+<div class="form-row">{% for key,label in [('required','Required skills'),('preferred','Preferred skills')] %}<fieldset>
+<legend>{{ label }}</legend>
+<div class="skill-options">{% for skill in skills %}<label class="check-label">
+<input type="checkbox" name="{{ key }}" value="{{ skill }}" {{ 'checked' if skill in row.get(key,[]) }}>{{ skill }}</label>{% endfor %}</div>
+</fieldset>{% endfor %}</div>
+<label>Source name<input name="source_name" maxlength="150" value="{{ row.get('source_name','') }}">
+</label>
+<label>Official application URL<input type="url" name="apply_url" value="{{ row.get('apply_url') or '' }}">
+</label>
+<label class="check-label">
+<input type="checkbox" name="is_demo" value="yes" {{ 'checked' if row.get('is_demo',True) }}> Fictional demo listing (application link disabled)</label>
+<label class="check-label">
+<input type="checkbox" name="is_verified" value="yes" {{ 'checked' if row.get('is_verified') }}> I verified this real opportunity on the official company careers site.</label>
+<p class="subtext">Real links must use HTTPS and match the company’s careers hostname. Changing that hostname requires verifying affected listings again.</p>
+<label>Status<select aria-label="Status" name="status">{% for status in ['ACTIVE','EXPIRED','REMOVED'] %}<option {{ 'selected' if row.get('status')==status }}>{{ status }}</option>{% endfor %}</select>
+</label>
+<button class="button">Save opportunity</button>
+</form>
+</section>{% endblock %}

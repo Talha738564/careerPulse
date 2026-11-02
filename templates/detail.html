@@ -1,0 +1,73 @@
+{% extends 'base.html' %}{% block content %}
+<a class="detail-back" href="{{ url_for('opportunities') }}">← All opportunities</a>
+<div class="detail-hero">
+<p class="eyebrow">{{ job.company_name }} · {{ 'FICTIONAL DEMO' if job.is_demo else 'CURATED OPPORTUNITY' }}</p>
+<h1>{{ job.title }}</h1>
+<p>{{ job.city }} · {{ 'Remote' if job.is_remote else 'On-site' }} · {{ job.job_type|replace('_',' ')|title }}</p>
+<span class="match">{{ '%g'|format(job.score) ~ '% required-skill match' if job.score is not none else 'Not scored — no required skills listed' }}</span>
+</div>
+<div class="detail-mobile-actions">
+{% if can_apply %}<form method="post" target="_blank" rel="noopener noreferrer" action="{{ url_for('apply.external',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Apply on company website →</button>
+</form>{% endif %}
+<form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}">
+<button class="button secondary-button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button>
+</form>
+<form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button secondary-button">Add to tracker</button>
+</form>
+</div>
+<div class="dashboard-grid">
+<article class="panel">
+<h2>A little about the role</h2>
+<p>{{ job.description }}</p>
+<h2>What you’ll bring</h2>
+<p>{{ job.requirements }}</p>
+<h3>Required skills</h3>
+<div class="chips">{% for skill in job.required %}<span class="chip">{{ skill }}</span>{% else %}<p>No required skills specified.</p>{% endfor %}</div>
+<h3>Nice to have</h3>
+<div class="chips">{% for skill in job.preferred %}<span class="chip">{{ skill }}</span>{% endfor %}</div>
+<h3>Compensation</h3>
+<p>PKR {{ '{:,}'.format(job.min_salary) }}–{{ '{:,}'.format(job.max_salary) }} {{ 'per project' if job.job_type=='FREELANCE' else 'per month' }}</p>
+<p>Posted {{ job.posted_at }} · Deadline {{ job.deadline }}</p>
+<small>{{ 'Fictional demonstration data.' if job.is_demo else 'Source: ' ~ job.source_name }}</small>
+</article>
+<aside>
+<section class="panel">
+<h2>Your fit, explained</h2>
+<h3>Matched</h3>
+<div class="chips">{% for skill in job.matched %}<span class="chip known">✓ {{ skill }}</span>{% else %}<p>No required skills matched.</p>{% endfor %}</div>
+<h3>Room to grow</h3>
+<div class="chips">{% for skill in job.missing %}<span class="chip missing">{{ skill }}</span>{% else %}<p>No missing required skills.</p>{% endfor %}</div>
+<p class="subtext">Matched required skills ÷ total required skills × 100. Preferred skills do not affect this score. No required skills means “Not scored.”</p>
+</section>
+<section class="panel">
+{% if can_apply %}<span class="match">Official link verified by curator</span>
+<h2>Apply with the employer</h2>
+<p>You’ll leave CareerPulse. Return to update your tracker after you actually submit your application.</p>
+<form method="post" target="_blank" rel="noopener noreferrer" action="{{ url_for('apply.external',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Apply on company website →</button>
+</form>{% else %}<h2>{{ 'Demo opportunity' if job.is_demo else 'Application unavailable' }}</h2>
+<p>{{ 'This fictional listing has no employer application link.' if job.is_demo else 'This role is inactive or its official link has not been verified.' }}</p>{% endif %}
+<form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="{{ 'remove' if job.opp_id in saved_ids else 'save' }}">
+<button class="button">{{ 'Remove saved job' if job.opp_id in saved_ids else 'Save opportunity' }}</button>
+</form>
+</section>
+<section class="panel">
+<h2>Track your next step</h2>
+<p>Keep your own record. Adding a role starts at Saved and never submits an application.</p>
+<form method="post" action="{{ url_for('tracker.add',opp_id=job.opp_id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="button">Add to tracker</button>
+</form>
+</section>
+</aside>
+</div>
+{% endblock %}

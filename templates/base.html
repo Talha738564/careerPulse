@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · CareerPulse</title>
+<link rel="icon" href="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="sidebar">
+<a class="brand" href="{{ url_for('home') }}">
+<img src="{{ url_for('static',filename='images/careerpulse-logo-dark.svg') }}" alt="CareerPulse">
+</a>
+<p class="eyebrow">STUDENT WORKSPACE</p>
+<nav aria-label="Main navigation">{% for endpoint,label,icon in [('dashboard','Dashboard','◫'),('opportunities','Explore jobs','⌕'),('saved.index','Saved jobs','◇'),('tracker.index','Application tracker','▤'),('profile','Profile & skills','◎'),('alerts.index','Job alerts','◉'),('alerts.notifications','Notifications','◌')] %}<a class="navlink {{ 'active' if request.endpoint==endpoint }}" href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
+<span aria-hidden="true">{{ icon }}</span>{{ label }}</a>{% endfor %}{% if account and account.role=='ADMIN' %}<a class="navlink" href="{{ url_for('admin.dashboard') }}">Admin workspace</a>{% endif %}</nav>
+<div class="sidebar-note">
+<span class="eyebrow">ONE STEP FORWARD</span>
+<h3>Your skills. Your next chapter.</h3>
+<p>Explore where your strengths could take you.</p>
+<a class="button" href="{{ url_for('opportunities') }}">Find your fit →</a>
+</div>
+<p class="sidebar-foot">Individual DBMS project<br>Fictional student demo</p>
+</aside>
+<div class="workspace">
+<header class="topbar">
+<a class="mobile-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home">
+<img src="{{ url_for('static',filename='images/careerpulse-logo-light.svg') }}" alt="CareerPulse">
+</a>
+<form action="{{ url_for('opportunities') }}" role="search">
+<label class="sr-only" for="global-search">Search jobs, companies or skills</label>
+<input id="global-search" name="q" placeholder="Search jobs, companies or skills…">
+<button aria-label="Search">Search</button>
+</form>
+<span class="identity">
+<b class="avatar">{{ student.full_name[:1] }}</b>
+<span class="identity-name">{{ student.full_name }}</span>
+<small>{{ account.role|title if account else 'Guest demo' }}</small>
+</span>
+<div class="topbar-actions">
+{% if account %}<form method="post" action="{{ url_for('auth.logout') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="remove topbar-btn">Sign out</button>
+</form>{% else %}<nav class="auth-entry" aria-label="Account navigation">
+<a class="button secondary-button auth-btn" href="{{ url_for('auth.login') }}">Sign in</a>
+<a class="account-register" href="{{ url_for('auth.register') }}">Create account</a>
+</nav>{% endif %}
+{% if account and account.role=='ADMIN' %}<a class="updates-link admin-pill" href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
+<a class="updates-link" href="{{ url_for('alerts.notifications') }}">Updates</a>
+</div>
+</header>
+<main id="main">
+<div class="demo-note">DEMO WORKSPACE <span>Sample records are fictional. Your edits are temporary.</span>
+</div>{% for message in get_flashed_messages() %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+{% block content %}
+
+{% endblock %}</main>
+<footer>CareerPulse · Built for your next step. <span>Oracle integration planned</span>
+</footer>
+</div>
+<nav class="mobile-nav" aria-label="Mobile navigation">{% for endpoint,label,icon in [('dashboard','Home','◫'),('opportunities','Explore','⌕'),('saved.index','Saved','◇'),('tracker.index','Tracker','▤'),('profile','Profile','◎')] %}<a href="{{ url_for(endpoint) }}" {% if request.endpoint==endpoint %}aria-current="page"{% endif %}>
+<span class="mobile-nav-icon" aria-hidden="true">{{ icon }}</span>
+<span class="mobile-nav-label">{{ label }}</span>
+</a>{% endfor %}</nav>
+</body>
+</html>
