@@ -218,12 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-<<<<<<< HEAD
-# 
-/artifacts
-
-=======
 
 # Local test artifacts
 artifacts/
->>>>>>> 7cccc63b888a881563a9cc7e9af1979ae9aa67b5
