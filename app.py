@@ -109,6 +109,8 @@ def create_app(repository=None, test_config=None):
         jobs = enrich([j for j in repo.opportunities() if j['status']=='ACTIVE'], student()['skills'])
         ranked = sorted(jobs, key=lambda j: j['score'] if j['score'] is not None else -1, reverse=True)
         return render_template('dashboard.html', title='Dashboard', jobs=ranked[:3],
+                               closing_soon=sorted([j for j in jobs if 0 <= j['days_left'] <= 7], key=lambda j: j['deadline'])[:3],
+                               alert_count=sum(a['is_active'] for a in activity()['alerts']),
                                total=len(jobs), strong=sum(j['score'] is not None and j['score']>=65 for j in jobs),
                                demand=demand(jobs)[:5], applications_count=sum(r['status']!='SAVED' for r in activity()['tracker'].values()), counts=Counter(r['status'] for r in activity()['tracker'].values()), saved_count=len(activity()['saved']))
 

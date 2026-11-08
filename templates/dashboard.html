@@ -1,62 +1,49 @@
-{% extends 'base.html' %}{% from 'cards.html' import job_card with context %}{% block content %}
-<div class="page-heading">
-<div>
-<p class="eyebrow">YOUR CAREER, IN MOTION</p>
-<h1>Welcome back, {{ student.full_name.split()[0] }}<span class="teal">.</span>
-</h1>
-<p>Small steps today. Bigger possibilities tomorrow.</p>
+{% extends 'base.html' %}
+{% from 'cards.html' import job_card with context %}
+{% block content %}
+<div class="page-heading dashboard-welcome">
+  <div><p class="eyebrow">YOUR NEXT CHAPTER STARTS TODAY</p>
+    <h1>Welcome back, <span class="name-highlight">{{ student.full_name.split()[0] }}</span>.</h1>
+    <p>Your skills. Your opportunities. Your next step.</p>
+  </div>
+  <a class="button" href="{{ url_for('opportunities') }}">Explore opportunities {{ icon_svg('arrow-right') }}</a>
 </div>
-<a class="button" href="{{ url_for('opportunities') }}">Explore opportunities →</a>
-</div>
-<section class="stats" aria-label="Demo overview">{% for value,label in [(total,'Active opportunities'),(strong,'Matches of 65%+'),(saved_count,'Saved opportunities'),(applications_count,'Applications tracked')] %}<div class="stat">
-<span>{{ label }}</span>
-<strong>{{ value }}</strong>
-<small>Your demo workspace</small>
-</div>{% endfor %}</section>
-<div class="dashboard-grid">
-<section>
-<div class="section-heading">
-<h2>Recommended for you</h2>
-<a href="{{ url_for('opportunities') }}">View all →</a>
-</div>
-<p class="subtext">Ranked by the required skills you already know.</p>{% for job in jobs %}{{ job_card(job) }}{% endfor %}<div class="banner">
-<p class="eyebrow">BUILD YOUR NEXT CHAPTER</p>
-<h2>You have more potential<br>than a job title can tell.</h2>
-<p>Discover opportunities that connect your skills to meaningful work.</p>
-<a href="{{ url_for('opportunities') }}">Find your next opportunity →</a>
-</div>
+<section class="stats" data-load-region aria-label="Your overview">
+{% for value,label,symbol,description in [(total,'Active opportunities','briefcase-business','Ready to explore'),(strong,'Strong matches','target','65% or higher skill match'),(saved_count,'Saved opportunities','bookmark','Your personal shortlist'),(applications_count,'Applications tracked','clipboard','Every step, in one place')] %}
+  <article class="stat" data-load-item>
+    <div class="stat-top"><span>{{ label }}</span><span class="stat-symbol">{{ icon_svg(symbol) }}</span></div>
+    <strong data-skeleton="number">{{ value }}</strong><small>{{ description }}</small>
+  </article>
+{% endfor %}
 </section>
-<aside class="insights">
-<section class="panel">
-<p class="eyebrow">YOUR STARTING POINT</p>
-<h2>A strong foundation</h2>
-<div class="skill-orbit">
-<img src="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}" alt="">
-<strong>{{ student.skills|length }} skills</strong>
-</div>
-<div class="chips">{% for skill in student.skills %}<span class="chip known">✓ {{ skill }}</span>{% endfor %}</div>
-<p class="subtext">Matches reflect the skills in your current demo profile.</p>
-<small>
-<a href="{{ url_for('profile') }}">Edit your profile and skills →</a>
-</small>
-</section>
-<section class="panel">
-<h2>Skills in demand</h2>
-<p class="subtext">Required by these {{ total }} active opportunities</p>{% for skill,percent in demand %}<div class="demand">
-<label for="skill-{{ loop.index }}">{{ skill }} <b>{{ percent }}%</b>
-</label>
-<progress id="skill-{{ loop.index }}" max="100" value="{{ percent }}">{{ percent }}%</progress>
-</div>{% endfor %}</section>
-<section class="panel" id="tracker">
-<h2>Your journey so far</h2>
-<p class="subtext">Your manual tracker</p>
-<div class="tracker">{% for status in ['SAVED','APPLIED','INTERVIEW','OFFER','REJECTED'] %}<div>
-<strong>{{ counts[status] }}</strong>
-<span>{{ status|title }}</span>
-</div>{% endfor %}</div>
-<small>An apply click never changes your status. <a href="{{ url_for('tracker.index') }}">Update your tracker →</a>
-</small>
-</section>
-</aside>
+<div class="dashboard-grid dashboard-layout">
+  <div class="dashboard-primary">
+    <section aria-labelledby="recommended-title">
+      <div class="section-heading"><div><p class="eyebrow">MADE FOR YOUR SKILLS</p><h2 id="recommended-title">Recommended for you</h2></div><a href="{{ url_for('opportunities') }}">View all {{ icon_svg('arrow-right') }}</a></div>
+      <div data-load-region aria-label="Recommended opportunities">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel" data-load-item><h3>No active opportunities yet.</h3><p>Check back for new curated roles.</p></div>{% endfor %}</div>
+    </section>
+    <section class="panel closing-panel" aria-labelledby="closing-title">
+      <div class="section-heading"><h2 id="closing-title">{{ icon_svg('clock') }} Closing soon</h2><a href="{{ url_for('opportunities',sort='deadline') }}">All deadlines {{ icon_svg('arrow-right') }}</a></div>
+      <div data-load-region aria-label="Closing soon opportunities">{% for job in closing_soon %}
+        <a class="deadline-row" data-load-item href="{{ url_for('detail',opp_id=job.opp_id) }}"><span class="deadline-date"><strong>{{ job.deadline.strftime('%d') }}</strong><small>{{ job.deadline.strftime('%b') }}</small></span><span><strong>{{ job.title }}</strong><small>{{ job.company_name }}</small></span><span class="deadline-badge">{{ 'Today' if job.days_left==0 else job.days_left|string ~ ' days left' }}</span></a>
+      {% else %}<p data-load-item>No roles close in the next seven days. You have time to explore.</p>{% endfor %}</div>
+    </section>
+    <section class="panel" aria-labelledby="journey-title">
+      <div class="section-heading"><h2 id="journey-title">Your applications</h2><a href="{{ url_for('tracker.index') }}">Open tracker {{ icon_svg('arrow-right') }}</a></div>
+      <p class="subtext">A little progress, every day. Update your status as you go.</p>
+      <div class="tracker" data-load-region aria-label="Applications summary">{% for status in ['SAVED','APPLIED','INTERVIEW','OFFER','REJECTED'] %}<div data-load-item><strong data-skeleton="number">{{ counts[status] }}</strong><span>{{ status|title }}</span></div>{% endfor %}</div>
+    </section>
+  </div>
+  <aside class="insights">
+    <section class="panel skills-panel" aria-labelledby="skills-title">
+      <div class="section-heading"><h2 id="skills-title">Your skill toolkit</h2><span class="panel-symbol">{{ icon_svg('layers') }}</span></div>
+      <div data-load-region aria-label="Your skills"><div data-load-item><p class="skill-total"><strong data-skeleton="number">{{ student.skills|length }}</strong> skills to build on</p><div class="chips">{% for skill in student.skills %}<span class="chip known">{{ icon_svg('check') }} {{ skill }}</span>{% else %}<p>Add your first skill to discover your matches.</p>{% endfor %}</div></div></div>
+      <a class="text-action" href="{{ url_for('profile') }}">Manage your skills {{ icon_svg('arrow-right') }}</a>
+      <div class="panel-divider"></div><h3>Skills in demand</h3><p class="subtext">Across {{ total }} active opportunities</p>
+      <div data-load-region aria-label="Skills in demand">{% for skill,percent in demand %}<div class="demand" data-load-item><label for="skill-{{ loop.index }}">{{ skill }} <b>{{ percent }}%</b></label><progress id="skill-{{ loop.index }}" max="100" value="{{ percent }}">{{ percent }}%</progress></div>{% else %}<p data-load-item>Demand will appear when opportunities are available.</p>{% endfor %}</div>
+    </section>
+    <section class="panel alert-panel" aria-labelledby="alerts-title"><span class="panel-symbol">{{ icon_svg('bell') }}</span><h2 id="alerts-title">Let your next role find you.</h2><p>Get updates for the skills and opportunities you care about.</p><div data-load-region aria-label="Job alerts summary"><p data-load-item><strong data-skeleton="number">{{ alert_count }}</strong> active job {{ 'alert' if alert_count==1 else 'alerts' }}</p></div><a class="button secondary-button" href="{{ url_for('alerts.index') }}">Manage job alerts {{ icon_svg('arrow-right') }}</a></section>
+    <section class="panel" aria-labelledby="events-title"><h2 id="events-title">{{ icon_svg('calendar-days') }} Upcoming events</h2><div data-load-region aria-label="Upcoming events"><div data-load-item><p class="subtext">No scheduled events to show.</p><p class="subtext">Keep interview details in your application notes.</p></div></div><a class="text-action" href="{{ url_for('tracker.index') }}">View your tracker {{ icon_svg('arrow-right') }}</a></section>
+  </aside>
 </div>
 {% endblock %}

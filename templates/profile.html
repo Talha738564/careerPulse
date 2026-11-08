@@ -9,7 +9,7 @@
 <ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>
 </div>{% endif %}
 <div class="dashboard-grid profile-grid">
-<section class="panel">
+<section class="panel" data-load-region>
 <h2>Academic profile</h2>
 <form method="post" action="{{ url_for('profile') }}" class="profile-form">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -31,10 +31,10 @@
 </form>
 </section>
 <section>
-<div class="panel">
+<div class="panel" data-load-region>
 <h2>Your skills</h2>
 <p class="subtext">Adding an existing skill updates its level and experience. Matching uses skill presence; proficiency and experience do not change the score.</p>
-{% for record in profile.skill_records %}<div class="skill-row">
+{% for record in profile.skill_records %}<div class="skill-row" data-load-item>
 <div>
 <strong>{{ record.skill_name }}</strong>
 <small>{{ record.proficiency|title }} · {{ record.years_experience }} years</small>
@@ -57,7 +57,7 @@
 <button class="button">Save skill</button>
 </form>
 </div>
-<div class="panel">
+<div class="panel" data-load-region>
 <h2>A fresh start</h2>
 <p>Reset your profile and skills to their starting values. This discards your demo edits.</p>
 <form method="post" action="{{ url_for('reset_profile') }}">

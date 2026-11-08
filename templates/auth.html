@@ -1,4 +1,4 @@
-{% from 'icons.html' import asset_icon %}
+{% from 'icons.html' import icon_svg %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,7 +22,7 @@
 <h1 id="auth-headline">{% if register %}Turn your skills into <span class="sketch-emphasis">opportunities.<svg class="sketch-underline" viewBox="0 0 440 30" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 13 C104 2 263 3 415 9 C309 10 142 23 25 17 C94 9 213 13 334 19 M3 27 C118 12 284 16 436 24"/></svg></span>{% else %}Your next chapter <span>starts <span class="circled-here">here<span class="circle-stroke" aria-hidden="true"></span></span>.</span>{% endif %}</h1>
 <p class="auth-intro">Discover where your skills can take you. Find your fit, build your confidence, and keep your next move in sight.</p>
 <div class="auth-preview" aria-label="What you can do with CareerPulse">
-<span class="auth-preview-icon" aria-hidden="true">→</span>
+<span class="auth-preview-icon" aria-hidden="true">{{ icon_svg('arrow-right') }}</span>
 <div><strong>Your potential. A clearer direction.</strong><p>Discover opportunities. Understand your skill gaps. Track your progress.</p></div>
 </div>
 </div>
@@ -30,7 +30,7 @@
 <div class="auth-liquid auth-liquid-story" aria-hidden="true"></div>
 </section>
 <main id="main" class="auth-stage" tabindex="-1">
-<a class="auth-back" href="{{ url_for('home') }}">← Back to home</a>
+<a class="auth-back" href="{{ url_for('home') }}">{{ icon_svg('arrow-left') }} Back to home</a>
 
 <div class="auth-liquid auth-liquid-blue" aria-hidden="true"></div>
 <div class="auth-liquid auth-liquid-teal" aria-hidden="true"></div>
@@ -48,12 +48,12 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 {% if register %}<label for="full-name">Full name</label><input id="full-name" name="full_name" maxlength="120" autocomplete="name" required value="{{ request.form.get('full_name','') }}">{% endif %}
 <label for="email">Email</label><input id="email" name="email" type="email" maxlength="150" autocomplete="username" required value="{{ request.form.get('email','') }}">
-<label for="password">Password</label><div class="password-field"><input id="password" name="password" type="password" autocomplete="{{ 'new-password' if register else 'current-password' }}" minlength="{{ 12 if register else 1 }}" maxlength="128" required {% if register %}aria-describedby="password-hint"{% endif %}><button hidden class="password-toggle" type="button" data-password-toggle aria-controls="password" aria-label="Show password" data-show-label="Show password" data-hide-label="Hide password" aria-pressed="false"><span class="eye-show">{{ asset_icon("eye") }}</span><span class="eye-hide">{{ asset_icon("eye-off") }}</span></button></div>
-{% if register %}<small id="password-hint">Use 12–128 characters.</small><label for="confirm-password">Confirm password</label><div class="password-field"><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" maxlength="128" required><button hidden class="password-toggle" type="button" data-password-toggle aria-controls="confirm-password" aria-label="Show confirm password" data-show-label="Show confirm password" data-hide-label="Hide confirm password" aria-pressed="false"><span class="eye-show">{{ asset_icon("eye") }}</span><span class="eye-hide">{{ asset_icon("eye-off") }}</span></button></div>{% endif %}
-<button class="button auth-submit">{{ 'Create account' if register else 'Sign in' }} <span aria-hidden="true">→</span></button>
+<label for="password">Password</label><div class="password-field"><input id="password" name="password" type="password" autocomplete="{{ 'new-password' if register else 'current-password' }}" minlength="{{ 12 if register else 1 }}" maxlength="128" required {% if register %}aria-describedby="password-hint"{% endif %}><button hidden class="password-toggle" type="button" data-password-toggle aria-controls="password" aria-label="Show password" data-show-label="Show password" data-hide-label="Hide password" aria-pressed="false"><span class="eye-show">{{ icon_svg("eye") }}</span><span class="eye-hide">{{ icon_svg("eye-off") }}</span></button></div>
+{% if register %}<small id="password-hint">Use 12–128 characters.</small><label for="confirm-password">Confirm password</label><div class="password-field"><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" maxlength="128" required><button hidden class="password-toggle" type="button" data-password-toggle aria-controls="confirm-password" aria-label="Show confirm password" data-show-label="Show confirm password" data-hide-label="Hide confirm password" aria-pressed="false"><span class="eye-show">{{ icon_svg("eye") }}</span><span class="eye-hide">{{ icon_svg("eye-off") }}</span></button></div>{% endif %}
+<button class="button auth-submit">{{ 'Create account' if register else 'Sign in' }} <span aria-hidden="true">{{ icon_svg('arrow-right') }}</span></button>
 </form>
 <p class="auth-switch">{{ 'Already have an account?' if register else 'New to CareerPulse?' }} <a href="{{ url_for('auth.login') if register else url_for('auth.register') }}">{{ 'Sign in' if register else 'Create an account' }}</a></p>
-<div class="auth-demo"><strong>Just exploring?</strong> <a href="{{ url_for('dashboard') }}">Try the guest demo →</a><p>Demo mode · Use fictional information. Accounts and edits reset when the server restarts.</p></div>
+<div class="auth-demo"><strong>Just exploring?</strong> <a href="{{ url_for('dashboard') }}">Try the guest demo {{ icon_svg('arrow-right') }}</a><p>Demo mode · Use fictional information. Accounts and edits reset when the server restarts.</p></div>
 </section>
 </main>
 </div>

@@ -1,6 +1,7 @@
-{% macro job_card(job) %}<article class="job-card">
+{% from 'icons.html' import icon_svg %}
+{% macro job_card(job) %}<article class="job-card" data-load-item>
 <div class="job-heading">
-<span class="company-icon" aria-hidden="true">{{ job.company_name[:1] }}</span>
+<span class="company-icon" aria-hidden="true">{{ icon_svg('building-2') }}</span>
 <div>
 <p class="overline">{{ job.company_name }} · {{ 'Demo' if job.is_demo else 'Curated' }}</p>
 <h3>
@@ -11,10 +12,10 @@
 </div>
 <p class="metadata">{{ job.city }} · {{ 'Remote' if job.is_remote else 'On-site' }} · {{ job.job_type|replace('_',' ')|title }}</p>
 {% if job.status!='ACTIVE' %}<p class="chip missing">{{ job.status|title }}</p>{% elif 0 <= job.days_left <= 7 %}<p class="chip missing">Deadline Pulse · {{ job.days_left }} days left</p>{% endif %}
-<div class="chips">{% for skill in job.matched %}<span class="chip known">✓ {{ skill }}</span>{% endfor %}{% for skill in job.missing %}<span class="chip missing">Missing: {{ skill }}</span>{% endfor %}</div>
+<div class="chips">{% for skill in job.matched %}<span class="chip known">{{ icon_svg('check') }} {{ skill }}</span>{% endfor %}{% for skill in job.missing %}<span class="chip missing">Missing: {{ skill }}</span>{% endfor %}</div>
 <div class="job-bottom">
 <span>Deadline · {{ job.deadline.strftime('%d %b %Y') }}</span>
-<a href="{{ url_for('detail',opp_id=job.opp_id) }}">View opportunity →</a>
+<a href="{{ url_for('detail',opp_id=job.opp_id) }}">View opportunity {{ icon_svg('arrow-right') }}</a>
 </div>
 <form method="post" action="{{ url_for('saved.save', opp_id=job.opp_id) }}" class="card-action">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

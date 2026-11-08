@@ -15,7 +15,7 @@
 .public-menu nav { position:absolute; top:54px; right:0; width:240px; padding:10px; background:white; border:1px solid var(--line); border-radius:14px; box-shadow:0 12px 32px #0e2a4714; z-index:20; }
 .public-menu nav a { display:block; padding:10px 12px; border-radius:8px; }
 .public-menu nav a:hover { background:#eef7f6; }
-.asset-icon { width:22px; height:22px; display:inline-block; vertical-align:middle; flex-shrink:0; }
+.ui-icon { width:22px; height:22px; display:inline-block; vertical-align:middle; flex-shrink:0; }
 .public-home main { max-width:none; padding:0; margin:0; }
 .home-hero { padding:45px 24px 22px; text-align:center; }
 .hero-eyebrow { color:var(--navy); font-size:18px; font-weight:750; letter-spacing:5px; margin:0 0 38px; }
@@ -26,11 +26,11 @@
 .hero-description { font-size:23px; line-height:1.55; color:#3d4c62; margin:0 0 34px; }
 .hero-actions { display:flex; gap:48px; justify-content:center; align-items:center; }
 .hero-primary { font-size:22px; padding:20px 32px; gap:22px; border-radius:12px; }
-.hero-primary .asset-icon { filter:brightness(0) invert(1); width:25px; height:25px; }
+.hero-primary .ui-icon { filter:brightness(0) invert(1); width:25px; height:25px; }
 .hero-demo { font-size:22px; font-weight:700; min-height:44px; display:inline-flex; align-items:center; }
 .hero-types { font-size:18px; margin:24px 0 40px; color:#4c5970; }
 .scroll-cue { display:inline-flex; align-items:center; flex-direction:column; gap:9px; font-size:19px; color:var(--navy); min-height:52px; }
-.scroll-cue .asset-icon { width:28px; height:28px; }
+.scroll-cue .ui-icon { width:28px; height:28px; }
 .home-how { background:#eefbf7; scroll-margin-top:24px; }
 .how-inner { max-width:1440px; margin:auto; padding:66px 56px; display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:center; }
 .how-copy h2 { font-size:clamp(32px,4.7vw,64px); line-height:1.18; letter-spacing:-1.9px; font-weight:800; margin:0 0 52px; }
@@ -42,11 +42,11 @@
 .opportunity-preview h3 { font-size:28px; font-weight:800; letter-spacing:-1px; margin-bottom:12px; }
 .preview-meta { display:flex; flex-wrap:wrap; gap:14px; font-size:15px; color:var(--navy); margin-bottom:16px; }
 .preview-meta span { display:inline-flex; align-items:center; gap:6px; }
-.preview-meta .asset-icon { width:17px; height:17px; }
+.preview-meta .ui-icon { width:17px; height:17px; }
 .preview-match { background:#e6f8f2; color:#087f75; font-size:20px; font-weight:650; border-radius:8px; padding:4px 10px; display:inline-block; margin:0 0 24px; }
 .preview-skills { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:22px; }
 .preview-skills span { display:inline-flex; align-items:center; gap:6px; background:#f4f7f7; border-radius:8px; padding:5px 9px; font-size:15px; }
-.preview-skills .asset-icon { width:18px; height:18px; }
+.preview-skills .ui-icon { width:18px; height:18px; }
 .preview-link { display:inline-flex; gap:8px; align-items:center; min-height:44px; font-size:18px; }
 .public-footer { margin:0; padding:22px 40px; background:white; }
 [data-reveal] { opacity:1; transform:none; }
@@ -128,7 +128,7 @@
 .feature-finish { padding:20px 24px 80px; text-align:center; }
 .feature-finish h2 { font-size:clamp(26px,3vw,38px); letter-spacing:-1.2px; }
 .feature-finish .button { gap:12px; font-size:16px; padding:16px 24px; }
-.feature-finish .asset-icon { filter:brightness(0) invert(1); }
+.feature-finish .ui-icon { filter:brightness(0) invert(1); }
 .feature-finish p { font-size:13px; margin:16px 0 0; }
 @media(max-width:900px) {
  .feature-row { padding:60px 32px; gap:32px; grid-template-columns:1fr; max-width:680px; }

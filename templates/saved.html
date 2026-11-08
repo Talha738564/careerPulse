@@ -1,3 +1,4 @@
+{% from 'icons.html' import icon_svg %}
 {% extends 'base.html' %}
 {% from 'cards.html' import job_card with context %}
 {% block content %}
@@ -6,9 +7,9 @@
 <p>Save interesting roles and come back when you’re ready. Saving is not applying.</p>
 <div class="section-heading">
 <h2>{{ jobs|length }} saved opportunities</h2>
-<a href="{{ url_for('opportunities') }}">Explore more →</a>
+<a href="{{ url_for('opportunities') }}">Explore more {{ icon_svg('arrow-right') }}</a>
 </div>
-<div class="browse-grid">
+<div class="browse-grid" data-load-region aria-label="Opportunities">
 {% for job in jobs %}{{ job_card(job) }}
 {% else %}<section class="panel">
 <h2>Your shortlist starts here.</h2>

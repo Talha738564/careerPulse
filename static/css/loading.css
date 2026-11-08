@@ -1,0 +1,14 @@
+/* Shared pending -> ready contract. No artificial delay or shimmer. */
+:root { --surface-1:#e5e9ee; --load-duration:230ms; --load-ease:cubic-bezier(0.23,1,0.32,1); --load-stagger:70ms; --load-short-cap:350ms; --load-long-cap:700ms; }
+[data-load-region] { position:relative; }
+.load-skeleton { overflow:hidden; position:absolute; inset:0; pointer-events:none; z-index:2; opacity:1; transition:opacity var(--load-duration) var(--load-ease); }
+.skeleton-block { position:absolute; background:var(--surface-1); border-radius:6px; }
+.load-pending .load-content { opacity:0!important; transition:none!important; }
+.load-content { transition:opacity var(--load-duration) var(--load-ease),transform var(--load-duration) var(--load-ease); }
+.load-enter { opacity:0; transform:translateY(6px); }
+.load-enter.load-ready { opacity:1; transform:translateY(0); }
+.load-skeleton.load-ready { opacity:0; }
+.load-error { margin:0 0 24px; padding:16px; background:#fff4ed; border:1px solid #e9c9b9; border-radius:12px; color:#803d22; }
+.load-error p { color:inherit; margin-bottom:8px; }
+.action-pending { cursor:wait; opacity:.65; }
+@media(prefers-reduced-motion:reduce) { .load-content,.load-skeleton { transition:none; transform:none; } }

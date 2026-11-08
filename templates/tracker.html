@@ -3,11 +3,11 @@
 <p class="eyebrow">EVERY STEP COUNTS</p>
 <h1>Your journey, at a glance.</h1>
 <p>A personal record of your progress. You update each status; employers do not use this tracker.</p>
-<div class="status-tabs">
+<div class="status-tabs" data-load-region>
 <a href="{{ url_for('tracker.index') }}">All entries</a>{% for status in statuses %}<a href="{{ url_for('tracker.index', status=status) }}" {{ 'aria-current=page' if selected==status }}>{{ status|title }} <strong>{{ counts[status] }}</strong>
 </a>{% endfor %}</div>
-{% for entry in entries %}
-<article class="panel">
+<div data-load-region aria-label="Tracker">{% for entry in entries %}
+<article class="panel" data-load-item>
 <div class="section-heading">
 <div>
 <p class="eyebrow">{{ entry.job.company_name }}</p>
@@ -35,9 +35,9 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <button class="remove">Remove tracker entry</button>
 </form>
-</article>{% else %}<div class="panel">
+</article>{% else %}<div class="panel" data-load-item>
 <h2>No entries in this view.</h2>
 <p>Open an opportunity and choose “Add to tracker” to get started.</p>
 <a class="button" href="{{ url_for('opportunities') }}">Explore opportunities</a>
 </div>{% endfor %}
-{% endblock %}
+</div>{% endblock %}

@@ -32,7 +32,7 @@ def run(output):
         def capture(name):
             page.screenshot(path=str(output/(name+'-desktop.png')),full_page=True)
             page.set_viewport_size({'width':390,'height':844})
-            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),name
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (name, page.locator('body *').evaluate_all('(els)=>els.filter(e=>e.getBoundingClientRect().right>innerWidth && getComputedStyle(e).position!=="fixed").map(e=>[e.tagName,e.className,e.getBoundingClientRect().right])'))
             page.screenshot(path=str(output/(name+'-mobile.png')),full_page=True)
             page.set_viewport_size({'width':1440,'height':1000})
         try:
@@ -52,7 +52,7 @@ def run(output):
             page.locator('#global-search').fill('Python')
             assert search.evaluate('(el) => getComputedStyle(el).outlineStyle') == 'solid'
             search.get_by_role('button', name='Search', exact=True).click()
-            assert 'q=Python' in page.url
+            expect(page).to_have_url(base+'/opportunities?q=Python')
             expect(page.locator('#global-search')).to_have_value('Python')
             visit('/')
             capture('auth-entry')
@@ -68,9 +68,11 @@ def run(output):
             visit('/profile')
             page.get_by_label('City',exact=True).fill('Lahore')
             page.get_by_role('button',name='Save demo profile',exact=True).click()
+            expect(page.locator('.notice[role="status"]')).to_contain_text('profile saved')
             for skill in ('Python','SQL','Git'):
                 page.get_by_label('Skill',exact=True).select_option(skill)
                 page.get_by_role('button',name='Save skill',exact=True).click()
+                expect(page.locator('.skill-row').filter(has=page.get_by_text(skill,exact=True))).to_be_visible()
             expect(page.get_by_text('Skill saved. Your opportunity matches have been updated.')).to_be_visible()
             visit('/opportunities/1')
             expect(page.get_by_text('100% required-skill match',exact=True)).to_be_visible()
@@ -89,9 +91,11 @@ def run(output):
             page.get_by_label('Alert name',exact=True).fill('My Python shortlist')
             page.get_by_label('Python',exact=True).check()
             page.get_by_role('button',name='Create alert',exact=True).click()
+            expect(page.locator('.notice[role="status"]')).to_contain_text('Alert saved')
             visit('/notifications')
             expect(page.get_by_text('Deadline Pulse',exact=True)).to_be_visible()
             page.get_by_role('button',name='Mark as read',exact=True).first.click()
+            expect(page.locator('[aria-busy="true"]')).to_have_count(0)
             visit('/dashboard')
             capture('journey-dashboard')
             page.get_by_role('button',name='Sign out',exact=True).click()

@@ -25,7 +25,15 @@ if (sidebar && toggle) {
   let expanded = true;
   const sync = () => {
     document.body.classList.toggle('sidebar-collapsed', !expanded && desktop.matches);
-    sidebar.inert = !expanded || !desktop.matches;
+    sidebar.inert = !desktop.matches;
+    sidebar.querySelector('[data-sidebar-note]').inert = !expanded;
+    sidebar.querySelector('.sidebar-tagline').setAttribute('aria-hidden', String(!expanded));
+    const expandedBrand = sidebar.querySelector('.sidebar-brand-expanded');
+    const collapsedBrand = sidebar.querySelector('.sidebar-brand-collapsed');
+    expandedBrand.tabIndex = expanded ? 0 : -1;
+    expandedBrand.setAttribute('aria-hidden', String(!expanded));
+    collapsedBrand.tabIndex = expanded ? -1 : 0;
+    collapsedBrand.setAttribute('aria-hidden', String(expanded));
     toggle.setAttribute('aria-expanded', String(expanded));
     toggle.setAttribute('aria-label', expanded ? 'Collapse navigation menu' : 'Expand navigation menu');
   };
@@ -33,13 +41,16 @@ if (sidebar && toggle) {
   desktop.addEventListener('change', sync);
   sync();
 }
-document.querySelectorAll('.public-menu').forEach(menu => {
-  const close = (focus = false) => { menu.open = false; if (focus) menu.querySelector('summary').focus(); };
-  menu.addEventListener('keydown', event => { if (event.key === 'Escape') close(true); });
-  menu.addEventListener('click', event => { if (event.target.closest('a')) close(); });
-  document.addEventListener('click', event => { if (!menu.contains(event.target)) close(); });
-  menu.addEventListener('focusout', event => { if (!menu.contains(event.relatedTarget)) close(); });
-});
+function closeMenus(event) {
+  document.querySelectorAll('.public-menu[open], .workspace-tools[open]').forEach(menu => {
+    if (event.type === 'keydown' && event.key !== 'Escape') return;
+    if (event.type === 'click' && menu.contains(event.target) && !event.target.closest('a')) return;
+    if (event.type === 'focusout' && (!menu.contains(event.target) || menu.contains(event.relatedTarget))) return;
+    menu.open = false;
+    if (event.type === 'keydown') menu.querySelector('summary').focus();
+  });
+}
+['click', 'keydown', 'focusout'].forEach(type => document.addEventListener(type, closeMenus));
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
   const observer = new IntersectionObserver(entries => {

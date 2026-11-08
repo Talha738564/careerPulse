@@ -1,4 +1,4 @@
-{% from 'icons.html' import asset_icon, icon_svg %}
+{% from 'icons.html' import icon_svg %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +20,7 @@
 {% if account %}<a class="button public-start" href="{{ url_for('dashboard') }}">My dashboard</a>{% else %}<a href="{{ url_for('auth.login') }}">Sign in</a><a class="button public-start" aria-label="Create account" href="{{ url_for('auth.register') }}">Get started</a>{% endif %}
 </nav>
 <details class="public-menu">
-<summary aria-label="Menu">{{ asset_icon('menu') }}<span class="sr-only">Menu</span></summary>
+<summary aria-label="Menu">{{ icon_svg('menu') }}<span class="sr-only">Menu</span></summary>
 <nav aria-label="Quick navigation"><a href="#how-it-works">How it works</a><a href="{{ url_for('opportunities') }}">Explore opportunities</a><a href="{{ url_for('dashboard') }}">Try the guest demo</a><a href="{{ url_for('auth.login') }}">Sign in</a><a href="{{ url_for('auth.register') }}">Create account</a></nav>
 </details>
 </header>
@@ -30,9 +30,9 @@
 <p class="hero-eyebrow">FOR YOUR NEXT CHAPTER</p>
 <h1 id="hero-title"><span>Your skills.</span><span>Your future.</span><span class="hero-next">Your next move.</span></h1>
 <p class="hero-description">Discover opportunities that fit your strengths.<br> Understand your skill gaps. Take your next step with confidence.</p>
-<div class="hero-actions"><a class="button hero-primary" href="{{ url_for('dashboard') if account else url_for('auth.register') }}">Find my next opportunity {{ asset_icon('arrow-right') }}</a><a class="hero-demo" href="{{ url_for('dashboard') }}" aria-label="Try the guest demo without an account">Explore the demo</a></div>
+<div class="hero-actions"><a class="button hero-primary" href="{{ url_for('dashboard') if account else url_for('auth.register') }}">Find my next opportunity {{ icon_svg('arrow-right') }}</a><a class="hero-demo" href="{{ url_for('dashboard') }}" aria-label="Try the guest demo without an account">Explore the demo</a></div>
 <p class="hero-types">Internships · Freelance · Entry-level roles</p>
-<a class="scroll-cue" href="#how-it-works">See how it works {{ asset_icon('chevron-down') }}</a>
+<a class="scroll-cue" href="#how-it-works">See how it works {{ icon_svg('chevron-down') }}</a>
 </section>
 <section class="home-how" id="how-it-works" aria-labelledby="how-title">
 <div class="how-inner" data-reveal>
@@ -40,10 +40,10 @@
 <ol class="home-steps"><li><span>01</span>Add your skills</li><li><span>02</span>Discover your fit</li><li><span>03</span>Track your progress</li></ol></div>
 <article class="opportunity-preview" aria-label="Example skill match">
 <p class="preview-label">FICTIONAL DEMO</p><h3>Python Backend Intern</h3>
-<p class="preview-meta"><span>{{ asset_icon('building-2') }} Northstar Labs</span><span>{{ asset_icon('map-pin') }} Lahore · Internship</span></p>
+<p class="preview-meta"><span>{{ icon_svg('building-2') }} Northstar Labs</span><span>{{ icon_svg('map-pin') }} Lahore · Internship</span></p>
 <p class="preview-match">100% skill match</p>
-<div class="preview-skills">{% for skill in ['Python','SQL','Git'] %}<span>{{ asset_icon('check') }} {{ skill }}</span>{% endfor %}</div>
-<a class="preview-link" href="{{ url_for('opportunities',q='Python') }}">View opportunity {{ asset_icon('arrow-right') }}</a>
+<div class="preview-skills">{% for skill in ['Python','SQL','Git'] %}<span>{{ icon_svg('check') }} {{ skill }}</span>{% endfor %}</div>
+<a class="preview-link" href="{{ url_for('opportunities',q='Python') }}">View opportunity {{ icon_svg('arrow-right') }}</a>
 </article>
 </div>
 <div class="feature-tour">
@@ -52,7 +52,7 @@
 <p class="feature-kicker">JOB ALERTS</p>
 <h2 id="alerts-feature-title">Less searching.<br>More possibilities.</h2>
 <p>Choose the skills, location and role you’re looking for. Find matching opportunities in your notifications when new roles are curated.</p>
-<a class="feature-link" href="{{ url_for('alerts.index') }}">Create your first alert {{ asset_icon('arrow-right') }}</a>
+<a class="feature-link" href="{{ url_for('alerts.index') }}">Create your first alert {{ icon_svg('arrow-right') }}</a>
 </div>
 <div class="feature-preview alert-preview" aria-label="Fictional job alert example">
 <p class="preview-label">EXAMPLE ALERT</p>
@@ -67,7 +67,7 @@
 <p class="feature-kicker">APPLICATION TRACKER</p>
 <h2 id="tracker-feature-title">Every next step.<br>All in one place.</h2>
 <p>Keep your applications organized, from your first shortlist to an interview or offer. Add dates and notes, and update your status as you go.</p>
-<a class="feature-link" href="{{ url_for('tracker.index') }}">Explore your tracker {{ asset_icon('arrow-right') }}</a>
+<a class="feature-link" href="{{ url_for('tracker.index') }}">Explore your tracker {{ icon_svg('arrow-right') }}</a>
 </div>
 <div class="feature-preview tracker-preview" aria-label="Fictional application tracker example">
 <p class="preview-label">EXAMPLE JOURNEY</p>
@@ -86,17 +86,17 @@
 <p class="feature-kicker">SAVED OPPORTUNITIES</p>
 <h2 id="saved-feature-title">A shortlist worth<br>coming back to.</h2>
 <p>Save interesting roles while you explore. Keep your favorites together and return when you’re ready for the next step.</p>
-<a class="feature-link" href="{{ url_for('saved.index') }}">Open your saved jobs {{ asset_icon('arrow-right') }}</a>
+<a class="feature-link" href="{{ url_for('saved.index') }}">Open your saved jobs {{ icon_svg('arrow-right') }}</a>
 </section>
 <section class="feature-small deadline-feature" aria-labelledby="deadline-feature-title">
 <span class="feature-symbol" aria-hidden="true">{{ icon_svg('bell') }}</span>
 <p class="feature-kicker">DEADLINE PULSE</p>
 <h2 id="deadline-feature-title">Keep closing dates<br>in sight.</h2>
 <p>See which saved roles close within seven days. In-app reminders help you plan your next move before the opportunity passes.</p>
-<a class="feature-link" href="{{ url_for('alerts.notifications') }}">View your notifications {{ asset_icon('arrow-right') }}</a>
+<a class="feature-link" href="{{ url_for('alerts.notifications') }}">View your notifications {{ icon_svg('arrow-right') }}</a>
 </section>
 </div>
-<div class="feature-finish"><h2>Your next chapter starts with a skill.</h2><a class="button" href="{{ url_for('profile') if account else url_for('auth.register') }}">{{ 'Update your skills' if account else 'Create your student account' }} {{ asset_icon('arrow-right') }}</a><p>Try the guest demo to explore with fictional data.</p></div>
+<div class="feature-finish"><h2>Your next chapter starts with a skill.</h2><a class="button" href="{{ url_for('profile') if account else url_for('auth.register') }}">{{ 'Update your skills' if account else 'Create your student account' }} {{ icon_svg('arrow-right') }}</a><p>Try the guest demo to explore with fictional data.</p></div>
 </div>
 </section>
 </main>

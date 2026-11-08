@@ -73,10 +73,10 @@ def run():
             # Desktop navigation hides from both sight and keyboard traversal.
             page.goto(base+'/dashboard')
             page.get_by_role('button',name='Collapse navigation menu').click()
-            expect(page.locator('#workspace-sidebar')).to_be_hidden()
-            assert page.locator('#workspace-sidebar').evaluate('(e)=>e.inert')
+            expect(page.locator('#workspace-sidebar')).to_have_css('width','72px')
+            assert not page.locator('#workspace-sidebar').evaluate('(e)=>e.inert')
             page.get_by_role('button',name='Expand navigation menu').click()
-            expect(page.locator('#workspace-sidebar')).to_be_visible()
+            expect(page.locator('#workspace-sidebar')).to_have_css('width','240px')
             # CTA destinations and scroll-triggered reveal.
             page.set_viewport_size({'width':1440,'height':800})
             page.goto(base+'/')

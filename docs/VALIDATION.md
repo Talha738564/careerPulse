@@ -71,3 +71,17 @@ saved opportunities and deadline reminders, with working links to each existing 
 Enlarged only the login “here” circle with three strokes. Re-ran all 35 unit tests and
 80 route/viewport checks; feature links, all scroll reveals and no-JS/reduced-motion
 behavior pass. Reviewed feature screenshots at 1440px and 390px.
+
+Sidebar follow-up: run `python tests/browser_sidebar.py` for 72/240px widths, fixed
+hamburger/nav coordinates, loaded SVGs, keyboard toggle/focus, active Settings,
+mobile navigation and reduced motion. Passed at desktop widths 901–1920px and
+mobile width 390px; screenshots are generated in `artifacts/sidebar/`. All 35 unit
+tests and 80 existing responsive route checks also pass.
+
+Dashboard/loading refresh: see [LOADING_PATTERNS.md](LOADING_PATTERNS.md) for the
+architecture and Windows commands. `tests/browser_loading.py` exercises actual
+held requests rather than simulated fixed delays: skeleton geometry, async search,
+save and profile updates, history, request races, network failure recovery,
+validation errors, responsive resizing, timing caps, inline icon loading,
+reduced motion and no-JS fallback. `tests/browser_smoke.py` validates the complete
+student/admin workflow, including skills, tracker and notifications.

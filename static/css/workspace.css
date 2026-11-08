@@ -1,0 +1,85 @@
+/* Workspace presentation; public and auth pages retain their own layouts. */
+@font-face { font-family:Inter; src:url('../fonts/InterVariable.woff2') format('woff2'); font-weight:100 900; font-display:swap; }
+.ui-icon { width:22px; height:22px; display:inline-block; vertical-align:middle; flex:0 0 auto; }
+.button .ui-icon,.text-action .ui-icon,.section-heading a .ui-icon,.job-bottom .ui-icon { width:17px; height:17px; }
+.button { gap:9px; }
+.chip .ui-icon { width:13px; height:13px; }
+.sidebar-toggle .ui-icon { width:20px; height:20px; }
+.workspace-page { background:#f6f8fb; }
+.workspace-page .topbar { display:flex; flex-wrap:wrap; position:relative; min-height:88px; padding:20px 36px; gap:20px; background:#fff; color:var(--ink); border-bottom:1px solid var(--line); backdrop-filter:none; }
+.workspace-page .workspace-brand-row { margin-right:auto; }
+.workspace-page .topbar .mobile-brand { width:160px; }
+.workspace-page .topbar .identity { color:var(--ink); }
+.workspace-page .topbar .identity small { color:var(--muted); }
+.workspace-page .topbar .auth-btn { color:var(--ink); }
+.workspace-page .topbar .account-register { background:var(--blue); color:#fff; border-radius:10px; }
+.workspace-page .topbar .updates-link,.workspace-page .topbar .topbar-btn,.workspace-page .workspace-tools summary { color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:10px; }
+.workspace-page .topbar form[role="search"] { flex-basis:100%; max-width:none; background:#f5f7fa; border:1px solid var(--line); border-radius:12px; box-shadow:none; backdrop-filter:none; }
+.workspace-page .topbar form[role="search"] button { border-radius:8px; }
+.workspace-page main { padding:26px 36px 40px; }
+.workspace-page .demo-note { margin-bottom:30px; font-size:9px; }
+.dashboard-welcome { margin:0 0 32px; }
+.dashboard-welcome h1 { font-size:clamp(28px,2.7vw,38px); letter-spacing:-1.4px; line-height:1.35; margin-bottom:10px; overflow-wrap:anywhere; }
+.dashboard-welcome .eyebrow { color:var(--muted); font-size:10px; letter-spacing:1.5px; }
+.dashboard-welcome p:last-child { font-size:14px; }
+.name-highlight { text-decoration-line:underline; text-decoration-color:#16b8a6; text-decoration-thickness:5px; text-underline-offset:7px; text-decoration-skip-ink:none; }
+.workspace-page .stats { gap:16px; margin-bottom:34px; }
+.workspace-page .stat { background:#fff; border:1px solid var(--line); padding:20px; border-radius:14px; box-shadow:0 3px 12px #162b4603; }
+.stat-top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+.stat-top>span:first-child { font-size:12px; font-weight:550; color:var(--muted); }
+.stat-top .stat-symbol { width:34px; height:34px; display:grid; place-items:center; background:#edf3ff; border-radius:10px; color:var(--blue); flex-shrink:0; }
+.stat:nth-child(2) .stat-symbol { background:#e8f6f3; color:var(--teal); }
+.stat-symbol .ui-icon { width:18px; height:18px; }
+.workspace-page .stat strong { display:table; font-size:32px; line-height:1.3; letter-spacing:-1px; margin:0 0 8px; }
+.workspace-page .stat small { font-size:11px; }
+.dashboard-layout { grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr); gap:24px; align-items:start; }
+.dashboard-primary,.dashboard-layout .insights { min-width:0; }
+.dashboard-layout .panel,.dashboard-layout .job-card { border-radius:14px; padding:24px; background:white; box-shadow:0 3px 12px #162b4603; }
+.dashboard-layout .section-heading { gap:12px; margin-bottom:18px; align-items:center; }
+.dashboard-layout .section-heading .eyebrow { color:var(--teal); font-size:9px; margin-bottom:5px; }
+.dashboard-layout .section-heading h2 { font-size:18px; margin-bottom:0; }
+.dashboard-layout .section-heading>a { font-size:12px; white-space:nowrap; }
+.dashboard-layout .job-card { margin-bottom:14px; }
+.dashboard-layout .job-card h3 { font-size:16px; }
+.dashboard-layout .job-card .metadata { font-size:12px; margin-top:16px; }
+.dashboard-layout .company-icon { width:42px; height:42px; border-radius:11px; background:#eff4fb; color:#58719a; }
+.dashboard-layout .job-bottom { margin-top:18px; padding-top:14px; }
+.dashboard-layout .card-action { margin-top:12px; }
+.dashboard-layout .card-action .button { min-height:36px; padding:7px 12px; font-size:11px; background:white; border:1px solid var(--line); color:var(--ink); }
+.dashboard-layout .job-card .chip { font-size:10px; }
+.closing-panel { margin-top:24px; }
+.deadline-row { display:flex; align-items:center; gap:14px; padding:16px 0; border-top:1px solid var(--line); color:var(--ink); }
+.deadline-row>span:nth-child(2) { min-width:0; flex:1; }
+.deadline-row strong { font-size:13px; line-height:1.5; display:block; }
+.deadline-row small { font-size:11px; display:block; }
+.deadline-date { flex-shrink:0; width:44px; text-align:center; padding:5px; background:#f4f7fb; border-radius:8px; }
+.deadline-date strong { font-size:18px; }
+.deadline-date small { font-size:10px; text-transform:uppercase; }
+.deadline-badge { font-size:10px; color:#986322; white-space:nowrap; background:#fff5e7; padding:4px 8px; border-radius:6px; }
+.panel-symbol { display:inline-grid; place-items:center; width:38px; height:38px; color:var(--teal); background:#e8f6f3; border-radius:10px; }
+.skill-total { font-size:13px; margin:12px 0; }
+.skill-total strong { font-size:28px; color:var(--ink); margin-right:5px; }
+.text-action { display:inline-flex; align-items:center; gap:8px; font-size:12px; min-height:44px; }
+.panel-divider { height:1px; background:var(--line); margin:16px 0 24px; }
+.skills-panel h3 { font-size:14px; margin-bottom:6px; }
+.skills-panel .demand { margin-top:16px; }
+.skills-panel progress { height:6px; }
+.alert-panel { background:#eef8f6!important; border-color:#d3e8e2; }
+.alert-panel>.panel-symbol { margin-bottom:16px; background:white; }
+.alert-panel h2 { font-size:20px; line-height:1.4; }
+.alert-panel p { font-size:13px; }
+.alert-panel .button { background:white; color:var(--teal); border:1px solid #c8e2dc; }
+.sidebar-note { width:200px; margin:40px 20px 24px; padding:24px 18px; border-radius:16px; }
+.sidebar-note h2 { font-size:18px; line-height:1.45; margin-bottom:14px; }
+.sidebar-note .eyebrow { font-size:10px; letter-spacing:1.5px; }
+.sidebar-note p { font-size:14px; }
+.sidebar-note .button { padding:12px 16px; }
+.sidebar-collapsed .sidebar-note { visibility:hidden; }
+#main:focus { outline:none; }
+@media(hover:none) { .button:hover { transform:none; } }
+@media(max-width:1200px) { .workspace-page .topbar { padding:20px 24px; } .workspace-page main { padding:24px; } .dashboard-layout { grid-template-columns:minmax(0,1.4fr) minmax(250px,1fr); gap:18px; } .workspace-page .stat { padding:16px; } .stat-top { align-items:flex-start; } .stat-top .stat-symbol { width:28px; height:28px; } }
+@media(max-width:1080px) { .dashboard-layout { grid-template-columns:1fr; } .dashboard-layout .insights { display:grid; grid-template-columns:1fr 1fr; gap:18px; } .skills-panel { grid-row:span 2; } .dashboard-layout .insights .panel { margin:0; } }
+@media(max-width:700px) { .workspace-page .topbar { padding:16px; gap:12px; } .workspace-page main { padding:22px 16px; } .workspace-page .topbar-actions { flex-wrap:wrap; gap:8px; } .workspace-page .topbar .mobile-brand { width:148px; } .workspace-page .topbar .account-register { padding:8px 12px; } .dashboard-welcome { gap:20px; } .dashboard-welcome h1 { letter-spacing:-1px; } .dashboard-welcome .button { width:100%; } .workspace-page .stats { gap:12px; } .stat-top .stat-symbol { display:none; } .workspace-page .stat { padding:16px; } .dashboard-layout .insights { display:block; } .dashboard-layout .insights .panel { margin-bottom:20px; } .dashboard-layout .panel,.dashboard-layout .job-card { padding:18px; } .dashboard-layout .section-heading { flex-wrap:wrap; } .dashboard-layout .section-heading a { min-height:32px; } .deadline-row { flex-wrap:wrap; gap:10px; } .deadline-badge { margin-left:54px; } .workspace-tools nav { right:auto; left:0; } .dashboard-layout .tracker { gap:6px; } }
+@media(max-width:380px) { .workspace-page .topbar .updates-link { padding:8px; } .workspace-page .topbar-actions { gap:5px; } .workspace-tools summary { padding:8px; } .workspace-page .topbar .auth-entry { gap:0; } }
+/* Breakpoint changes are immediate; only the explicit desktop toggle animates. */
+@media(max-width:900px) { .workspace,.sidebar-collapsed .workspace { transition:none; } }

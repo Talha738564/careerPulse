@@ -1130,7 +1130,7 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
 .mobile-brand { background:transparent; border:0; border-radius:0; padding:0; box-shadow:none; }
 
 /* Brand-tinted glass header and unified search control. */
-.ui-icon { width:22px; height:22px; flex-shrink:0; display:block; }
+.ui-icon { width:22px; height:22px; flex-shrink:0; display:inline-block; vertical-align:middle; }
 .topbar { position:relative; display:grid; grid-template-columns:minmax(180px,1fr) auto auto; gap:24px; padding:24px 36px 30px; color:white; background:linear-gradient(115deg,var(--navy),#1d5bd6 60%,#087f75); border:0; }
 .topbar .mobile-brand { display:flex; width:200px; max-width:100%; padding:0; background:transparent; border:0; }
 .topbar .mobile-brand img { width:100%; height:auto; }
@@ -1180,12 +1180,35 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
  .topbar form[role="search"] .ui-icon { width:18px; }
 }
 
-/* Desktop sidebar control; native navigation remains available without JS. */
-.asset-icon { width:22px; height:22px; display:inline-block; vertical-align:middle; flex-shrink:0; }
+/* Two-state desktop navigation. Fixed slots keep the menu and nav icons anchored. */
 .workspace-brand-row { display:flex; align-items:center; gap:14px; min-width:0; }
-.topbar .desktop-menu-button { display:inline-grid; place-items:center; flex-shrink:0; width:44px; height:44px; min-height:44px; padding:0; border:1px solid #ffffff65; border-radius:10px; background:#ffffff18; }
-.desktop-menu-button .asset-icon { filter:brightness(0) invert(1); }
-.desktop-menu-button[hidden] { display:none; }
-.sidebar-collapsed .sidebar { visibility:hidden; }
-.sidebar-collapsed .workspace { margin-left:0; }
-@media(max-width:900px) { .topbar .desktop-menu-button { display:none; } }
+.sidebar { width:240px; padding:0; background:#15223d; overflow-x:hidden; overflow-y:auto; display:block; z-index:8; transition:width 230ms ease; }
+.workspace { margin-left:240px; transition:margin-left 230ms ease; }
+.sidebar-toggle { position:absolute; left:14px; top:16px; width:44px; height:44px; display:grid; place-items:center; border:0; padding:0; border-radius:9px; background:#ffffff14; color:#cdd6f0; }
+.sidebar-toggle[hidden] { display:none; }
+.sidebar-brand-expanded { position:absolute; top:16px; left:64px; height:44px; display:flex; align-items:center; gap:8px; color:white; white-space:nowrap; font-size:17px; font-weight:500; }
+.sidebar-brand-expanded img { width:26px; height:26px; object-fit:contain; }
+.sidebar-pulse { color:#7fa8f0; }
+.sidebar-brand-collapsed { position:absolute; top:76px; left:14px; width:44px; height:44px; display:grid; place-items:center; visibility:hidden; }
+.sidebar-brand-collapsed img { width:30px; height:30px; }
+.sidebar .sidebar-tagline { position:absolute; top:85px; left:24px; color:#8f9bc2; font-size:10px; letter-spacing:1.3px; font-weight:500; white-space:nowrap; margin:0; }
+.sidebar-divider { position:absolute; top:122px; left:24px; width:192px; height:1px; background:#ffffff1f; }
+.sidebar-avatar { position:absolute; left:22px; top:140px; width:28px; height:28px; border-radius:50%; background:#ffffff14; visibility:hidden; }
+#sidebar-navigation { padding-top:196px; padding-bottom:24px; display:flex; flex-direction:column; gap:10px; }
+.rail-link { position:relative; display:flex; align-items:center; height:44px; min-height:44px; margin:0 10px; border-radius:9px; color:#8f9bc2; text-decoration:none; }
+.rail-icon { display:grid; place-items:center; position:absolute; left:4px; width:44px; height:44px; }
+.rail-icon .ui-icon { width:20px; height:20px; }
+.rail-label { position:absolute; left:58px; font-size:14px; white-space:nowrap; }
+.rail-link.active { color:white; font-weight:700; }
+.sidebar-label { opacity:1; transform:translateX(0); transition:opacity 230ms ease,transform 230ms ease; }
+.sidebar-collapsed .sidebar { width:72px; }
+.sidebar-collapsed .workspace { margin-left:72px; }
+.sidebar-collapsed .sidebar-label { opacity:0; transform:translateX(-5px); pointer-events:none; }
+.sidebar-collapsed .sidebar-brand-collapsed,.sidebar-collapsed .sidebar-avatar { visibility:visible; }
+.sidebar a:focus-visible,.sidebar button:focus-visible { outline:2px solid #7fa8f0; outline-offset:2px; }
+@media(hover:hover) { .rail-link:hover { color:white; background:#ffffff0a; text-decoration:none; } .sidebar-toggle:hover { background:#ffffff24; } }
+.workspace-tools { position:relative; }
+.workspace-tools summary { min-height:44px; display:flex; align-items:center; border:1px solid #ffffff65; border-radius:12px; padding:8px 12px; cursor:pointer; font-size:12px; }
+.workspace-tools nav { position:absolute; top:52px; right:0; z-index:20; min-width:210px; padding:8px; border:1px solid var(--line); border-radius:12px; background:white; box-shadow:var(--shadow); }
+.workspace-tools nav a { display:block; padding:10px 12px; font-size:14px; color:var(--ink); }
+@media(max-width:900px) { .sidebar { display:none; } .workspace,.sidebar-collapsed .workspace { margin-left:0; } }

@@ -1,3 +1,4 @@
+{% from 'icons.html' import icon_svg %}
 {% extends 'base.html' %}{% from 'cards.html' import job_card with context %}{% block content %}
 <p class="eyebrow">DISCOVER YOUR NEXT STEP</p>
 <h1>Opportunity starts here.</h1>
@@ -6,7 +7,7 @@
 <input type="hidden" name="q" value="{{ q }}">
 <details class="filter-accordion" open>
 <summary class="filter-toggle">
-<span class="filter-toggle-title">⚙ Filter & sort options</span>
+<span class="filter-toggle-title">{{ icon_svg('sliders-horizontal') }} Filter & sort options</span>
 <span class="filter-active-pill">{% if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') %}Active filters{% else %}Customize{% endif %}</span>
 </summary>
 <div class="filter-fields">
@@ -44,9 +45,9 @@
 <h2>{{ jobs|length }} opportunities</h2>
 <span>Curated demo workspace</span>
 </div>
-<div class="browse-grid">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
+<div class="browse-grid" data-load-region aria-label="Opportunities">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
 <h2>No matches this time.</h2>
 <p>Try another skill or remove a filter.</p>
-<a href="{{ url_for('opportunities') }}">Show all opportunities →</a>
+<a href="{{ url_for('opportunities') }}">Show all opportunities {{ icon_svg('arrow-right') }}</a>
 </div>{% endfor %}</div>
 {% endblock %}

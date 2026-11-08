@@ -56,3 +56,40 @@ Validation: 35 unit tests and 80 responsive route checks pass. The focused brows
 suite also visits all four feature links, tests every scroll reveal and verifies that
 registration has no login circle. Reduced motion and no-JS checks cover all sections.
 Final result remains passed. Physical-device testing remains outside this check.
+
+## Collapsible sidebar
+
+Implemented the supplied reference as a 72px icon rail and 240px expanded navy
+sidebar, with a 230ms width and label transition. The hamburger and navigation
+icons retain identical coordinates in both states. The upper region reserves room
+for the collapsed logomark and avatar. Settings opens the existing profile page;
+application tracking and job alerts remain available in the header Workspace menu.
+
+Reviewed expanded desktop and collapsed rail screenshots in `artifacts/sidebar/`.
+All icons render as local SVGs. Browser checks pass at 901, 1024, 1440 and 1920px,
+including exact anchor coordinates, keyboard focus, active links and asset loading.
+At 390px, the existing mobile navigation remains available without horizontal
+overflow. Reduced-motion preferences disable transitions. All 35 unit tests and
+80 existing responsive route checks pass. Mobile testing uses Chromium emulation.
+
+## Dashboard and shared loading refresh
+
+Implemented a compact light workspace header, teal underline beneath the greeting's
+first name, four overview cards, recommendations, closing-soon list, application
+summary, skills/demand, job alerts and an empty upcoming-events panel. The supplied
+“One step forward” card is retained inside the expanded sidebar and removed from
+keyboard navigation while collapsed. Original brand assets are preserved.
+
+Reviewed `artifacts/dashboard/desktop.png`, `desktop-first-fold.png`, `mobile.png`
+and `loading-desktop.png`. Loading placeholders preserve actual text/field/card
+geometry; numeric values disappear behind digit-sized gray bars during requests.
+The header uses the supplied logo variant for light backgrounds. All UI icons
+are local inline Lucide SVGs, including public and authentication screens.
+
+Full student/admin browser workflow passes. Responsive route checks, sidebar
+coordinates, delayed requests, filtering, saving, profile edits, browser history,
+GET races, failures, no-JS and reduced motion are covered by the browser suites.
+The tracker breakpoint check caught a sidebar margin transition during resizing;
+mobile breakpoint changes now apply immediately. Physical phones and a full
+screen-reader audit remain outside this validation. See `docs/LOADING_PATTERNS.md`
+for shared tokens, request behavior, timing budgets and the events data limitation.

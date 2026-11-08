@@ -1,3 +1,4 @@
+import re
 import unittest
 from app import create_app
 
@@ -16,7 +17,7 @@ class ProfileTests(unittest.TestCase):
     def test_profile_save_and_isolation(self):
         response = self.post('/profile', full_name='Demo Ali', study_year='3', cgpa='3.7', university='Sample University')
         self.assertEqual(response.status_code, 303)
-        self.assertIn(b'Welcome back, Demo', self.client.get('/dashboard').data)
+        self.assertIn('Welcome back, Demo', re.sub(r'<[^>]+>', '', self.client.get('/dashboard').get_data(as_text=True)))
         self.assertNotIn(b'Demo Ali', self.app.test_client().get('/profile').data)
 
     def test_csrf(self):

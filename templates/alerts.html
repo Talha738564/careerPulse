@@ -1,10 +1,11 @@
+{% from 'icons.html' import icon_svg %}
 {% extends 'base.html' %}{% block content %}
 <p class="eyebrow">LET OPPORTUNITY FIND YOU</p>
 <h1>A little less searching.</h1>
 <p>Set your preferences. We’ll collect matching roles in your notifications.</p>
 <div class="dashboard-grid">
 <section>
-{% for alert in alerts %}<article class="panel">
+{% for alert in alerts %}<article class="panel" data-load-region>
 <div class="section-heading">
 <h2>{{ alert.alert_name }}</h2>
 <span class="match">{{ 'Active' if alert.is_active else 'Paused' }}</span>
@@ -16,13 +17,13 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <button class="remove">{{ label }}</button>
 </form>{% endfor %}</div>
-</article>{% else %}<div class="panel">
+</article>{% else %}<div class="panel" data-load-region>
 <h2>Make your first alert.</h2>
 <p>Choose the skills and location you want to hear about.</p>
 </div>{% endfor %}
-<a href="{{ url_for('alerts.notifications') }}">View notifications →</a>
+<a href="{{ url_for('alerts.notifications') }}">View notifications {{ icon_svg('arrow-right') }}</a>
 </section>
-<section class="panel">
+<section class="panel" data-load-region>
 <h2>{{ 'Edit alert' if editing else 'Create an alert' }}</h2>
 <form method="post" class="profile-form">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% if editing %}<input type="hidden" name="alert_id" value="{{ editing.alert_id }}">{% endif %}
