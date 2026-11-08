@@ -42,3 +42,32 @@ Create account directly. Both forms were opened from the homepage at 1440px and
 Login and registration now use a dedicated responsive public layout with original brand artwork, bold headings, frosted forms and static blue/teal glass shapes. Existing authentication, CSRF, flash messages and server validation remain connected. Demo accounts still reset on server restart.
 
 Validation: 35 unit tests passed; full Chromium student/admin browser workflow passed. Auth layout checked at 320, 390, 768 and 1440 CSS pixels with no horizontal overflow. Focused browser checks verified keyboard skip navigation, invalid login, password mismatch feedback and reduced-motion styling. Desktop and mobile screenshots were captured and visually inspected. Tests use browser emulation, not physical phones or their keyboards.
+
+### Public homepage and navigation — 2026-11-08
+
+Implemented the approved public landing concept with the original light-background
+SVG logo, local Inter typography, working account/demo links and a reduced-motion
+aware scroll reveal. Search now appears only on Explore, without a duplicate input.
+Desktop workspace navigation can collapse, and the public page has a menu at all
+sizes. Login emphasizes “here”; login/registration password fields have accessible
+show/hide controls. Fonts and icons are served locally with licenses.
+
+35 unit tests and the complete student/admin Chromium workflow pass. The focused
+`tests/browser_landing.py` suite passes 80 route/width checks from 320px to 1440px,
+checks menu keyboard behavior, password toggles, search placement, CTA navigation,
+scroll reveal, reduced motion, no-JS fallback and browser errors. Visual comparison
+and limitations are recorded in `design-qa.md`. Screenshots are generated in ignored
+`artifacts/landing/`. These are browser-emulated checks, not physical-device tests.
+
+Windows PowerShell:
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe tests/browser_smoke.py
+.\.venv\Scripts\python.exe tests/browser_landing.py
+```
+
+Homepage follow-up: expanded the feature tour with job alerts, application tracking,
+saved opportunities and deadline reminders, with working links to each existing tool.
+Enlarged only the login “here” circle with three strokes. Re-ran all 35 unit tests and
+80 route/viewport checks; feature links, all scroll reveals and no-JS/reduced-motion
+behavior pass. Reviewed feature screenshots at 1440px and 390px.

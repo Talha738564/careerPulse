@@ -3,12 +3,8 @@
 <h1>Opportunity starts here.</h1>
 <p>Find a role that fits your skills—and room to grow.</p>
 <form class="filters" method="get">
-<div class="filter-search-row">
-<label class="filter-search-label">Search<input name="q" value="{{ q }}" placeholder="Role, company, city or skill">
-</label>
-<button class="button filter-search-btn">Search</button>
-</div>
-<details class="filter-accordion" {{ 'open' if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') or request.args.get('sort') }}>
+<input type="hidden" name="q" value="{{ q }}">
+<details class="filter-accordion" open>
 <summary class="filter-toggle">
 <span class="filter-toggle-title">⚙ Filter & sort options</span>
 <span class="filter-active-pill">{% if request.args.get('type') or request.args.get('remote') or request.args.get('city') or request.args.get('skill') or request.args.get('level') or request.args.get('salary') or request.args.get('deadline') %}Active filters{% else %}Customize{% endif %}</span>

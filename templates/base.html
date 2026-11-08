@@ -1,4 +1,4 @@
-{% from 'icons.html' import icon_svg %}
+{% from 'icons.html' import icon_svg, asset_icon %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,10 +7,11 @@
 <title>{{ title }} · CareerPulse</title>
 <link rel="icon" href="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}">
 <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<script defer src="{{ url_for('static',filename='js/ui.js') }}"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<aside class="sidebar">
+<aside class="sidebar" id="workspace-sidebar">
 <a class="brand" href="{{ url_for('home') }}">
 <img src="{{ url_for('static',filename='images/careerpulse-logo-dark.svg') }}" alt="CareerPulse">
 </a>
@@ -27,9 +28,10 @@
 </aside>
 <div class="workspace">
 <header class="topbar">
+<div class="workspace-brand-row"><button hidden type="button" class="desktop-menu-button" data-sidebar-toggle aria-controls="workspace-sidebar" aria-expanded="true" aria-label="Collapse navigation menu">{{ asset_icon("menu") }}</button>
 <a class="mobile-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home">
 <img src="{{ url_for('static',filename='images/careerpulse-logo-dark.svg') }}" alt="CareerPulse">
-</a>
+</a></div>
 <span class="identity">
 <b class="avatar">{{ student.full_name[:1] }}</b>
 <span class="identity-name">{{ student.full_name }}</span>
@@ -47,12 +49,14 @@
 <a class="updates-link" href="{{ url_for('alerts.notifications') }}">{{ icon_svg("bell") }}<span>Updates</span></a>
 </div>
 <div class="header-intro"><p class="eyebrow">DISCOVER YOUR FIT</p><h2>{{ "Find a job that fits your life" if request.endpoint == "home" else title }}</h2><p>Discover opportunities. Build your skills. Take your next step.</p></div>
+{% if request.endpoint == 'opportunities' %}
 <form action="{{ url_for('opportunities') }}" role="search">
 <label class="sr-only" for="global-search">Search jobs, companies or skills</label>
 {{ icon_svg("search") }}
 <input id="global-search" name="q" value="{{ request.args.get('q', '') }}" placeholder="Search jobs, companies or skills…">
 <button aria-label="Search">Search</button>
 </form>
+{% endif %}
 </header>
 <main id="main">
 <div class="demo-note">DEMO WORKSPACE <span>Sample records are fictional. Your edits are temporary.</span>

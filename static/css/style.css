@@ -1179,3 +1179,13 @@ fieldset { border:1px solid var(--line); border-radius:10px; padding:14px; min-w
  .topbar form[role="search"] button { padding:10px 16px; }
  .topbar form[role="search"] .ui-icon { width:18px; }
 }
+
+/* Desktop sidebar control; native navigation remains available without JS. */
+.asset-icon { width:22px; height:22px; display:inline-block; vertical-align:middle; flex-shrink:0; }
+.workspace-brand-row { display:flex; align-items:center; gap:14px; min-width:0; }
+.topbar .desktop-menu-button { display:inline-grid; place-items:center; flex-shrink:0; width:44px; height:44px; min-height:44px; padding:0; border:1px solid #ffffff65; border-radius:10px; background:#ffffff18; }
+.desktop-menu-button .asset-icon { filter:brightness(0) invert(1); }
+.desktop-menu-button[hidden] { display:none; }
+.sidebar-collapsed .sidebar { visibility:hidden; }
+.sidebar-collapsed .workspace { margin-left:0; }
+@media(max-width:900px) { .topbar .desktop-menu-button { display:none; } }

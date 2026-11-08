@@ -1,0 +1,58 @@
+# Homepage implementation QA
+
+final result: passed
+
+## Source and evidence
+- Source visual: `/workspace/generated_images/exec-7a9e78ab-f9ee-4000-adf0-540b828621cf.png` (1159 × 1358).
+- Implementation: `artifacts/landing/home-1159.png`, captured at 1159 CSS pixels wide, device scale factor 1, full page; the additional footer is intentional.
+- Full-view comparison: `artifacts/landing/comparison.png`. Source left, browser implementation right, both uniformly displayed at 580px wide. No independent height stretching.
+- Additional browser captures: `artifacts/landing/home-1440.png`, `home-390.png`, `login-1440.png`, `login-390.png`, `register-1440.png`, `register-390.png`.
+- State: guest, menu closed, default theme, how-it-works reveal completed before full-page capture.
+- The full-size homepage and login captures were also inspected for logo clarity, wrapping, circle placement and eye-button legibility; the controls are readable at this scale without further crops.
+
+## Comparison history and findings
+1. Initial mobile inspection found missing whitespace where the desktop description line break is hidden. Added a literal space and recaptured.
+2. Initial desktop comparison found the hero too small relative to the reference. Increased the fluid type scale, reduced weight from 850 to 800, and recaptured.
+3. The next combined comparison found excess hero vertical spacing, a smaller logo at the intermediate desktop breakpoint, and undersized explanatory heading. Adjusted hero spacing/line height, restored the larger logo, and increased the explanatory heading scale.
+4. Final combined comparison and mobile/login screenshots show no remaining actionable P0/P1/P2 issues. The requested extra menu control and a small demo footer are intentional additions.
+
+## Required fidelity surfaces
+- Typography: locally hosted Inter variable font; large three-line navy/blue headline, responsive wrapping, readable mobile controls. Source raster letterforms are approximated by the real font rather than embedded as an image.
+- Layout: white hero, centered CTA group and scroll cue, mint explanation section with three steps and one example opportunity. Two columns stack naturally on phones. Added menu occupies header space intentionally.
+- Colors: original navy/blue/teal identity, restrained mint surface, low-contrast borders and subtle card shadow. No fake testimonials or usage metrics.
+- Assets: original supplied SVG logos retained without edits; local Lucide SVG interface icons and Inter font include their licenses. Logo remains sharp at both densities. Underline and requested text circle are lightweight decorative CSS treatments; the underline is cleaner than the generated sketch.
+- Content: approved headline, support copy, CTA, fictional opportunity, required-skill examples, registration and guest links. Sample card links to Python exploration so a deleted catalog record cannot leave a broken fixed-ID link.
+
+## Verification
+- 35 Python unit tests passed.
+- Existing Chromium student/admin end-to-end smoke passed.
+- `tests/browser_landing.py`: 80 route/width checks at 320, 360, 390, 430, 768, 1024, 1159 and 1440 CSS pixels, no horizontal page overflow.
+- Search input exists only on Explore; duplicate input removed; filters preserve the search query.
+- Public menu opens, closes and restores focus with Escape. Desktop sidebar toggles visibility and keyboard access.
+- Login and registration password buttons independently reveal/hide the value without navigation or value loss. Fields revert to hidden on form submission/page restoration.
+- Hero CTA reaches registration, scroll cue reaches explanation, scroll reveal completes, reduced-motion removes motion, and no-JS content/forms remain available.
+- No browser JavaScript errors or HTTP failures in the focused browser suite.
+- Git whitespace check passed.
+
+## Follow-up polish and limits
+- P3: generated image shadows, exact glyph shapes and underline texture are not pixel-identical; real SVG branding and browser text are intentionally preserved.
+- Testing uses Chromium responsive emulation, not physical phones or a full screen-reader audit.
+- Screenshots are local ignored artifacts; rerun the browser suites to regenerate them.
+
+## Follow-up: feature tour and login emphasis
+
+User-authorized expansion adds job alerts, application tracking, saved opportunities
+and Deadline Pulse below the approved first section. The hero remains the reference
+target; the additional sections follow its typography, navy/blue/teal palette and
+spacing. Feature examples are explicitly illustrative and link to the existing tools.
+
+Reviewed `artifacts/landing/features-desktop.png` (1440 CSS px) and
+`artifacts/landing/features-mobile.png` (390 CSS px), plus refreshed login screenshots.
+Desktop alternates feature text and previews; mobile uses a single column with the
+text first. No clipped labels, overlapping controls or horizontal overflow found.
+The login-only circle is larger and has three thin strokes; registration is unchanged.
+
+Validation: 35 unit tests and 80 responsive route checks pass. The focused browser
+suite also visits all four feature links, tests every scroll reveal and verifies that
+registration has no login circle. Reduced motion and no-JS checks cover all sections.
+Final result remains passed. Physical-device testing remains outside this check.

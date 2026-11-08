@@ -1,27 +1,105 @@
-{% extends 'base.html' %}{% block content %}
-<section class="landing">
-<p class="eyebrow">SKILLS MEET POSSIBILITY</p>
-<h1>Your next chapter<br>starts with <span class="teal">you.</span>
-</h1>
-<p>Discover opportunities that fit your strengths.<br>Understand your skill gaps. Take your next step with confidence.</p>
-{% if account %}
-<a class="button" href="{{ url_for('dashboard') }}">Continue to your dashboard →</a>
-{% else %}
-<div class="auth-entry" aria-label="Account access">
-<a class="button" href="{{ url_for('auth.login') }}">Sign in</a>
-<a class="button secondary-button" href="{{ url_for('auth.register') }}">Create account</a>
+{% from 'icons.html' import asset_icon, icon_svg %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Discover internships, freelance projects and entry-level roles that fit your skills. Find your next move with CareerPulse.">
+<title>Find your next move · CareerPulse</title>
+<link rel="icon" href="{{ url_for('static',filename='images/careerpulse-icon-static.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
+<script defer src="{{ url_for('static',filename='js/ui.js') }}"></script>
+</head>
+<body class="public-home">
+<a class="skip" href="#main">Skip to content</a>
+<header class="public-header">
+<a class="public-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home"><img src="{{ url_for('static',filename='images/careerpulse-logo-light.svg') }}" alt="CareerPulse" width="280" height="65"></a>
+<nav class="public-links" aria-label="About CareerPulse"><a href="#how-it-works">How it works</a><a href="{{ url_for('opportunities') }}">Explore opportunities</a></nav>
+<nav class="public-account" aria-label="Account access">
+{% if account %}<a class="button public-start" href="{{ url_for('dashboard') }}">My dashboard</a>{% else %}<a href="{{ url_for('auth.login') }}">Sign in</a><a class="button public-start" aria-label="Create account" href="{{ url_for('auth.register') }}">Get started</a>{% endif %}
+</nav>
+<details class="public-menu">
+<summary aria-label="Menu">{{ asset_icon('menu') }}<span class="sr-only">Menu</span></summary>
+<nav aria-label="Quick navigation"><a href="#how-it-works">How it works</a><a href="{{ url_for('opportunities') }}">Explore opportunities</a><a href="{{ url_for('dashboard') }}">Try the guest demo</a><a href="{{ url_for('auth.login') }}">Sign in</a><a href="{{ url_for('auth.register') }}">Create account</a></nav>
+</details>
+</header>
+<main id="main" tabindex="-1">
+{% for message in get_flashed_messages() %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+<section class="home-hero" aria-labelledby="hero-title">
+<p class="hero-eyebrow">FOR YOUR NEXT CHAPTER</p>
+<h1 id="hero-title"><span>Your skills.</span><span>Your future.</span><span class="hero-next">Your next move.</span></h1>
+<p class="hero-description">Discover opportunities that fit your strengths.<br> Understand your skill gaps. Take your next step with confidence.</p>
+<div class="hero-actions"><a class="button hero-primary" href="{{ url_for('dashboard') if account else url_for('auth.register') }}">Find my next opportunity {{ asset_icon('arrow-right') }}</a><a class="hero-demo" href="{{ url_for('dashboard') }}" aria-label="Try the guest demo without an account">Explore the demo</a></div>
+<p class="hero-types">Internships · Freelance · Entry-level roles</p>
+<a class="scroll-cue" href="#how-it-works">See how it works {{ asset_icon('chevron-down') }}</a>
+</section>
+<section class="home-how" id="how-it-works" aria-labelledby="how-title">
+<div class="how-inner" data-reveal>
+<div class="how-copy"><h2 id="how-title">A clearer path from<br class="desktop-break"> skills to opportunity.</h2>
+<ol class="home-steps"><li><span>01</span>Add your skills</li><li><span>02</span>Discover your fit</li><li><span>03</span>Track your progress</li></ol></div>
+<article class="opportunity-preview" aria-label="Example skill match">
+<p class="preview-label">FICTIONAL DEMO</p><h3>Python Backend Intern</h3>
+<p class="preview-meta"><span>{{ asset_icon('building-2') }} Northstar Labs</span><span>{{ asset_icon('map-pin') }} Lahore · Internship</span></p>
+<p class="preview-match">100% skill match</p>
+<div class="preview-skills">{% for skill in ['Python','SQL','Git'] %}<span>{{ asset_icon('check') }} {{ skill }}</span>{% endfor %}</div>
+<a class="preview-link" href="{{ url_for('opportunities',q='Python') }}">View opportunity {{ asset_icon('arrow-right') }}</a>
+</article>
 </div>
-<p class="guest-entry"><a href="{{ url_for('dashboard') }}">Try the guest demo without an account →</a></p>
-{% endif %}
-<a class="secondary" href="{{ url_for('opportunities') }}">Browse opportunities</a>
+<div class="feature-tour">
+<section class="feature-row" data-reveal aria-labelledby="alerts-feature-title">
+<div class="feature-copy">
+<p class="feature-kicker">JOB ALERTS</p>
+<h2 id="alerts-feature-title">Less searching.<br>More possibilities.</h2>
+<p>Choose the skills, location and role you’re looking for. Find matching opportunities in your notifications when new roles are curated.</p>
+<a class="feature-link" href="{{ url_for('alerts.index') }}">Create your first alert {{ asset_icon('arrow-right') }}</a>
+</div>
+<div class="feature-preview alert-preview" aria-label="Fictional job alert example">
+<p class="preview-label">EXAMPLE ALERT</p>
+<div class="feature-preview-heading"><h3>My next internship</h3><span class="feature-status">Active</span></div>
+<div class="preview-skills"><span>Python</span><span>SQL</span><span>Lahore</span><span>Internship</span></div>
+<div class="notification-example"><span class="notification-symbol" aria-hidden="true">{{ icon_svg('bell') }}</span><div><strong>A new match for your alert</strong><p>Python Backend Intern at Northstar Labs</p><small>Fictional opportunity · In-app notification</small></div></div>
+<p class="feature-footnote">Any selected required skill can match. Your other preferences must match too.</p>
+</div>
 </section>
-<div class="stats home-features">{% for number,title,body in [('01','Discover your fit','Transparent matching based on required skills.'),('02','Build your confidence','See exactly which skills match and what to learn next.'),('03','Own your journey','Track your application progress with explicit, personal status updates.')] %}<article class="panel feature-card">
-<span class="feature-badge">{{ number }}</span>
-<h2>{{ title }}</h2>
-<p>{{ body }}</p>
-</article>{% endfor %}</div>
-<section class="panel about-panel">
-<h2>A course project with a clear purpose.</h2>
-<p>Explore the guest demo or create a student account. Profiles, saved jobs, tracking, alerts and admin curation are working with temporary in-memory data. The Oracle schema and SQL demonstrations are prepared; live integration awaits a database. Companies are curated entities, without employer accounts.</p>
+<section class="feature-row feature-row-reverse" data-reveal aria-labelledby="tracker-feature-title">
+<div class="feature-copy">
+<p class="feature-kicker">APPLICATION TRACKER</p>
+<h2 id="tracker-feature-title">Every next step.<br>All in one place.</h2>
+<p>Keep your applications organized, from your first shortlist to an interview or offer. Add dates and notes, and update your status as you go.</p>
+<a class="feature-link" href="{{ url_for('tracker.index') }}">Explore your tracker {{ asset_icon('arrow-right') }}</a>
+</div>
+<div class="feature-preview tracker-preview" aria-label="Fictional application tracker example">
+<p class="preview-label">EXAMPLE JOURNEY</p>
+<h3>Your applications</h3>
+<ul class="tracker-example">
+<li><div><strong>Python Backend Intern</strong><small>Northstar Labs</small></div><span class="feature-status status-applied">Applied</span></li>
+<li><div><strong>Data Analyst Intern</strong><small>Juniper Analytics</small></div><span class="feature-status">Interview</span></li>
+<li><div><strong>Junior Web Developer</strong><small>Bluefin Studio</small></div><span class="feature-status status-saved">Saved</span></li>
+</ul>
+<p class="feature-footnote">You update each status. Opening an employer’s website never marks a role as applied.</p>
+</div>
 </section>
-{% endblock %}
+<div class="feature-pair" data-reveal>
+<section class="feature-small" aria-labelledby="saved-feature-title">
+<span class="feature-symbol" aria-hidden="true">{{ icon_svg('bookmark') }}</span>
+<p class="feature-kicker">SAVED OPPORTUNITIES</p>
+<h2 id="saved-feature-title">A shortlist worth<br>coming back to.</h2>
+<p>Save interesting roles while you explore. Keep your favorites together and return when you’re ready for the next step.</p>
+<a class="feature-link" href="{{ url_for('saved.index') }}">Open your saved jobs {{ asset_icon('arrow-right') }}</a>
+</section>
+<section class="feature-small deadline-feature" aria-labelledby="deadline-feature-title">
+<span class="feature-symbol" aria-hidden="true">{{ icon_svg('bell') }}</span>
+<p class="feature-kicker">DEADLINE PULSE</p>
+<h2 id="deadline-feature-title">Keep closing dates<br>in sight.</h2>
+<p>See which saved roles close within seven days. In-app reminders help you plan your next move before the opportunity passes.</p>
+<a class="feature-link" href="{{ url_for('alerts.notifications') }}">View your notifications {{ asset_icon('arrow-right') }}</a>
+</section>
+</div>
+<div class="feature-finish"><h2>Your next chapter starts with a skill.</h2><a class="button" href="{{ url_for('profile') if account else url_for('auth.register') }}">{{ 'Update your skills' if account else 'Create your student account' }} {{ asset_icon('arrow-right') }}</a><p>Try the guest demo to explore with fictional data.</p></div>
+</div>
+</section>
+</main>
+<footer class="public-footer"><span>CareerPulse · Built for your next step.</span><span>Fictional course demo · Edits reset on restart.</span></footer>
+</body>
+</html>
