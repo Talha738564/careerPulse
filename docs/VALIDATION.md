@@ -85,3 +85,19 @@ save and profile updates, history, request races, network failure recovery,
 validation errors, responsive resizing, timing caps, inline icon loading,
 reduced motion and no-JS fallback. `tests/browser_smoke.py` validates the complete
 student/admin workflow, including skills, tracker and notifications.
+
+Workspace/landing layout correction: `tests/browser_layout_fixes.py` verifies the
+landing CTA buttons and “See how it works” fit without scrolling at 1366×768,
+1440×900, 1280×720, 1024×600, 390×844, 360×640 and 320×568. It also verifies no
+collapsed-rail vertical overflow at 500/640/900px heights, three workspace header
+controls, guest/account menu access, Escape dismissal and authenticated sign-out.
+The sidebar suite and full student/admin workflow also pass. Screenshots live in
+`artifacts/layout-fixes/`. Mobile checks use browser emulation.
+
+```powershell
+.\.venv\Scripts\python.exe tests/browser_layout_fixes.py
+```
+
+Approved mobile header: logo, Sign in, Get started and menu share one row at
+320–600px. The layout regression checks their shared vertical alignment and
+retains 44px touch targets.

@@ -26,6 +26,7 @@ if (sidebar && toggle) {
   const sync = () => {
     document.body.classList.toggle('sidebar-collapsed', !expanded && desktop.matches);
     sidebar.inert = !desktop.matches;
+    if (!expanded) sidebar.scrollTop = 0;
     sidebar.querySelector('[data-sidebar-note]').inert = !expanded;
     sidebar.querySelector('.sidebar-tagline').setAttribute('aria-hidden', String(!expanded));
     const expandedBrand = sidebar.querySelector('.sidebar-brand-expanded');
@@ -42,7 +43,7 @@ if (sidebar && toggle) {
   sync();
 }
 function closeMenus(event) {
-  document.querySelectorAll('.public-menu[open], .workspace-tools[open]').forEach(menu => {
+  document.querySelectorAll('.public-menu[open], .workspace-tools[open], .account-menu[open]').forEach(menu => {
     if (event.type === 'keydown' && event.key !== 'Escape') return;
     if (event.type === 'click' && menu.contains(event.target) && !event.target.closest('a')) return;
     if (event.type === 'focusout' && (!menu.contains(event.target) || menu.contains(event.relatedTarget))) return;

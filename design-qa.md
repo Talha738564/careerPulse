@@ -93,3 +93,21 @@ The tracker breakpoint check caught a sidebar margin transition during resizing;
 mobile breakpoint changes now apply immediately. Physical phones and a full
 screen-reader audit remain outside this validation. See `docs/LOADING_PATTERNS.md`
 for shared tokens, request behavior, timing budgets and the events data limitation.
+
+## First-screen and collapsed-rail corrections
+
+Removed the hidden expanded CTA card from collapsed layout flow, reset sidebar
+scroll position on collapse, and kept the narrow rail free of a visible scrollbar.
+The expanded card and small-screen scrolling remain available. Workspace headers
+now expose only Workspace, Updates and a user account menu; profile/sign-out live
+inside that menu. Public authentication links remain on public pages.
+
+Reduced landing headline, header and spacing using viewport-aware sizing. Reviewed
+`artifacts/layout-fixes/homepage-1366.png`, `homepage-390.png` and
+`collapsed-menu.png`; both opportunity buttons and the how-it-works cue are in the
+initial viewport. Seven first-screen sizes, sidebar geometry and the complete
+student/admin workflow pass; see `docs/VALIDATION.md`.
+
+Applied the approved single-row mobile header preview: compact original logo,
+Sign in, Get started and menu remain visible together. Verified alignment and
+no horizontal overflow at 320px, 360px and 390px.

@@ -40,22 +40,14 @@
 <a class="mobile-brand" href="{{ url_for('home') }}" aria-label="CareerPulse home">
 <img src="{{ url_for('static',filename='images/careerpulse-logo-light.svg') }}" alt="CareerPulse">
 </a></div>
-<span class="identity">
-<b class="avatar">{{ student.full_name[:1] }}</b>
-<span class="identity-name">{{ student.full_name }}</span>
-<small>{{ account.role|title if account else 'Guest demo' }}</small>
-</span>
 <div class="topbar-actions">
-<details class="workspace-tools"><summary>Workspace</summary><nav aria-label="Workspace tools"><a href="{{ url_for('tracker.index') }}">Application tracker</a><a href="{{ url_for('alerts.index') }}">Job alerts</a><a href="{{ url_for('profile') }}">Profile &amp; skills</a></nav></details>
-{% if account %}<form method="post" action="{{ url_for('auth.logout') }}">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-<button class="remove topbar-btn">Sign out</button>
-</form>{% else %}<nav class="auth-entry" aria-label="Account navigation">
-<a class="button secondary-button auth-btn" href="{{ url_for('auth.login') }}">Sign in</a>
-<a class="account-register" href="{{ url_for('auth.register') }}">Create account</a>
-</nav>{% endif %}
-{% if account and account.role=='ADMIN' %}<a class="updates-link admin-pill" href="{{ url_for('admin.dashboard') }}">Admin</a>{% endif %}
-<a class="updates-link" href="{{ url_for('alerts.notifications') }}">{{ icon_svg("bell") }}<span>Updates</span></a>
+<details class="workspace-tools"><summary>Workspace</summary><nav aria-label="Workspace tools"><a href="{{ url_for('tracker.index') }}">Application tracker</a><a href="{{ url_for('alerts.index') }}">Job alerts</a><a href="{{ url_for('profile') }}">Profile &amp; skills</a>{% if account and account.role=='ADMIN' %}<a href="{{ url_for('admin.dashboard') }}">Admin workspace</a>{% endif %}</nav></details>
+<a class="updates-link" href="{{ url_for('alerts.notifications') }}">{{ icon_svg('bell') }}<span>Updates</span></a>
+<details class="account-menu">
+<summary aria-label="User account"><span class="avatar" aria-hidden="true">{{ student.full_name[:1] }}</span><span class="account-name">{{ student.full_name }}</span>{{ icon_svg('chevron-down') }}</summary>
+<div class="account-panel"><strong>{{ student.full_name }}</strong><small>{{ account.role|title if account else 'Guest demo' }}</small><a href="{{ url_for('profile') }}">Profile &amp; skills</a>
+{% if account %}<form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="remove">Sign out</button></form>{% else %}<a href="{{ url_for('home') }}">Back to homepage</a>{% endif %}</div>
+</details>
 </div>
 
 {% if request.endpoint == 'opportunities' %}
