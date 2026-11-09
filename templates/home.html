@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
 <script defer src="{{ url_for('static',filename='js/ui.js') }}"></script>
 <script defer src="{{ url_for('static',filename='js/feature-demos.js') }}"></script>
+<script defer src="{{ url_for('static',filename='js/feature-cursor.js') }}"></script>
 </head>
 <body class="public-home">
 <a class="skip" href="#main">Skip to content</a>
@@ -36,6 +37,19 @@
 <a class="scroll-cue" href="#how-it-works">See how it works {{ icon_svg('chevron-down') }}</a>
 </section>
 <section class="home-how" id="how-it-works" aria-labelledby="how-title">
+
+<section class="feature-row discovery-feature" data-reveal aria-labelledby="discovery-feature-title">
+<div class="feature-copy"><p class="feature-kicker">DISCOVER YOUR FIT</p><h2 id="discovery-feature-title">Your next role.<br>A little easier to find.</h2><p>Search jobs, companies or skills. Narrow your choices and discover the roles that match what you already know.</p><a class="feature-link" href="{{ url_for('opportunities') }}">Explore opportunities {{ icon_svg('arrow-right') }}</a></div>
+<div class="feature-preview feature-demo discovery-preview" data-feature-demo data-reveal aria-label="Job discovery demonstration">
+<div class="demo-toolbar"><p class="preview-label">JOB DISCOVERY · EXAMPLE</p><span class="demo-duration">3.6s demo</span></div>
+<p class="sr-only">Search for Python, filter to internships in Lahore, and open a role with a 100 percent required-skill match.</p>
+<div class="demo-scenes" aria-hidden="true">
+<div class="demo-frame"><span class="demo-step">01 / START WITH A SKILL</span><h3>What’s your next move?</h3><div class="demo-window"><span class="demo-field-label">Search jobs, companies or skills...</span><div class="demo-search">{{ icon_svg('search') }}<strong>Python</strong></div><p>Matching titles, companies and tagged skills</p></div><p class="demo-caption">Results update as you type.</p></div>
+<div class="demo-frame"><span class="demo-step">02 / NARROW YOUR CHOICES</span><h3>A role that fits your life.</h3><div class="demo-window"><div class="preview-skills"><span>Internship</span><span>Lahore</span><span>Python</span></div><span class="demo-field-label">Sort by: Best match</span><div class="demo-action">Apply filters {{ icon_svg('check') }}</div></div><p class="demo-caption">Combine filters to focus your search.</p></div>
+<div class="demo-frame"><span class="demo-step">03 / FIND YOUR FIT</span><h3>Your skills, put to work.</h3><div class="demo-window"><strong>Python Backend Intern</strong><p>Northstar Labs · Lahore</p><span class="feature-status">100% skill match</span></div><p class="demo-caption">Open the role to see requirements and your skill gaps.</p></div>
+</div><div class="demo-progress" aria-hidden="true"><span></span></div>
+<div class="demo-footer"><span>Fictional search example</span><button type="button" class="demo-control" hidden aria-label="Play job discovery demo">Play demo {{ icon_svg('arrow-right') }}</button></div><p class="demo-announcement sr-only" role="status"></p>
+</div></section>
 <div class="how-inner" data-reveal>
 <div class="how-copy"><h2 id="how-title">A clearer path from<br class="desktop-break"> skills to opportunity.</h2>
 <ol class="home-steps"><li><span>01</span>Add your skills</li><li><span>02</span>Discover your fit</li><li><span>03</span>Track your progress</li></ol></div>
@@ -48,24 +62,19 @@
 </article>
 </div>
 <div class="feature-tour">
-<section class="feature-row" data-reveal aria-labelledby="alerts-feature-title">
+<section class="feature-row" aria-labelledby="alerts-feature-title">
 <div class="feature-copy">
 <p class="feature-kicker">JOB ALERTS</p>
 <h2 id="alerts-feature-title">Less searching.<br>More possibilities.</h2>
 <p>Choose the skills, location and role you’re looking for. Find matching opportunities in your notifications when new roles are curated.</p>
 <a class="feature-link" href="{{ url_for('alerts.index') }}">Create your first alert {{ icon_svg('arrow-right') }}</a>
 </div>
-<div class="feature-preview feature-demo alert-preview" data-feature-demo data-reveal aria-label="Job alerts demonstration">
-<div class="demo-toolbar"><p class="preview-label">JOB ALERTS · EXAMPLE</p><span class="demo-duration">3.6s demo</span></div>
-<p class="sr-only">Choose Python and Lahore, activate an alert, then receive a notification when a matching role is curated.</p>
-<div class="demo-scenes" aria-hidden="true">
-<div class="demo-frame"><span class="demo-step">01 / YOUR PREFERENCES</span><h3>Start with what fits.</h3><div class="demo-window"><span class="demo-field-label">Skills &amp; location</span><div class="preview-skills"><span>Python {{ icon_svg('check') }}</span><span>SQL {{ icon_svg('check') }}</span><span>Lahore</span></div><div class="demo-action">Create my alert {{ icon_svg('arrow-right') }}</div></div><p class="demo-caption">Choose your skills and where you want to work.</p></div>
-<div class="demo-frame"><span class="demo-step">02 / ALERT ACTIVE</span><h3>Your preferences. Saved.</h3><div class="demo-window"><div class="demo-success">{{ icon_svg('check') }} My next internship</div><p>Python · SQL · Lahore</p><span class="feature-status">Alert active</span></div><p class="demo-caption">New curated roles are checked against your alert.</p></div>
-<div class="demo-frame"><span class="demo-step">03 / A NEW MATCH</span><h3>Your next possibility.</h3><div class="demo-window demo-notification"><span class="notification-symbol">{{ icon_svg('bell') }}</span><div><strong>A new match for your alert</strong><p>Python Backend Intern</p><small>Northstar Labs · Lahore</small></div></div><p class="demo-caption">A matching opportunity lands in your notifications.</p></div>
-</div>
-<div class="demo-progress" aria-hidden="true"><span></span></div>
-<div class="demo-footer"><span>Fictional opportunity</span><button type="button" class="demo-control" hidden aria-label="Play job alerts demo">Play demo {{ icon_svg('arrow-right') }}</button></div>
-<p class="demo-announcement sr-only" role="status"></p>
+<div class="feature-preview alert-preview" aria-label="Fictional job alert example">
+<p class="preview-label">EXAMPLE ALERT</p>
+<div class="feature-preview-heading"><h3>My next internship</h3><span class="feature-status">Active</span></div>
+<div class="preview-skills"><span>Python</span><span>SQL</span><span>Lahore</span><span>Internship</span></div>
+<div class="notification-example"><span class="notification-symbol" aria-hidden="true">{{ icon_svg('bell') }}</span><div><strong>A new match for your alert</strong><p>Python Backend Intern at Northstar Labs</p><small>Fictional opportunity · In-app notification</small></div></div>
+<p class="feature-footnote">Any selected required skill can match. Your other preferences must match too.</p>
 </div>
 </section>
 <section class="feature-row feature-row-reverse" data-reveal aria-labelledby="tracker-feature-title">

@@ -13,6 +13,7 @@
   const entrances = new Set();
   let pending = null;
   let currentURL = location.href;
+  let searchTimer;
   const workspacePath = path => /^\/(dashboard|opportunities(?:\/\d+)?|saved|tracker|notifications|alerts|profile)$/.test(path);
   const mutationPath = path => /^\/(profile(?:\/reset)?|skills(?:\/remove)?|opportunities\/\d+\/(save|track)|tracker\/\d+(?:\/remove)?|alerts(?:\/[^/]+\/(toggle|delete))?|notifications\/[^/]+\/read)$/.test(path);
 
@@ -125,7 +126,7 @@
       clear(entrance.states);
     }
     entrances.clear();
-    if (pending) { clear(pending.states); pending.states = begin(document.getElementById('main')); }
+    if (pending) { clear(pending.states); pending.states = begin(pending.root); }
   });
   // Shared API also supports future section-level fetches without duplicating timing.
   window.CareerPulseLoading = {begin, clear, reveal};
@@ -147,6 +148,7 @@
     box.focus();
   }
   async function navigate(url, options = {}) {
+    clearTimeout(searchTimer);
     if (pending?.method === 'POST') return; // Never interrupt/replay an in-flight write.
     if (pending) { pending.controller.abort(); clear(pending.states); }
     document.querySelector('.load-error')?.remove();
@@ -157,7 +159,8 @@
     document.querySelectorAll('.load-skeleton').forEach(el => el.remove());
     const controller = new AbortController();
     const method = options.method || 'GET';
-    const task = {controller, method, states:begin(document.getElementById('main'))};
+    const task = {controller, method, root: options.resultsOnly ? document.getElementById('discovery-results') : document.getElementById('main')};
+    task.states = begin(task.root);
     pending = task;
     status.textContent = method === 'POST' ? 'Saving changes…' : 'Loading workspace…';
     const submitter = options.submitter;
@@ -169,24 +172,30 @@
       if (pending !== task) return;
       if (response.status >= 500) throw new Error('server');
       const doc = new DOMParser().parseFromString(html, 'text/html');
-      const next = doc.querySelector('.workspace');
+      if (options.resultsOnly && !response.ok) throw new Error('Invalid filters');
+      const next = doc.querySelector(options.resultsOnly ? '#discovery-results' : '.workspace');
       if (!next) {
         // Session redirects and public routes retain normal browser navigation.
         location.assign(response.url); return;
       }
       clear(task.states);
-      document.querySelector('.workspace').replaceWith(next);
+      document.querySelector(options.resultsOnly ? '#discovery-results' : '.workspace').replaceWith(next);
       document.title = doc.title;
       updateNavigation(doc);
+      if (options.resultsOnly) {
+        document.querySelector('.filter-active-pill').textContent = doc.querySelector('.filter-active-pill').textContent;
+      }
       // A validation response to /skills must keep the canonical profile URL.
       const destination = response.ok ? response.url : currentURL;
-      if (options.history !== 'pop' && destination !== location.href) history.pushState({}, '', destination);
+      if (options.history !== 'pop' && destination !== location.href) {
+        history[options.history === 'replace' ? 'replaceState' : 'pushState']({}, '', destination);
+      }
       currentURL = location.href;
       reveal(next);
       const main = document.getElementById('main');
-      main.focus({preventScroll:true});
+      if (!options.resultsOnly) main.focus({preventScroll:true});
       if (!options.keepScroll) window.scrollTo({top:0,behavior:'instant'});
-      status.textContent = response.ok ? (method === 'POST' ? 'Changes saved.' : 'Workspace loaded.') : 'Please review the form errors.';
+      status.textContent = response.ok ? (options.resultsOnly ? next.querySelector('[data-result-count]').textContent : method === 'POST' ? 'Changes saved.' : 'Workspace loaded.') : 'Please review the form errors.';
     } catch (error) {
       if (pending !== task) return;
       clear(task.states);
@@ -199,13 +208,39 @@
       if (pending === task) pending = null;
     }
   }
+  function discoveryURL() {
+    const form = document.querySelector('form.filters');
+    const search = document.getElementById('global-search');
+    const url = new URL('/opportunities', location.origin);
+    const data = new FormData(form);
+    data.set('q', search.value.trim());
+    form.querySelector('[name="q"]').value = search.value;
+    for (const [key, value] of data) if (value && !(key === 'sort' && value === 'match')) url.searchParams.set(key, value);
+    return url.href;
+  }
+  document.addEventListener('input', event => {
+    if (event.target.id !== 'global-search' || event.isComposing) return;
+    clearTimeout(searchTimer);
+    if (pending?.method === 'GET') { pending.controller.abort(); clear(pending.states); pending = null; }
+    searchTimer = setTimeout(() => navigate(discoveryURL(), {resultsOnly:true,keepScroll:true,history:'replace'}), 300);
+  });
+  document.addEventListener('compositionend', event => {
+    if (event.target.id === 'global-search') event.target.dispatchEvent(new Event('input', {bubbles:true}));
+  });
   document.addEventListener('click', event => {
     const link = event.target.closest('a[href]');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target || link.hasAttribute('download')) return;
     const url = new URL(link.href);
     if (url.origin !== location.origin || url.hash || !workspacePath(url.pathname)) return;
     event.preventDefault();
-    navigate(url.href);
+    if (link.hasAttribute('data-reset-discovery') && document.getElementById('discovery-results')) {
+      document.querySelectorAll('form.filters input, form.filters select').forEach(field => {
+        if (field.tagName === 'SELECT') field.selectedIndex = 0;
+        else field.value = '';
+      });
+      document.getElementById('global-search').value = '';
+      navigate(url.href, {resultsOnly:true,keepScroll:true});
+    } else navigate(url.href);
   });
   document.addEventListener('submit', event => {
     const form = event.target;
@@ -214,6 +249,11 @@
     if (form.target || url.origin !== location.origin || (method === 'POST' ? !mutationPath(url.pathname) : !workspacePath(url.pathname))) return;
     event.preventDefault();
     if (pending?.method === 'POST') return;
+    if (method === 'GET' && document.getElementById('discovery-results') && (form.matches('.filters') || form.getAttribute('role') === 'search')) {
+      const filters = document.querySelector('form.filters');
+      if (filters.reportValidity()) navigate(discoveryURL(), {resultsOnly:true,keepScroll:true});
+      return;
+    }
     const data = new FormData(form, event.submitter);
     if (method === 'GET') { url.search = new URLSearchParams(data).toString(); navigate(url.href); }
     else navigate(url.href, {method, body:data, submitter:event.submitter, keepScroll:true});

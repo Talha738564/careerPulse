@@ -23,7 +23,7 @@ class AppTests(unittest.TestCase):
 
     def test_filters(self):
         response=self.client.get('/opportunities?q=SQL&type=INTERNSHIP&remote=yes')
-        self.assertIn(b'No matches this time',response.data)
+        self.assertIn(b'No roles match your filters',response.data)
         response=self.client.get('/opportunities?q=northstar')
         self.assertIn(b'Python Backend Intern',response.data)
         self.assertNotIn(b'Data Analyst Intern',response.data)

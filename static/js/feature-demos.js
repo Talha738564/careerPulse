@@ -5,7 +5,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   cards.forEach(card => {
     const button = card.querySelector('.demo-control');
-    const label = card.classList.contains('alert-preview') ? 'job alerts' : 'application tracker';
+    const label = card.classList.contains('discovery-preview') ? 'job discovery' : 'application tracker';
     let seen = false, visible = false, manuallyPaused = false;
     const playing = () => card.classList.contains('demo-playing');
     function control(text) {

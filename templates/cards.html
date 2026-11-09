@@ -5,12 +5,13 @@
 <div>
 <p class="overline">{{ job.company_name }} · {{ 'Demo' if job.is_demo else 'Curated' }}</p>
 <h3>
-<a href="{{ url_for('detail',opp_id=job.opp_id) }}">{{ job.title }}</a>
+<a class="job-card-title" href="{{ url_for('detail',opp_id=job.opp_id) }}">{{ job.title }}</a>
 </h3>
 </div>
-<span class="match">{{ '%g'|format(job.score) ~ '% match' if job.score is not none else 'Not scored' }}</span>
+<span class="match">{{ '%g'|format(job.score) ~ '% skill match' if job.score is not none else 'Not scored' }}</span>
 </div>
 <p class="metadata">{{ job.city }} · {{ 'Remote' if job.is_remote else 'On-site' }} · {{ job.job_type|replace('_',' ')|title }}</p>
+<p class="metadata">PKR {{ '{:,}'.format(job.min_salary) }}–{{ '{:,}'.format(job.max_salary) }} {{ 'per project' if job.job_type=='FREELANCE' else 'per month' }}</p>
 {% if job.status!='ACTIVE' %}<p class="chip missing">{{ job.status|title }}</p>{% elif 0 <= job.days_left <= 7 %}<p class="chip missing">Deadline Pulse · {{ job.days_left }} days left</p>{% endif %}
 <div class="chips">{% for skill in job.matched %}<span class="chip known">{{ icon_svg('check') }} {{ skill }}</span>{% endfor %}{% for skill in job.missing %}<span class="chip missing">Missing: {{ skill }}</span>{% endfor %}</div>
 <div class="job-bottom">

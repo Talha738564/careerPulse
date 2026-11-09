@@ -3,7 +3,7 @@
 <p class="eyebrow">DISCOVER YOUR NEXT STEP</p>
 <h1>Opportunity starts here.</h1>
 <p>Find a role that fits your skills—and room to grow.</p>
-<form class="filters" method="get">
+<form class="filters" method="get" action="{{ url_for('opportunities') }}">
 <input type="hidden" name="q" value="{{ q }}">
 <details class="filter-accordion" open>
 <summary class="filter-toggle">
@@ -17,7 +17,7 @@
 <label>Location<select aria-label="Location" name="remote">
 <option value="">Any location</option>
 <option value="yes" {{ 'selected' if remote=='yes' }}>Remote only</option>
-</select>
+<option value="no" {{ 'selected' if remote=='no' }}>On-site only</option></select>
 </label>
 <label>City<select aria-label="City" name="city">
 <option value="">All cities</option>{% for city in cities %}<option {{ 'selected' if request.args.get('city')==city }}>{{ city }}</option>{% endfor %}</select>
@@ -32,22 +32,23 @@
 </label>
 <label>Deadline on or before<input type="date" name="deadline" value="{{ request.args.get('deadline','') }}">
 </label>
-<label>Sort by<select aria-label="Sort by" name="sort">{% for value,label in [('match','Best match'),('deadline','Closing soon'),('newest','Newest first')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select>
+<label>Sort by<select aria-label="Sort by" name="sort">{% for value,label in [('match','Best match'),('newest','Newest'),('salary','Highest pay'),('deadline','Deadline soonest')] %}<option value="{{ value }}" {{ 'selected' if request.args.get('sort','match')==value }}>{{ label }}</option>{% endfor %}</select>
 </label>
 <div class="filter-actions-row">
 <button class="button">Apply filters</button>
-<a class="filter-reset-link" href="{{ url_for('opportunities') }}">Reset all</a>
+<a class="filter-reset-link" data-reset-discovery href="{{ url_for('opportunities') }}">Reset all</a>
 </div>
 </div>
 </details>
 </form>
+<div id="discovery-results" aria-label="Job search results">
 <div class="section-heading">
-<h2>{{ jobs|length }} opportunities</h2>
+<h2 data-result-count>{{ jobs|length }} {{ 'opportunity' if jobs|length == 1 else 'opportunities' }}</h2>
 <span>Curated demo workspace</span>
 </div>
 <div class="browse-grid" data-load-region aria-label="Opportunities">{% for job in jobs %}{{ job_card(job) }}{% else %}<div class="panel">
-<h2>No matches this time.</h2>
-<p>Try another skill or remove a filter.</p>
-<a href="{{ url_for('opportunities') }}">Show all opportunities {{ icon_svg('arrow-right') }}</a>
+<h2>No roles match your filters — try widening your search</h2>
+<a class="button secondary-button" data-reset-discovery href="{{ url_for('opportunities') }}">Reset filters</a>
 </div>{% endfor %}</div>
+</div>
 {% endblock %}

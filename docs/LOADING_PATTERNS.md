@@ -63,3 +63,19 @@ From the repository directory with development requirements installed:
 The browser scripts launch isolated local Flask instances. Screenshots are written
 to ignored `artifacts/dashboard/`, `artifacts/sidebar/`, `artifacts/landing/` and
 `artifacts/browser/`. Tests use Chromium responsive emulation, not physical devices.
+
+
+## Discovery search
+
+Explore keeps its search header visible and debounces typing by 300ms, including
+composition-input support. Search and Apply filters fetch the existing Flask
+route and replace only `#discovery-results`; inputs and typing focus stay intact.
+The result region uses the same skeleton and entrance utilities as other pages.
+Search matches title, company and required/preferred skill tags. Filters combine
+with AND logic, while best-match scoring continues to use required skills only.
+
+Successful live searches replace the current URL; Apply and Reset create history
+entries. Query parameters restore all filter selections on reload and Back/Forward.
+Reset clears search and every filter. New input cancels obsolete requests, and a
+failed request restores existing results. Without JavaScript, Search and Apply
+remain normal GET forms. Result counts are announced through the shared live region.

@@ -98,3 +98,11 @@
 .account-panel form { margin-top:8px; }
 .account-menu summary:focus-visible { outline:3px solid var(--teal); outline-offset:4px; }
 @media(max-width:700px) { .account-name { display:none; } .account-menu summary { gap:4px; } .workspace-page .topbar-actions { gap:10px; } }
+
+/* Discovery: persistent query control, full-card detail target, independent save. */
+.workspace-page[data-page="opportunities"] .topbar { position:sticky; top:0; z-index:7; }
+.workspace-page[data-page="opportunities"] .job-card { position:relative; }
+.workspace-page[data-page="opportunities"] .job-card-title::after { content:''; position:absolute; inset:0; border-radius:var(--radius); }
+.workspace-page[data-page="opportunities"] .job-card .card-action,.workspace-page[data-page="opportunities"] .job-bottom a { position:relative; z-index:1; }
+.workspace-page[data-page="opportunities"] .job-card:focus-within { outline:2px solid var(--teal); outline-offset:3px; }
+@media(hover:hover) { .workspace-page[data-page="opportunities"] .job-card:hover { border-color:#94b9cd; } }

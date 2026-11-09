@@ -103,11 +103,32 @@ Approved mobile header: logo, Sign in, Get started and menu share one row at
 retains 44px touch targets.
 
 Landing feature demos: run `tests/browser_feature_demos.py` for the two 3.6-second
-alert/tracker demonstrations. Checks cover completion, replay, keyboard pause,
+discovery/tracker demonstrations. Checks cover completion, replay, keyboard pause,
 paused timeline stability, offscreen suspension, unchanged card height, the custom
 fine-pointer cursor, touch playback, reduced motion, no JavaScript, and responsive
 widths 320/390/768px. The scenes are illustrative only and never write user data.
 
 ```powershell
 .\.venv\Scripts\python.exe tests/browser_feature_demos.py
+```
+
+
+Discovery and homepage follow-up: 37 unit tests pass, along with
+`browser_discovery.py`, `browser_loading.py`, `browser_feature_demos.py`,
+`browser_landing.py` (80 route/width checks), and `browser_smoke.py`.
+Discovery checks cover 300ms search debounce and retained input focus, combined
+filters, URL restoration/history, reset/empty states, required-skill badges,
+whole-card links and independent Save actions. Highest pay sorts by the upper
+salary bound, then the lower bound; cards display the pay period.
+Responsive checks use Chromium emulation at 320, 390 and 768px.
+
+The homepage discovery demo comes first, the original skill-match section second,
+and Job Alerts is static with no reveal transition. Discovery and Tracker alone
+use the 8px dot / 34px trailing ring cursor, growing to 54px over controls.
+Checks cover exact pointer coordinates, smooth-scroll behavior, dark palette,
+touch, reduced motion and no-JavaScript fallback. Screenshots are generated under
+`artifacts/discovery/`. Demo scenes remain clearly fictional.
+
+```powershell
+.\.venv\Scripts\python.exe tests/browser_discovery.py
 ```
