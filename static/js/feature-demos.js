@@ -1,14 +1,16 @@
-/* Explanatory landing-page motion only: one 3.6s play, then a stable final frame. */
+/* Marketing previews: journey loops while visible; tracker plays once. */
 (() => {
   const cards = [...document.querySelectorAll('[data-feature-demo]')];
   if (!cards.length || !('IntersectionObserver' in window)) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   cards.forEach(card => {
     const button = card.querySelector('.demo-control');
+    const looping = card.classList.contains('journey-preview');
     const label = card.classList.contains('discovery-preview') ? 'getting started' : 'application tracker';
     let seen = false, visible = false, manuallyPaused = false;
     const playing = () => card.classList.contains('demo-playing');
     function control(text) {
+      if (!button) return;
       button.firstChild.textContent = text + ' ';
       button.setAttribute('aria-label', `${text.replace(' demo','')} ${label} demo`);
     }
@@ -29,11 +31,12 @@
       card.classList.remove('demo-playing','demo-paused');
       control('Replay demo');
     }
-    button.addEventListener('click', () => {
+    button?.addEventListener('click', () => {
       if (!playing()) play();
       else { manuallyPaused = !manuallyPaused; syncPause(); }
     });
     card.addEventListener('animationend', event => {
+      if (looping) return;
       if (!['journey-register', 'demo-last'].includes(event.animationName)) return;
       finish();
       card.querySelector('.demo-announcement').textContent = 'Demo complete. Replay is available.';
@@ -46,8 +49,8 @@
     function preference() {
       finish();
       card.classList.toggle('demo-enhanced', !reduced.matches);
-      button.hidden = reduced.matches;
-      if (!reduced.matches && visible && !seen) { seen = true; play(); }
+      if (button) button.hidden = reduced.matches;
+      if (!reduced.matches && visible && (!seen || looping)) { seen = true; play(); }
     }
     preference();
     observer.observe(card);

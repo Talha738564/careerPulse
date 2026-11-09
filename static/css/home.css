@@ -326,3 +326,12 @@
 @keyframes journey-pointer { 0%,72% { opacity:0; transform:translate(40px,30px); } 78% { opacity:1; transform:translate(40px,30px); } 87% { opacity:1; transform:none; } 90% { opacity:1; transform:scale(.9); } 94% { opacity:1; transform:none; } 100% { opacity:0; transform:none; } }
 @keyframes journey-click { 0%,88% { opacity:0; transform:scale(.9); } 91% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(1.7); } }
 @keyframes journey-press { 0%,87%,96%,100% { transform:none; } 90% { transform:scale(.97); } }
+
+/* Repeat the getting-started preview without playback chrome. */
+@media(prefers-reduced-motion:no-preference) {
+ .journey-preview.demo-playing .journey-tile,
+ .journey-preview.demo-playing .journey-registration,
+ .journey-preview.demo-playing .journey-pointer,
+ .journey-preview.demo-playing .journey-click,
+ .journey-preview.demo-playing .journey-submit { animation-iteration-count:infinite; }
+}
