@@ -101,3 +101,13 @@ The sidebar suite and full student/admin workflow also pass. Screenshots live in
 Approved mobile header: logo, Sign in, Get started and menu share one row at
 320–600px. The layout regression checks their shared vertical alignment and
 retains 44px touch targets.
+
+Landing feature demos: run `tests/browser_feature_demos.py` for the two 3.6-second
+alert/tracker demonstrations. Checks cover completion, replay, keyboard pause,
+paused timeline stability, offscreen suspension, unchanged card height, the custom
+fine-pointer cursor, touch playback, reduced motion, no JavaScript, and responsive
+widths 320/390/768px. The scenes are illustrative only and never write user data.
+
+```powershell
+.\.venv\Scripts\python.exe tests/browser_feature_demos.py
+```

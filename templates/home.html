@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
 <script defer src="{{ url_for('static',filename='js/ui.js') }}"></script>
+<script defer src="{{ url_for('static',filename='js/feature-demos.js') }}"></script>
 </head>
 <body class="public-home">
 <a class="skip" href="#main">Skip to content</a>
@@ -54,12 +55,17 @@
 <p>Choose the skills, location and role you’re looking for. Find matching opportunities in your notifications when new roles are curated.</p>
 <a class="feature-link" href="{{ url_for('alerts.index') }}">Create your first alert {{ icon_svg('arrow-right') }}</a>
 </div>
-<div class="feature-preview alert-preview" aria-label="Fictional job alert example">
-<p class="preview-label">EXAMPLE ALERT</p>
-<div class="feature-preview-heading"><h3>My next internship</h3><span class="feature-status">Active</span></div>
-<div class="preview-skills"><span>Python</span><span>SQL</span><span>Lahore</span><span>Internship</span></div>
-<div class="notification-example"><span class="notification-symbol" aria-hidden="true">{{ icon_svg('bell') }}</span><div><strong>A new match for your alert</strong><p>Python Backend Intern at Northstar Labs</p><small>Fictional opportunity · In-app notification</small></div></div>
-<p class="feature-footnote">Any selected required skill can match. Your other preferences must match too.</p>
+<div class="feature-preview feature-demo alert-preview" data-feature-demo data-reveal aria-label="Job alerts demonstration">
+<div class="demo-toolbar"><p class="preview-label">JOB ALERTS · EXAMPLE</p><span class="demo-duration">3.6s demo</span></div>
+<p class="sr-only">Choose Python and Lahore, activate an alert, then receive a notification when a matching role is curated.</p>
+<div class="demo-scenes" aria-hidden="true">
+<div class="demo-frame"><span class="demo-step">01 / YOUR PREFERENCES</span><h3>Start with what fits.</h3><div class="demo-window"><span class="demo-field-label">Skills &amp; location</span><div class="preview-skills"><span>Python {{ icon_svg('check') }}</span><span>SQL {{ icon_svg('check') }}</span><span>Lahore</span></div><div class="demo-action">Create my alert {{ icon_svg('arrow-right') }}</div></div><p class="demo-caption">Choose your skills and where you want to work.</p></div>
+<div class="demo-frame"><span class="demo-step">02 / ALERT ACTIVE</span><h3>Your preferences. Saved.</h3><div class="demo-window"><div class="demo-success">{{ icon_svg('check') }} My next internship</div><p>Python · SQL · Lahore</p><span class="feature-status">Alert active</span></div><p class="demo-caption">New curated roles are checked against your alert.</p></div>
+<div class="demo-frame"><span class="demo-step">03 / A NEW MATCH</span><h3>Your next possibility.</h3><div class="demo-window demo-notification"><span class="notification-symbol">{{ icon_svg('bell') }}</span><div><strong>A new match for your alert</strong><p>Python Backend Intern</p><small>Northstar Labs · Lahore</small></div></div><p class="demo-caption">A matching opportunity lands in your notifications.</p></div>
+</div>
+<div class="demo-progress" aria-hidden="true"><span></span></div>
+<div class="demo-footer"><span>Fictional opportunity</span><button type="button" class="demo-control" hidden aria-label="Play job alerts demo">Play demo {{ icon_svg('arrow-right') }}</button></div>
+<p class="demo-announcement sr-only" role="status"></p>
 </div>
 </section>
 <section class="feature-row feature-row-reverse" data-reveal aria-labelledby="tracker-feature-title">
@@ -69,15 +75,17 @@
 <p>Keep your applications organized, from your first shortlist to an interview or offer. Add dates and notes, and update your status as you go.</p>
 <a class="feature-link" href="{{ url_for('tracker.index') }}">Explore your tracker {{ icon_svg('arrow-right') }}</a>
 </div>
-<div class="feature-preview tracker-preview" aria-label="Fictional application tracker example">
-<p class="preview-label">EXAMPLE JOURNEY</p>
-<h3>Your applications</h3>
-<ul class="tracker-example">
-<li><div><strong>Python Backend Intern</strong><small>Northstar Labs</small></div><span class="feature-status status-applied">Applied</span></li>
-<li><div><strong>Data Analyst Intern</strong><small>Juniper Analytics</small></div><span class="feature-status">Interview</span></li>
-<li><div><strong>Junior Web Developer</strong><small>Bluefin Studio</small></div><span class="feature-status status-saved">Saved</span></li>
-</ul>
-<p class="feature-footnote">You update each status. Opening an employer’s website never marks a role as applied.</p>
+<div class="feature-preview feature-demo tracker-preview" data-feature-demo data-reveal aria-label="Application tracker demonstration">
+<div class="demo-toolbar"><p class="preview-label">YOUR JOURNEY · EXAMPLE</p><span class="demo-duration">3.6s demo</span></div>
+<p class="sr-only">Start with a saved role. After applying on the employer's site, manually select Applied and confirm the update in your tracker.</p>
+<div class="demo-scenes" aria-hidden="true">
+<div class="demo-frame"><span class="demo-step">01 / KEEP IT CLOSE</span><h3>A possibility worth saving.</h3><div class="demo-window"><strong>Python Backend Intern</strong><p>Northstar Labs</p><span class="feature-status status-saved">Saved</span></div><p class="demo-caption">Add a role to your personal application tracker.</p></div>
+<div class="demo-frame"><span class="demo-step">02 / YOU MAKE THE UPDATE</span><h3>Applied? Record your step.</h3><div class="demo-window"><span class="demo-field-label">After applying on the employer’s site</span><div class="demo-status-choice"><span>Saved</span>{{ icon_svg('arrow-right') }}<strong>Applied {{ icon_svg('check') }}</strong></div><div class="demo-action">Confirm status update {{ icon_svg('check') }}</div></div><p class="demo-caption">Choose Applied and confirm your own activity.</p></div>
+<div class="demo-frame"><span class="demo-step">03 / PROGRESS RECORDED</span><h3>Every step, in one place.</h3><div class="demo-window"><div class="demo-success">{{ icon_svg('check') }} Tracker updated</div><p>Python Backend Intern</p><span class="feature-status status-applied">Applied</span></div><p class="demo-caption">Your status changes only when you update it.</p></div>
+</div>
+<div class="demo-progress" aria-hidden="true"><span></span></div>
+<div class="demo-footer"><span>Illustrative manual update</span><button type="button" class="demo-control" hidden aria-label="Play application tracker demo">Play demo {{ icon_svg('arrow-right') }}</button></div>
+<p class="demo-announcement sr-only" role="status"></p>
 </div>
 </section>
 <div class="feature-pair" data-reveal>

@@ -111,3 +111,19 @@ student/admin workflow pass; see `docs/VALIDATION.md`.
 Applied the approved single-row mobile header preview: compact original logo,
 Sign in, Get started and menu remain visible together. Verified alignment and
 no horizontal overflow at 320px, 360px and 390px.
+
+## Scroll-triggered feature demonstrations
+
+Job alerts and application tracking now use three-scene, 3.6-second explanatory
+animations. They play once when 40% visible, pause offscreen/in background tabs,
+and allow pause/resume/replay. CSS animates opacity and transform; the existing
+brand ease-out curve controls scene transitions. The two cards receive independent
+scroll entrances so the reveal remains visible on stacked mobile layouts.
+
+A navy pointer with a teal accent applies only to these cards on fine-pointer,
+hover-capable devices. Touch uses normal controls. Reduced motion and no-JS show
+the stable final scene plus accessible descriptions. Tracker scenes explicitly
+require a manual update after applying externally. No real data is changed.
+Reviewed alert and tracker card screenshots in `artifacts/feature-demos/` and
+verified playback behavior through the focused browser suite. Physical-device
+feel testing remains outside Chromium emulation.
