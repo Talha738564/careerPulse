@@ -33,7 +33,8 @@
       if (!playing()) play();
       else { manuallyPaused = !manuallyPaused; syncPause(); }
     });
-    card.querySelector('.demo-progress span').addEventListener('animationend', () => {
+    card.addEventListener('animationend', event => {
+      if (!['journey-register', 'demo-last'].includes(event.animationName)) return;
       finish();
       card.querySelector('.demo-announcement').textContent = 'Demo complete. Replay is available.';
     });
@@ -46,7 +47,6 @@
       finish();
       card.classList.toggle('demo-enhanced', !reduced.matches);
       button.hidden = reduced.matches;
-      card.querySelector('.demo-duration').textContent = reduced.matches ? 'Feature preview' : '3.6s demo';
       if (!reduced.matches && visible && !seen) { seen = true; play(); }
     }
     preference();

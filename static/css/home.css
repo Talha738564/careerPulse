@@ -310,3 +310,19 @@
 @keyframes journey-stack-middle { 0%,8% { opacity:0; transform:translateY(30px); } 23%,38% { opacity:1; transform:none; } 53% { opacity:1; transform:scale(.97); } 64%,100% { opacity:0; transform:scale(.95); } }
 @keyframes journey-stack-last { 0%,16% { opacity:0; transform:translateY(36px); } 34%,38% { opacity:1; transform:none; } 53% { opacity:1; transform:translateY(-75px) scale(.97); } 64%,100% { opacity:0; transform:translateY(-75px) scale(.95); } }
 @keyframes journey-register { 0%,53% { opacity:0; transform:translateY(12px) scale(.95); } 76%,100% { opacity:1; transform:none; } }
+
+/* Illustrative click stays inside the preview; it never submits a form. */
+.journey-submit { position:relative; }
+.journey-pointer { position:absolute; left:60%; top:50%; color:var(--navy); opacity:0; pointer-events:none; z-index:2; }
+.journey-pointer svg { display:block; }
+.journey-click { position:absolute; left:60%; top:50%; width:28px; height:28px; margin:-14px; border:2px solid #5eead4; border-radius:50%; opacity:0; pointer-events:none; }
+.demo-footer { margin-top:16px; }
+@media(prefers-reduced-motion:no-preference) {
+ .journey-preview.demo-playing .journey-pointer { animation:journey-pointer var(--demo-duration) var(--ease-out) both; }
+ .journey-preview.demo-playing .journey-click { animation:journey-click var(--demo-duration) var(--ease-out) both; }
+ .journey-preview.demo-playing .journey-submit { animation:journey-press var(--demo-duration) var(--ease-out) both; }
+ .journey-preview.demo-paused .journey-pointer,.journey-preview.demo-paused .journey-click,.journey-preview.demo-paused .journey-submit { animation-play-state:paused; }
+}
+@keyframes journey-pointer { 0%,72% { opacity:0; transform:translate(40px,30px); } 78% { opacity:1; transform:translate(40px,30px); } 87% { opacity:1; transform:none; } 90% { opacity:1; transform:scale(.9); } 94% { opacity:1; transform:none; } 100% { opacity:0; transform:none; } }
+@keyframes journey-click { 0%,88% { opacity:0; transform:scale(.9); } 91% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(1.7); } }
+@keyframes journey-press { 0%,87%,96%,100% { transform:none; } 90% { transform:scale(.97); } }

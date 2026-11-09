@@ -41,12 +41,12 @@
 <section class="feature-row discovery-feature" data-reveal aria-labelledby="discovery-feature-title">
 <div class="feature-copy"><p class="feature-kicker">YOUR JOURNEY STARTS HERE</p><h2 id="discovery-feature-title">Your skills.<br>Your next chapter.</h2><p>Add your skills. Discover your fit. Track your progress. Your next move starts with a CareerPulse account.</p><a class="feature-link" href="{{ url_for('auth.register') }}">Get started {{ icon_svg('arrow-right') }}</a></div>
 <div class="feature-preview feature-demo discovery-preview journey-preview" data-feature-demo data-reveal aria-label="Getting started demonstration">
-<div class="demo-toolbar"><p class="preview-label">YOUR FIRST STEP</p><span class="demo-duration">3.6s demo</span></div>
+<div class="demo-toolbar"><p class="preview-label">YOUR FIRST STEP</p></div>
 <p class="sr-only">Three cards introduce adding skills, discovering a fit and tracking progress, then transition into a registration preview. Use Get started to create your account.</p>
 <div class="journey-stage" aria-hidden="true">
 <div class="journey-tiles">{% for number,title,icon in [('01','Add skills','user'),('02','Discover fit','search'),('03','Track progress','eye')] %}<div class="journey-tile"><span>{{ number }}</span>{{ icon_svg(icon) }}<strong>{{ title }}</strong></div>{% endfor %}</div>
-<div class="journey-registration"><div class="journey-tabs"><span>Sign in</span><strong>Create account</strong></div><small>YOUR JOURNEY STARTS HERE</small><h3>Make your next move.</h3><p>Create your student account and explore what comes next.</p>{% for label,placeholder in [('Full name','Full name'),('Email','Email'),('Password','Password'),('Confirm password','Confirm password')] %}<div class="journey-field"><strong>{{ label }}</strong><span>{{ placeholder }}{% if 'password' in label|lower %}{{ icon_svg('eye') }}{% endif %}</span></div>{% endfor %}<div class="journey-submit">Create account {{ icon_svg('arrow-right') }}</div></div>
-</div><div class="demo-progress" aria-hidden="true"><span></span></div>
+<div class="journey-registration"><div class="journey-tabs"><span>Sign in</span><strong>Create account</strong></div><small>YOUR JOURNEY STARTS HERE</small><h3>Make your next move.</h3><p>Create your student account and explore what comes next.</p>{% for label,placeholder in [('Full name','Full name'),('Email','Email'),('Password','Password'),('Confirm password','Confirm password')] %}<div class="journey-field"><strong>{{ label }}</strong><span>{{ placeholder }}{% if 'password' in label|lower %}{{ icon_svg('eye') }}{% endif %}</span></div>{% endfor %}<div class="journey-submit">Create account {{ icon_svg('arrow-right') }}<span class="journey-pointer"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="m4 4 7.07 17 2.51-7.39L21 11.07z" fill="currentColor" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="journey-click"></span></div></div>
+</div>
 <div class="demo-footer"><span>Registration preview</span><button type="button" class="demo-control" hidden aria-label="Play getting started demo">Play demo {{ icon_svg('arrow-right') }}</button></div><p class="demo-announcement sr-only" role="status"></p>
 </div></section>
 <div class="how-inner" data-reveal>
@@ -84,14 +84,14 @@
 <a class="feature-link" href="{{ url_for('tracker.index') }}">Explore your tracker {{ icon_svg('arrow-right') }}</a>
 </div>
 <div class="feature-preview feature-demo tracker-preview" data-feature-demo data-reveal aria-label="Application tracker demonstration">
-<div class="demo-toolbar"><p class="preview-label">YOUR JOURNEY · EXAMPLE</p><span class="demo-duration">3.6s demo</span></div>
+<div class="demo-toolbar"><p class="preview-label">YOUR JOURNEY · EXAMPLE</p></div>
 <p class="sr-only">Start with a saved role. After applying on the employer's site, manually select Applied and confirm the update in your tracker.</p>
 <div class="demo-scenes" aria-hidden="true">
 <div class="demo-frame"><span class="demo-step">01 / KEEP IT CLOSE</span><h3>A possibility worth saving.</h3><div class="demo-window"><strong>Python Backend Intern</strong><p>Northstar Labs</p><span class="feature-status status-saved">Saved</span></div><p class="demo-caption">Add a role to your personal application tracker.</p></div>
 <div class="demo-frame"><span class="demo-step">02 / YOU MAKE THE UPDATE</span><h3>Applied? Record your step.</h3><div class="demo-window"><span class="demo-field-label">After applying on the employer’s site</span><div class="demo-status-choice"><span>Saved</span>{{ icon_svg('arrow-right') }}<strong>Applied {{ icon_svg('check') }}</strong></div><div class="demo-action">Confirm status update {{ icon_svg('check') }}</div></div><p class="demo-caption">Choose Applied and confirm your own activity.</p></div>
 <div class="demo-frame"><span class="demo-step">03 / PROGRESS RECORDED</span><h3>Every step, in one place.</h3><div class="demo-window"><div class="demo-success">{{ icon_svg('check') }} Tracker updated</div><p>Python Backend Intern</p><span class="feature-status status-applied">Applied</span></div><p class="demo-caption">Your status changes only when you update it.</p></div>
 </div>
-<div class="demo-progress" aria-hidden="true"><span></span></div>
+
 <div class="demo-footer"><span>Illustrative manual update</span><button type="button" class="demo-control" hidden aria-label="Play application tracker demo">Play demo {{ icon_svg('arrow-right') }}</button></div>
 <p class="demo-announcement sr-only" role="status"></p>
 </div>
