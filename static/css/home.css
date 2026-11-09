@@ -276,7 +276,7 @@
 
 /* Reference-inspired feature tiles fold into a registration preview in 3.6s. */
 .journey-preview { background:radial-gradient(ellipse at 15% 80%,#b3e7da 0,transparent 55%),radial-gradient(ellipse at 90% 10%,#b8dce8 0,transparent 60%),#80bebf; overflow:hidden; }
-.journey-stage { position:relative; display:grid; place-items:center; height:360px; margin-top:20px; }
+.journey-stage { position:relative; display:grid; place-items:start center; min-height:360px; padding-bottom:24px; margin-top:12px; }
 .journey-stage::before { content:''; position:absolute; width:230px; height:300px; border:1px solid #ffffff40; border-radius:45% 55% 65% 35%; transform:rotate(28deg); background:#ffffff18; }
 .journey-tiles,.journey-registration { grid-area:1/1; position:relative; width:min(100%,270px); }
 .journey-tiles { display:none; }
@@ -284,7 +284,7 @@
 .journey-tile>span { display:block; color:#728a91; font-size:14px; margin-bottom:4px; }
 .journey-tile>strong { font-size:16px; }
 .journey-tile>.ui-icon { position:absolute; right:16px; top:16px; width:17px; height:17px; }
-.journey-registration { background:#f6fcfbed; border:1px solid #ffffffb0; border-radius:18px; padding:18px; box-shadow:0 18px 40px #173a4820; }
+.journey-registration { width:min(100%,250px); line-height:1.35; background:#f6fcfbed; border:1px solid #ffffffb0; border-radius:18px; padding:14px; box-shadow:0 18px 40px #173a4820; }
 .journey-tabs { display:flex; justify-content:space-around; font-size:9px; padding-bottom:12px; }
 .journey-tabs strong { border-bottom:2px solid var(--blue); padding-bottom:5px; }
 .journey-registration>small { color:var(--teal); font-size:7px; letter-spacing:1px; font-weight:750; }
